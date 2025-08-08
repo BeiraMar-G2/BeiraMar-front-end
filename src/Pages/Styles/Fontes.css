@@ -1,0 +1,25 @@
+.titulo{
+    color: #282828;
+    font-weight: 600;
+    font-size: 28px;
+}
+
+.label {
+    color: #282828;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.titulo-home {
+    color: #282828;
+    font-size: 32px;
+    line-height: 1;
+    font-weight: 500;
+}
+
+.subtitulo-home {
+    color: #282828;
+    font-size: 16px;
+    line-height: 1.05;
+    font-weight: 450;
+}
