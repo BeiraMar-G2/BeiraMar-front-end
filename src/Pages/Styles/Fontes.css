@@ -14,12 +14,17 @@
     color: #282828;
     font-size: 32px;
     line-height: 1;
-    font-weight: 500;
+    font-weight: 550;
 }
 
 .subtitulo-home {
     color: #282828;
     font-size: 16px;
-    line-height: 1.05;
     font-weight: 450;
+}
+
+.conteudo-home{
+    color: #282828;
+    font-size: 14px;
+    font-weight: 400;
 }

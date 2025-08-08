@@ -21,3 +21,9 @@ export function SubtituloHome(props) {
     <span style={{ color: props.cor}} className="subtitulo-home">{props.texto}</span>
     )
 }
+
+export function ConteudoHome(props) {
+    return(
+    <span style={{ color: props.cor}} className="conteudo-home">{props.texto}</span>
+    )
+}
