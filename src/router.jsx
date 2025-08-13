@@ -5,6 +5,7 @@ import { CadastroFuncForm } from "./Pages/Cadastro/CadastroFuncForm.jsx";
 import { RecuperacaoForm } from "./Pages/RecuperacaoSenha/RecuperacaoForm.jsx";
 import { EdicaoUsuarioForm } from "./Pages/Edicao Usuario/EdicaoUsuarioForm.jsx";
 import { Home } from "./Pages/Home/Home.jsx";
+import { Calendario } from "./Pages/Login/calendario.jsx";
 
 export const routes = createBrowserRouter([
   { path: "/Login", 
@@ -21,6 +22,9 @@ export const routes = createBrowserRouter([
     errorElement: <div>Erro ao carregar a página</div> },
     { path: "/EdicaoUsuario",
     element: <EdicaoUsuarioForm />,
+    errorElement: <div>Erro ao carregar a página</div> },
+    { path: "/calendario",
+    element: <Calendario />,
     errorElement: <div>Erro ao carregar a página</div> },
     { path: "/",
     element: <Home />,
