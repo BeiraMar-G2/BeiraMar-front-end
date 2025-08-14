@@ -22,19 +22,10 @@
     color: #282828;
 }
 
-.react-calendar__tile {
-    border: 1px solid #282828;
-    background-color: aqua;
-}
-
 .react-calendar__tile--active {
-    background-color: transparent!important;
     border-radius: 5px;
     color: #282828 !important;
+    background-color: #afafaf54 !important;
     border: 2px solid #282828 !important;
 }
 
-.react-calendar__tile--active,
-.react-calendar__tile--now {
-    background-color: #4effac !important;
-}
