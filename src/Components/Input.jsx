@@ -66,13 +66,13 @@ export function Input(props) {
                     ref={inputRef}
                     type={props.type}
                     placeholder={props.placeholder}
-                    onChange={validar}
+                    onChange={(e) => props.onChange(e.target.value)}
                 />
             ) : (
                 <input
+                onChange={(e) => props.onChange(e.target.value)}
                     type={props.type}
                     placeholder={props.placeholder}
-                    onChange={validar}
                 />
             )}
         </div>

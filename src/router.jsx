@@ -7,6 +7,8 @@ import { EdicaoUsuarioForm } from "./Pages/Edicao Usuario/EdicaoUsuarioForm.jsx"
 import { Home } from "./Pages/Home/Home.jsx";
 import { CadastroPacote } from "./Pages/Cadastro Pacote/CadastroPacote.jsx";
 
+import { Calendario } from "./Pages/Login/calendario.jsx";
+import { Menu } from "./Pages/Menu/MenuFunc.jsx";
 export const routes = createBrowserRouter([
   { path: "/Login", 
     element: <LoginForm />, 
@@ -23,6 +25,9 @@ export const routes = createBrowserRouter([
     { path: "/EdicaoUsuario",
     element: <EdicaoUsuarioForm />,
     errorElement: <div>Erro ao carregar a página</div> },
+    { path: "/calendario",
+    element: <Calendario />,
+    errorElement: <div>Erro ao carregar a página</div> },
     { path: "/",
     element: <Home />,
     errorElement: <div>Erro ao carregar a página</div> },
@@ -31,4 +36,7 @@ export const routes = createBrowserRouter([
     element: <CadastroPacote />,
     errorElement: <div>Erro ao carregar a página</div>
     },
+    { path: "/Menu",
+    element: <Menu />,
+    errorElement: <div>Erro ao carregar a página</div> },
 ])

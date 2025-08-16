@@ -1,0 +1,38 @@
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  display: flex;
+}
+
+.navbarMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #0cdefa;
+  color: white;
+  padding: 25px;
+
+}
+
+/* .containerMenu {
+    display: flex;
+    flex-direction: column;
+} */
+
+.botoesMenu1 {
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  gap: 40px;              
+  margin-left: 30px;
+  margin-bottom: 30px;
+}
+
+.tituloMenu {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0 !important;
+  text-align: center;
+  color: black;
+}
