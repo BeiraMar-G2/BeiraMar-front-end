@@ -5,6 +5,7 @@ import { CadastroFuncForm } from "./Pages/Cadastro/CadastroFuncForm.jsx";
 import { RecuperacaoForm } from "./Pages/RecuperacaoSenha/RecuperacaoForm.jsx";
 import { EdicaoUsuarioForm } from "./Pages/Edicao Usuario/EdicaoUsuarioForm.jsx";
 import { Home } from "./Pages/Home/Home.jsx";
+import { CadastroPacote } from "./Pages/Cadastro Pacote/CadastroPacote.jsx";
 
 export const routes = createBrowserRouter([
   { path: "/Login", 
@@ -25,4 +26,9 @@ export const routes = createBrowserRouter([
     { path: "/",
     element: <Home />,
     errorElement: <div>Erro ao carregar a página</div> },
+    {
+    path: "/CadastroPacote",
+    element: <CadastroPacote />,
+    errorElement: <div>Erro ao carregar a página</div>
+    },
 ])
