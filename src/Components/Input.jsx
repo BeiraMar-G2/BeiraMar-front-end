@@ -16,65 +16,51 @@ export function Input(props) {
     }, [tipo]);
 
     function validar(e) {
+        const valor = e.target.value;
+
         if (tipo === "nome") {
-            const nome = e.target.value;
-            if (nome.length < 3) {
+            if (valor.length < 3) {
                 console.error("Nome deve ter pelo menos 3 caracteres");
             }
-            console.log("Nome validado")
-        }
-        else if (tipo === "email") {
-            const email = e.target.value;
-            if (!email.includes("@") || !email.includes(".")) {
+        } else if (tipo === "email") {
+            if (!valor.includes("@") || !valor.includes(".")) {
                 console.error("Email inválido");
             }
-            console.log("Email validado")
-        }
-        else if (tipo === "telefone") {
-            const telefone = e.target.value.replace(/\D/g, "");
+        } else if (tipo === "telefone") {
+            const telefone = valor.replace(/\D/g, "");
             const regex = /^\d{10,11}$/;
             if (!regex.test(telefone)) {
                 console.error("Telefone inválido");
             }
-            console.log("Telefone validado")
-        }
-        else if (tipo === "senha") {
-            const senha = e.target.value;
-            if (senha.length < 6) {
+        } else if (tipo === "senha") {
+            if (valor.length < 6) {
                 console.error("Senha deve ter pelo menos 6 caracteres");
             }
-            console.log("Senha validada")
-        } 
-        else if (tipo === "confirmarSenha") {
-            const senha = e.target.value;
-            if (senha !== props.senha) {
+        } else if (tipo === "confirmarSenha") {
+            if (valor !== props.senha) {
                 console.error("As senhas não coincidem");
             }
-        }
-        else if (tipo === null) {
-            console.log("Para validação insira o VALOR do input")
-        }
-        else {
+        } else if (tipo === null) {
+            console.log("Para validação insira o VALOR do input");
+        } else {
             console.error("Tipo de validação desconhecido/desnecessário");
         }
     }
 
     return (
         <div>
-            {tipo === "telefone" ? (
-                <input
-                    ref={inputRef}
-                    type={props.type}
-                    placeholder={props.placeholder}
-                    onChange={(e) => props.onChange(e.target.value)}
-                />
-            ) : (
-                <input
-                onChange={(e) => props.onChange(e.target.value)}
-                    type={props.type}
-                    placeholder={props.placeholder}
-                />
-            )}
+            <input
+                ref={tipo === "telefone" ? inputRef : null}
+                type={props.type}
+                name={props.name}
+                placeholder={props.placeholder}
+                value={props.value}
+                onChange={(e) => {
+                    validar(e);
+                    props.onChange && props.onChange(e); // Passa o evento completo
+                }}
+                className={props.className}
+            />
         </div>
     );
 }

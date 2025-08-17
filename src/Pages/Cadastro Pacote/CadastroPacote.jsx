@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { Botao } from '../../Components/Botao.jsx';
 import { Input } from '../../Components/Input.jsx';
 import { Titulo, Label } from '../../Components/Fontes.jsx';
-import { FaHome } from 'react-icons/fa';
-import { FaCheck } from 'react-icons/fa';
+import { FaHome, FaCheck } from 'react-icons/fa';
 import '../Styles/CadastroPacote.css';
 
 export function CadastroPacote() {
+
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         nomePacote: '',
-        sobrancelha: true,
+        sobrancelha: false,
         massagem: false,
-        drenagem: true,
+        drenagem: false,
         limpeza: false,
     });
 
+    const [filtro, setFiltro] = useState('');
+
     const handleChange = (e) => {
+        if (!e || !e.target) return;
+
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+
+        if (name === 'nomePacote') {
+            setFiltro(value.toLowerCase());
+        }
     };
 
     const handleCardClick = (servico) => {
@@ -31,9 +42,18 @@ export function CadastroPacote() {
         { id: 'limpeza', label: 'Limpeza de Pele' },
     ];
 
+    const servicosFiltrados = servicos.filter(({ label }) =>
+        label.toLowerCase().includes(filtro)
+    );
+
+    const destacarTexto = (label) => {
+        if (!filtro) return label;
+        const regex = new RegExp(`(${filtro})`, 'gi');
+        return label.replace(regex, '<mark>$1</mark>');
+    };
+
     return (
         <div className="content pacote">
-            {/* Navbar */}
             <div className="navbar">
                 <FaHome size={20} color="#000" />
                 <span className="navbar-text">Menu</span>
@@ -58,22 +78,28 @@ export function CadastroPacote() {
                     </div>
 
                     <div className="lista-servicos">
-                        {servicos.map(({ id, label }) => (
+                        {servicosFiltrados.map(({ id, label }) => (
                             <div
                                 key={id}
                                 className={`card-servico ${formData[id] ? 'selecionado' : ''}`}
                                 onClick={() => handleCardClick(id)}
                             >
-                                <span>{label}</span>
+                                <span dangerouslySetInnerHTML={{ __html: destacarTexto(label) }} />
                                 {formData[id] && <FaCheck className="check-icon" />}
                             </div>
                         ))}
+                        {servicosFiltrados.length === 0 && (
+                            <div className="card-servico vazio">Nenhum serviço encontrado</div>
+                        )}
                     </div>
                 </div>
 
                 <div className="botoes">
-                    <Botao texto="Voltar" />
-                    <Botao texto="Continuar" />
+                    <Botao texto="Voltar" cor="cinza" onClick={() => navigate("/")} />
+                    <Botao 
+                        texto="Continuar" 
+                        onClick={() => navigate("/DefinirSessoes", { state: { servicosSelecionados: formData } })} 
+                    />
                 </div>
             </div>
         </div>
