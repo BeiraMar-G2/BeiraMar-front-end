@@ -1,43 +1,18 @@
 export function BotaoMenu(props) {
-    return(
-        <div className='botaoMenu'>
-            <span className='textoBotao'>
-                {props.texto}
-            </span>
-        </div>
-    )
+  return (
+    <div className="botaoMenu">
+      <span className="textoBotao">{props.texto}</span>
+      {props.imagem && (
+        <img src={props.imagem} alt={props.texto} className="iconeBotao" />
+      )}
+    </div>
+  )
 }
 
 export function Botao(props) {
-  const estiloBotao =
-    props.texto === "Voltar"
-      ? {
-          backgroundColor: "#ccc",
-          color: "#000",
-          padding: "10px 16px",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }
-      : {
-          backgroundColor: "#f8c7ccbb",
-          color: "#000",
-          padding: "10px 16px",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-        };
-
   return (
     <div className="botao">
-      <button
-        type="button"
-        className="textoBotao"
-        style={estiloBotao}
-        onClick={props.onClick}  // ✅ agora repassa o clique certinho
-      >
-        {props.texto}
-      </button>
+      <button className="textoBotao">{props.texto}</button>
     </div>
-  );
+  )
 }
