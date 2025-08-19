@@ -4,8 +4,8 @@ import { Botao } from '../../Components/Botao.jsx';
 import { InputPesquisa } from '../../Components/Input.jsx';
 import { Header } from '../../Components/Header.jsx';
 import { FaHouse } from "react-icons/fa6";
-import { Titulo, Label, Subtitulo } from '../../Components/Fontes.jsx';
-import { FaHome, FaCheck } from 'react-icons/fa';
+import { Titulo, Subtitulo } from '../../Components/Fontes.jsx';
+import { FaCheck } from 'react-icons/fa';
 import '../Styles/CadastroPacote.css';
 
 export function CadastroPacote() {
@@ -56,7 +56,7 @@ export function CadastroPacote() {
 
     return (
         <div className="content pacote">
-            <Header alinhamento="flex-start" icone={<FaHouse size={28}/>} texto="Retornar ao Menu"/>
+            <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Retornar ao Menu"/>
             
             <div className="formulario">
                 <Titulo texto="Cadastro de Pacotes" />

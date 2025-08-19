@@ -5,13 +5,17 @@ import { CadastroFuncForm } from "./Pages/Cadastro/CadastroFuncForm.jsx";
 import { RecuperacaoForm } from "./Pages/RecuperacaoSenha/RecuperacaoForm.jsx";
 import { EdicaoUsuarioForm } from "./Pages/Edicao Usuario/EdicaoUsuarioForm.jsx";
 import { Home } from "./Pages/Home/Home.jsx";
-import { CadastroPacote } from "./Pages/Cadastro Pacote/CadastroPacote.jsx";
+import { CadastroPacote } from "./Pages/Cadastro/CadastroPacote.jsx";
 import { Calendario } from "./Pages/Login/Calendario.jsx";
 import { Menu } from "./Pages/Menu/MenuFunc.jsx";
 import { DefinirSessoes } from './Pages/Cadastro Pacote/DefinirSessoes.jsx';
 import { PacotesCadastrados } from './Pages/Cadastro Pacote/PacotesCadastrados.jsx';
 
 export const routes = createBrowserRouter([
+  {
+    path: "/*",
+    element: <div style={{color:"#282828"}}>Página não encontrada</div>
+  },
   { path: "/Login", 
     element: <LoginForm />, 
     errorElement: <div>Erro ao carregar a página</div> },
@@ -34,7 +38,7 @@ export const routes = createBrowserRouter([
     element: <Home />,
     errorElement: <div>Erro ao carregar a página</div> },
     {
-    path: "/CadastroPacote",
+    path: "/Cadastro/Pacote",
     element: <CadastroPacote />,
     errorElement: <div>Erro ao carregar a página</div>
     },

@@ -1,3 +1,8 @@
+body {
+  background-color: #f8f8f8;
+  display: flex;
+}
+
 .navbarMenu {
   position: fixed;
   top: 0;
@@ -10,7 +15,6 @@
   color: rgb(0, 0, 0);
   background-color: #90FCF9; 
   font-weight: bold;
-  padding: 0 10px;
 }
 
 .botoesMenu {
