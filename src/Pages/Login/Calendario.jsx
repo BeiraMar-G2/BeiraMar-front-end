@@ -3,9 +3,14 @@ import { useState } from "react";
 import "../Styles/calendario.css";
 import 'react-calendar/dist/Calendar.css';
 import api from "../../provider/api";
+import { useEffect } from "react";
+import { Header } from "../../Components/Header";
+import { FaHouse } from "react-icons/fa6";
+import { Titulo, Subtitulo } from "../../Components/Fontes";
 
 export function Calendario() {
     const [mesAtual, setMesAtual] = useState(null);
+    const [diasAgendados, setDiasAgendados] = useState([]);
 
     function buscarInformacoes() {
         fetch("https://689ce666ce755fe697876044.mockapi.io/api/pessoas")
@@ -15,7 +20,14 @@ export function Calendario() {
 
     function buscarAgendamentos() {
         api.get("/agendamentos")
-        .then((response) => console.log(response.data))
+        .then((response) => {
+            const agendamentos = response.data.map(dataAgendamento =>
+            dataAgendamento.dtHora.split("T")[0]
+        );
+        setDiasAgendados(agendamentos);
+        console.log("Array novo:", agendamentos);
+        }
+        )
     }
 
     function salvarInformacoes() {
@@ -39,9 +51,18 @@ export function Calendario() {
         }).then((response)=>console.log(response.data))
     }
 
+    useEffect(() => {
+    buscarAgendamentos();
+    }, []);
+
     return (
-        <div onLoad={buscarAgendamentos} className="calendario">
-            <h1>Calendário</h1>
+        <div className="agendamento-container">
+            <Header alinhamento="flex-start" icone={<FaHouse size={28}/>} texto="Retornar ao Menu"/>
+
+            <Subtitulo texto="Selecione o dia para vizualizar mais detalhes:" />
+
+            <Titulo texto="Agendamentos"/>
+            
             <Calendar 
             onActiveStartDateChange={({ activeStartDate, view }) => {
                   if (view === "month") {
@@ -51,17 +72,17 @@ export function Calendario() {
                   }
             }}
             tileClassName={({ date, view }) => {
-                if (view === "month" && date.toDateString() === "1") { // Verifica se a data é igual ao valor retornado dos agendamentos MUDAR DIAESPECIAL POR DATA DO BANCO
-                  return "dia-agendado";
-                } else if (view === "month" && date.getMonth() === mesAtual) { // Verifica se é domingo
-                  return "dia-vago";
+                if (view === "month") {
+                    const dataFormatada = date.toISOString().split("T")[0]; // "YYYY-MM-DD"
+
+                    if (diasAgendados.includes(dataFormatada)) {
+                        return "dia-agendado";
+                    } else if (date.getMonth() === mesAtual) {
+                        return "dia-vago";
+                    }
                 }
             }}
             className={"calendario"}/>
-
-
-            <button onClick={buscarInformacoesAxios}>EXIBIR</button>
-            <button onClick={salvarInformacoes}>SALVAR</button>
         </div>
     );
 }

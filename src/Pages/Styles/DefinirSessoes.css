@@ -39,11 +39,8 @@
 .servicos-box {
   display: flex;
   flex-direction: column;
-  gap: 16px;
   width: 80%;
   max-width: 400px;
-  padding: 24px;
-  background-color: #e6e6e6;
   border-radius: 10px;
   text-align: center;
 }

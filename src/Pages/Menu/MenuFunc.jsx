@@ -1,28 +1,55 @@
 // Menu.jsx
 import "../Styles/Botao.css"
-import "../Styles/Menu.css"
+import "../Styles/Header.css"
 import { BotaoMenu } from "../../Components/Botao"
+import { Header } from "../../Components/Header"
+import { Titulo } from "../../Components/Fontes"
+import { FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export function Menu() {
+  const navigate = useNavigate();
+
+    const direcionarAgendamentos = () => {
+      navigate("/Agendamentos"); 
+    };
+
+    const direcionarHistAgendamentos = () => {
+      navigate("/HistoricoAgendamentos"); 
+    };
+    
+    const direcionarServPacotes = () => {
+      navigate("/ServicosPacotes"); 
+    };
+    
+    const direcionarCadAtendente = () => {
+      navigate("/Cadastro/Funcionario"); 
+    };
+
+    const direcionarDisponibilidade = () => {
+      navigate("/Disponibilidade"); 
+    };
+
+    const direcionarDashboards = () => {
+      navigate("/Dashboards"); 
+    };
+
   return (
     <div className="containerMenu">
-       <div className="navbarMenu">
-        <span className="iconeUsuario">👤</span>
-        <span className="textoUsuario">Olá, Ana!</span>
-      </div>
-      <b className="tituloMenu">Boas Vindas ao Menu!</b>
+      <Header texto="Olá, Ana!" alinhamento="center" icone={<FaUser size={28}/>}/>
+      <Titulo texto="Boas Vindas ao Menu!"/>
 
-      <div className="botoesMenu1">
-        <BotaoMenu texto="Agendamentos" imagem="/Assets/calendario.png"/>
-        <BotaoMenu texto="Histórico de Agendamentos" imagem="/Assets/historico.png"/>
+      <div className="botoesMenu">
+        <BotaoMenu onClick={direcionarAgendamentos} texto="Agendamentos" imagem="/Assets/calendario.png"/>
+        <BotaoMenu onClick={direcionarHistAgendamentos} texto="Histórico de Agendamentos" imagem="/Assets/historico.png"/>
       </div>
-      <div className="botoesMenu1">
-        <BotaoMenu texto="Serviços e Pacotes" imagem="/Assets/servicos.png"/>
-        <BotaoMenu texto="Cadastro de Atendentes" imagem="/Assets/cadastro.png"/>
+      <div className="botoesMenu">
+        <BotaoMenu onClick={direcionarServPacotes} texto="Serviços e Pacotes" imagem="/Assets/servicos.png"/>
+        <BotaoMenu onClick={direcionarCadAtendente} texto="Cadastro de Atendentes" imagem="/Assets/cadastro.png"/>
       </div>
-      <div className="botoesMenu1">
-        <BotaoMenu texto="Disponibilidade" imagem="/Assets/disponibilidade.png"/>
-        <BotaoMenu texto="Dashboards" imagem="/Assets/dashboards.png"/>
+      <div className="botoesMenu">
+        <BotaoMenu onClick={direcionarDisponibilidade} texto="Disponibilidade" imagem="/Assets/disponibilidade.png"/>
+        <BotaoMenu onClick={direcionarDashboards} texto="Dashboards" imagem="/Assets/dashboards.png"/>
       </div>
     </div>
   )

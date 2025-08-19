@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Botao } from '../../Components/Botao.jsx';
-import { Input } from '../../Components/Input.jsx';
-import { Titulo, Label } from '../../Components/Fontes.jsx';
+import { InputPesquisa } from '../../Components/Input.jsx';
+import { Header } from '../../Components/Header.jsx';
+import { FaHouse } from "react-icons/fa6";
+import { Titulo, Label, Subtitulo } from '../../Components/Fontes.jsx';
 import { FaHome, FaCheck } from 'react-icons/fa';
 import '../Styles/CadastroPacote.css';
 
@@ -11,7 +13,7 @@ export function CadastroPacote() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        nomePacote: '',
+        nomeServico: '',
         sobrancelha: false,
         massagem: false,
         drenagem: false,
@@ -26,7 +28,7 @@ export function CadastroPacote() {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
 
-        if (name === 'nomePacote') {
+        if (name === 'nomeServico') {
             setFiltro(value.toLowerCase());
         }
     };
@@ -54,28 +56,24 @@ export function CadastroPacote() {
 
     return (
         <div className="content pacote">
-            <div className="navbar">
-                <FaHome size={20} color="#000" />
-                <span className="navbar-text">Menu</span>
-            </div>
-
+            <Header alinhamento="flex-start" icone={<FaHouse size={28}/>} texto="Retornar ao Menu"/>
+            
             <div className="formulario">
                 <Titulo texto="Cadastro de Pacotes" />
-                <Label texto="Serviços do Pacote" />
+                <Subtitulo texto="Serviços do Pacote" />
 
                 <div className="servicos-box">
-                    <Label texto="Serviços Incluídos" tamanho="18px" />
+                    
+                    <Subtitulo texto="Serviços Incluídos" tamanho="18px" />
 
-                    <div className="conjuntoInput">
-                        <Input
-                            name="nomePacote"
-                            type="text"
-                            placeholder="Digite o nome do pacote"
-                            value={formData.nomePacote}
-                            onChange={handleChange}
-                            className="input-pacote"
-                        />
-                    </div>
+                    <InputPesquisa
+                        name="nomeServico"
+                        type="text"
+                        placeholder="Digite o nome do serviço"    
+                        value={formData.nomePacote}
+                        onChange={handleChange}
+                        className="input-pacote"
+                    />
 
                     <div className="lista-servicos">
                         {servicosFiltrados.map(({ id, label }) => (

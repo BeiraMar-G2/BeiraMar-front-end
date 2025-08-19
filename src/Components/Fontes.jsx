@@ -4,6 +4,12 @@ export function Titulo(props) {
 )
 }
 
+export function Subtitulo(props) {
+    return(
+    <span className="subtitulo">{props.texto}</span>
+)
+}
+
 export function Label(props) {
     return(
     <label className="label">{props.texto}</label>

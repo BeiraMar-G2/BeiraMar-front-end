@@ -1,7 +1,13 @@
 .titulo{
     color: #282828;
     font-weight: 600;
-    font-size: 28px;
+    font-size: 32px;
+}
+
+.subtitulo{
+    color: #282828;
+    font-weight: 450;
+    font-size: 18px;
 }
 
 .label {

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Menu from "./Menu";
-import PacoteCard from "./PacoteCard";
+//import { Input } from "@/components/ui/input";
+import { Input } from "../../Components/Input";
+//import { Button } from "@/components/ui/button";
+import { Header } from "../../Components/Header";
+import PacoteCard from "../../Components/PacoteCard";
 
-export default function PacotesCadastrados() {
+export function PacotesCadastrados() {
   const [search, setSearch] = useState("");
 
   const pacotes = [
@@ -20,7 +21,7 @@ export default function PacotesCadastrados() {
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-50 p-4">
       {/* Header / Menu */}
-      <Menu />
+      <Header />
 
       <h2 className="text-lg font-semibold mb-2">Pacotes Cadastrados</h2>
 
@@ -32,9 +33,6 @@ export default function PacotesCadastrados() {
       {/* Pesquisa */}
       <Input
         placeholder="Pesquisar serviços..."
-        className="w-64 mb-4"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
       />
 
       {/* Lista de Pacotes */}
@@ -45,7 +43,7 @@ export default function PacotesCadastrados() {
       </div>
 
       {/* Botão Voltar */}
-      <Button className="mt-4 w-32">Voltar</Button>
+      
     </div>
   );
 }

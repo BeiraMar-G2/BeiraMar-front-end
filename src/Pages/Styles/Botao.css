@@ -1,9 +1,35 @@
+.botao{
+  width: 245px;
+  height: 35px;
+  box-shadow: 3px 3px 5px rgb(160, 160, 160);
+  background-color: #f8c7ccbb;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  border-radius: 10px;
+}
+
+.botao:hover .textoBotao{
+  font-weight: 700;
+}
+
+.botao .textoBotao{
+  height: 100%;
+  width: 100%;
+  color: #282828;
+  font-size: 16px;
+  border-radius: 10px;
+  font-weight: 500;
+  background-color: #f8c7ccbb;
+  border: 0px solid transparent;
+  cursor: pointer;
+}
 
 .iconeBotao {
   width: 40px;
   height: 40px;
   margin-top: 10px;
 }
+
 .botaoMenu {
   width: 130px;
   height: 120px;
