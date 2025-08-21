@@ -8,6 +8,17 @@
     gap: 10%;
 }
 
+.calendario-wrapper{
+    width: 85%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e7e7e7;
+    padding: 5px 0;
+    border-radius: 5px;
+}
+
 .calendario {
     display: flex;
     flex-direction: column;
@@ -19,9 +30,10 @@
     border: 0 !important;
     border-radius: 8px;
     width: 95% !important;
+    margin: 20px 0 10px 0;
 }
 
-.reacr-calendar {
+.react-calendar {
     line-height: 1.em !important;
 }
 
@@ -44,7 +56,8 @@
 }
 
 .react-calendar__tile--now {
-    background-color: #4effac !important;
+    background-color: #90fcf880 !important;
+    border: 2px solid #1ef590 !important;
 }
 
 .react-calendar__navigation__arrow {
@@ -59,11 +72,51 @@
 }
 
 .dia-agendado {
-    background-color: #FF4747 !important;
+    background-color: #ff4747d5 !important;
     color: #282828 !important;
 }
 
 .dia-vago {
-    background-color: #90FCF9 !important;
+    background-color: #90fcf880 !important;
     color: #282828 !important;
+}
+
+.legenda-agendamentos{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 10px;
+}
+
+.legenda-agendamentos span{
+    font-size: 14px !important;
+}
+
+.legenda-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.legenda {
+    width: 20px;
+    height: 20px;
+}
+
+.vermelho{
+    background-color: #ff4747d5;
+    color: #ff4747d5;
+}
+
+.azul {
+    background-color: #90fcf880;
+    color: #90fcf880;
+}
+
+.detalhes-dia {
+    width: 85%;
+    margin-top: 20px;
+    align-self: flex-start;
 }

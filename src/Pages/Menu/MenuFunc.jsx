@@ -11,7 +11,7 @@ export function Menu() {
   const navigate = useNavigate();
 
     const direcionarAgendamentos = () => {
-      navigate("/Agendamentos"); 
+      navigate("/Agendamentos/Visualizacao"); 
     };
 
     const direcionarHistAgendamentos = () => {
@@ -28,7 +28,7 @@ export function Menu() {
     };
 
     const direcionarDisponibilidade = () => {
-      navigate("/Disponibilidade"); 
+      navigate("/Indisponibilidade/Dia"); 
     };
 
     const direcionarDashboards = () => {

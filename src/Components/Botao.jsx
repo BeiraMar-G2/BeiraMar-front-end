@@ -11,8 +11,8 @@ export function BotaoMenu(props) {
 
 export function Botao(props) {
   return (
-    <div className="botao">
-      <button className="textoBotao">{props.texto}</button>
+    <div onClick={(e) => props.onClick(e.target.value)} className="botao">
+      <button style={{backgroundColor: props.cor}} className="textoBotao">{props.texto}</button>
     </div>
   )
 }
