@@ -1,0 +1,41 @@
+.card {
+    background-color: #F8C7CC;
+    color: #282828;
+    margin: 20px 0;
+    width: 80%;
+    box-shadow: #CE2D4F 5px 5px 0;
+    border-radius: 9px;
+    padding: 10px 15px;
+    justify-self: center;
+}
+
+.card-section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.conteudo-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.conteudo-card span {
+    font-style: italic !important;
+}
+
+.card-modificacoes {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.card-modificacoes button {
+    background-color: transparent;
+    border: none;
+    color: #282828;
+    width: 35px;
+    height: 35px;
+}

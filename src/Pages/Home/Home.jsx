@@ -4,14 +4,14 @@ import { FaInstagram } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { TituloHome,SubtituloHome,ConteudoHome } from "../../Components/Fontes"
-import '../Styles/Botao.css';
-import '../Styles/Home.css';
 import antesImg1 from "/Assets/Antes img1.png";
 import antesImg2 from "/Assets/Antes img2.png";
 import antesImg3 from "/Assets/Antes img3.png";
 import depoisImg1 from "/Assets/Depois img1.png";
 import depoisImg2 from "/Assets/Depois img2.png";
 import depoisImg3 from "/Assets/Depois img3.png";
+import '../Styles/Botao.css';
+import '../Styles/Home.css';
 
 export function Home() {
 const imagesA = [antesImg1, antesImg2, antesImg3];

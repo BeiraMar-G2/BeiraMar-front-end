@@ -1,9 +1,7 @@
 import { useState } from "react";
-//import { Input } from "@/components/ui/input";
 import { Input } from "../../Components/Input";
-//import { Button } from "@/components/ui/button";
 import { Header } from "../../Components/Header";
-import PacoteCard from "../../Components/PacoteCard";
+import { PacoteCard } from "../../Components/PacoteCard";
 
 export function PacotesCadastrados() {
   const [search, setSearch] = useState("");

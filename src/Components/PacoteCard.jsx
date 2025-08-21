@@ -1,20 +1,31 @@
-export default function PacoteCard({ nome, duracao, preco }) {
+import { Subtitulo } from "../Components/Fontes";
+import { MdEdit } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
+import { LuNotebookPen } from "react-icons/lu";
+import "../Pages/Styles/Card.css";
+
+export function PacoteCard({ nome, duracao, preco }) {
   return (
-    <div className="bg-red-200 shadow-md rounded-xl p-3 flex justify-between items-center">
-      <div>
-        <p className="font-medium text-sm">{nome}</p>
-        <p className="text-sm text-gray-600">Duração: {duracao}</p>
-        <p className="text-sm text-gray-700 font-semibold">R$ {preco},00</p>
+    <div className="card">
+          <Subtitulo texto={nome}/>
+      <div className="card-section">
+
+        <div className="conteudo-card">
+          <span className="text-sm text-gray-600">Duração: {duracao}</span>
+          <span className="text-sm text-gray-700 font-semibold">R$ {preco},00</span>
+        </div>
+
+        <div className="card-modificacoes">
+          <button className="p-2 rounded-full hover:bg-red-300 transition">
+            <LuNotebookPen size={"100%"} />
+          </button>
+          <button className="p-2 rounded-full hover:bg-red-300 transition">
+            <FaTrashAlt size={"100%"}/>
+          </button>
+        </div>
       </div>
 
-      <div className="flex gap-2">
-        <button className="p-2 rounded-full hover:bg-red-300 transition">
-          ✏️
-        </button>
-        <button className="p-2 rounded-full hover:bg-red-300 transition">
-          🗑️
-        </button>
-      </div>
+
     </div>
   );
 }
