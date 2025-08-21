@@ -6,7 +6,7 @@ import { FaKey, FaPhone, FaUser } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import api from '../../provider/api.js';
+import api from '../../Provider/api.js';
 import '../Styles/Form.css'
 import '../Styles/Input.css'
 import '../Styles/Fontes.css'

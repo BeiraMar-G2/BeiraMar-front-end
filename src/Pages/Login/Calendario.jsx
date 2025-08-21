@@ -2,7 +2,7 @@ import Calendar from "react-calendar";
 import { useState } from "react";
 import "../Styles/calendario.css";
 import 'react-calendar/dist/Calendar.css';
-import api from "../../provider/api";
+import api from "../../Provider/api";
 import { useEffect } from "react";
 import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";

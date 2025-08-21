@@ -23,6 +23,7 @@ export function Menu() {
     };
     
     const direcionarCadAtendente = () => {
+      console.log("Clicou em Cadastro de Atendentes");
       navigate("/Cadastro/Funcionario"); 
     };
 
