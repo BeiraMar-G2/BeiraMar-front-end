@@ -87,6 +87,7 @@ export function InputPesquisa(props) {
             style={{ fontStyle: "italic" }}
             type="text"
             placeholder={props.placeholder}
+            onChange={(e) => props.onChange(e)}
         />
     );
 }

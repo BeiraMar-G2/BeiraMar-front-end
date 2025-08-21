@@ -6,12 +6,14 @@ import { Header } from '../../Components/Header.jsx';
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from '../../Components/Fontes.jsx';
 import { FaCheck } from 'react-icons/fa';
+import { useEffect } from "react";
 import '../Styles/CadastroPacote.css';
+import api from '../../Provider/api.js'; 
 
 export function CadastroPacote() {
-
+    
     const navigate = useNavigate();
-
+    const [filtro, setFiltro] = useState('');
     const [formData, setFormData] = useState({
         nomeServico: '',
         sobrancelha: false,
@@ -19,40 +21,51 @@ export function CadastroPacote() {
         drenagem: false,
         limpeza: false,
     });
+    const [servicos, setServicos] = useState([
+        {id: 'sobrancelha', nome: 'Sobrancelha'},
+    ]);
 
-    const [filtro, setFiltro] = useState('');
+    function buscarServico() {
+        api.get("/servicos")
+            .then((response) => {
+                console.log("Serviços disponíveis:", response.data);
+                setServicos(response.data.map(servico => ({
+                    id: servico.idServico,
+                    nome: servico.nome
+                })));
+                console.log("Serviços atualizados:", servicos);
+            })
+            .catch((error) => {
+                console.error("Erro ao buscar serviços:", error);
+            });
+    }
+
+
 
     const handleChange = (e) => {
-        if (!e || !e.target) return;
+        const {value } = e.target;
 
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-
-        if (name === 'nomeServico') {
-            setFiltro(value.toLowerCase());
-        }
+        setFormData(prev => ({ ...prev, nomeServico: value }));
+        setFiltro(value);
     };
 
     const handleCardClick = (servico) => {
         setFormData(prev => ({ ...prev, [servico]: !prev[servico] }));
     };
 
-    const servicos = [
-        { id: 'sobrancelha', label: 'Design de Sobrancelha' },
-        { id: 'massagem', label: 'Massagem Modeladora' },
-        { id: 'drenagem', label: 'Drenagem' },
-        { id: 'limpeza', label: 'Limpeza de Pele' },
-    ];
-
-    const servicosFiltrados = servicos.filter(({ label }) =>
-        label.toLowerCase().includes(filtro)
+    const servicosFiltrados = servicos.filter(({ nome }) =>
+        nome.toLowerCase().includes(filtro.toLowerCase())
     );
 
-    const destacarTexto = (label) => {
-        if (!filtro) return label;
+    const destacarTexto = (nome) => {
+        if (!filtro) return nome;
         const regex = new RegExp(`(${filtro})`, 'gi');
-        return label.replace(regex, '<mark>$1</mark>');
+        return nome.replace(regex, '<mark>$1</mark>');
     };
+
+    useEffect(() => {
+        buscarServico();
+        }, []);
 
     return (
         <div className="content pacote">
@@ -70,19 +83,19 @@ export function CadastroPacote() {
                         name="nomeServico"
                         type="text"
                         placeholder="Digite o nome do serviço"    
-                        value={formData.nomePacote}
+                        value={formData.nomeServico}
                         onChange={handleChange}
                         className="input-pacote"
                     />
 
                     <div className="lista-servicos">
-                        {servicosFiltrados.map(({ id, label }) => (
+                        {servicosFiltrados.map(({ id, nome }) => (
                             <div
                                 key={id}
                                 className={`card-servico ${formData[id] ? 'selecionado' : ''}`}
                                 onClick={() => handleCardClick(id)}
                             >
-                                <span dangerouslySetInnerHTML={{ __html: destacarTexto(label) }} />
+                                <span dangerouslySetInnerHTML={{ __html: destacarTexto(nome) }} />
                                 {formData[id] && <FaCheck className="check-icon" />}
                             </div>
                         ))}

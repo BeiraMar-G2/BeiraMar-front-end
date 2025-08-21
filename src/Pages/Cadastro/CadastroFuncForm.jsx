@@ -6,7 +6,7 @@ import { FaKey, FaPhone, FaUser } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import api from '../../provider/api.js';
+import api from '../../Provider/api.js';
 import '../Styles/Form.css'
 import '../Styles/Input.css'
 import '../Styles/Fontes.css'
@@ -41,7 +41,7 @@ export function CadastroFuncForm(){
   
     return (
     <div className='content atendente'>
-    <div onClick={() => navigate("/Login")} className='voltar-wrapper'>
+    <div onClick={() => navigate("/Menu")} className='voltar-wrapper'>
       <FaArrowLeft size={28} color="#000" className='voltar'/>
     </div>
       <div className='formulariocentrado'>
@@ -71,7 +71,7 @@ export function CadastroFuncForm(){
         </div>
         </div>
         <div onClick={cadastrarUsuario}>
-          <Botao texto="Cadastrar"/>
+          <Botao cor="#f8c7ccbb" texto="Cadastrar"/>
         </div>
       </div>
     </div>

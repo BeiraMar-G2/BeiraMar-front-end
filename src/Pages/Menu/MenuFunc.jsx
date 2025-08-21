@@ -11,7 +11,7 @@ export function Menu() {
   const navigate = useNavigate();
 
     const direcionarAgendamentos = () => {
-      navigate("/Agendamentos"); 
+      navigate("/Agendamentos/Visualizacao"); 
     };
 
     const direcionarHistAgendamentos = () => {
@@ -23,11 +23,12 @@ export function Menu() {
     };
     
     const direcionarCadAtendente = () => {
+      console.log("Clicou em Cadastro de Atendentes");
       navigate("/Cadastro/Funcionario"); 
     };
 
     const direcionarDisponibilidade = () => {
-      navigate("/Disponibilidade"); 
+      navigate("/Indisponibilidade/Dia"); 
     };
 
     const direcionarDashboards = () => {

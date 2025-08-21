@@ -7,7 +7,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import api from '../../provider/api';
+import api from '../../Provider/api';
 import '../Styles/Form.css'
 import '../Styles/Input.css'
 import '../Styles/Fontes.css'
