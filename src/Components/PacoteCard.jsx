@@ -11,7 +11,6 @@ export function PacoteCard({ nome, duracao, preco }) {
       <div className="card-section">
 
         <div className="conteudo-card">
-          <span className="text-sm text-gray-600">Duração: {duracao}</span>
           <span className="text-sm text-gray-700 font-semibold">R$ {preco},00</span>
         </div>
 

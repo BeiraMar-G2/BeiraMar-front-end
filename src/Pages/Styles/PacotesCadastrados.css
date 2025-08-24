@@ -31,6 +31,14 @@
   margin-bottom: 12px;
   color: #222;
 }
+h2 .titulo-tela{
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: black;
+  text-align: center;
+
+}
 
 /* Dropdown */
 select {
@@ -44,7 +52,7 @@ select {
 }
 
 /* Input de pesquisa */
-input[type="text"], input[type="search"] {
+input-pesquisa {
   width: 90%;
   border: 1px solid #b2dfdb;
   border-radius: 8px;
@@ -66,49 +74,6 @@ input[type="text"], input[type="search"] {
 }
 .max-h-96 {
   max-height: 320px;
-}
-
-/* Card do pacote */
-.pacote-card {
-  background: #ffb6b6;
-  border-radius: 10px;
-  padding: 14px 16px;
-  box-shadow: 0 1px 4px #0002;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  position: relative;
-}
-
-.pacote-card h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #222;
-  margin-bottom: 2px;
-}
-
-.pacote-card .preco {
-  color: #b85c5c;
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 0;
-}
-
-.pacote-card .icones {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  display: flex;
-  gap: 10px;
-}
-
-.pacote-card .icones svg {
-  cursor: pointer;
-  color: #222;
-  transition: color 0.2s;
-}
-.pacote-card .icones svg:hover {
-  color: #b85c5c;
 }
 
 /* Botão Voltar */

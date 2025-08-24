@@ -3,6 +3,7 @@ import { Input } from "../../Components/Input";
 import { Header } from "../../Components/Header";
 import { PacoteCard } from "../../Components/PacoteCard";
 import { FaHouse } from "react-icons/fa6";
+import "../../Pages/Styles/PacotesCadastrados.css";
 
 export function PacotesCadastrados() {
   const [search, setSearch] = useState("");
@@ -11,19 +12,16 @@ export function PacotesCadastrados() {
     {
       id: 1,
       nome: "3 Massagens Modeladoras + 2 Drenagens Linfáticas",
-      duracao: "1h30",
       preco: 470,
     },
     {
       id: 2,
       nome: "3 Hidrolipo NA + 3 Detox Corporal",
-      duracao: "2h",
       preco: 630,
     },
     {
       id: 3,
       nome: "3 Aplicações de Enzimas + 2 Drenagens Linfáticas",
-      duracao: "2h15",
       preco: 840,
     },
   ];
@@ -41,15 +39,15 @@ export function PacotesCadastrados() {
         texto="Retornar ao Menu"
       />
 
-      <h2 className="text-lg font-semibold mb-2">Pacotes Cadastrados</h2>
+      <h2 className="titulo-tela">Pacotes Cadastrados</h2>
 
-      {/* Dropdown */}
       <select className="w-64 border rounded-lg p-2 mb-2">
         <option>Pacotes</option>
+        <option>Serviços</option>
       </select>
 
       {/* Pesquisa */}
-      <Input
+      <Input className="input-pesquisa"
         placeholder="Pesquisar serviços..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -61,7 +59,6 @@ export function PacotesCadastrados() {
           <PacoteCard
             key={p.id}
             nome={p.nome}
-            duracao={p.duracao}
             preco={p.preco}
           />
         ))}
