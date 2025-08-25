@@ -6,59 +6,51 @@ import { RecuperacaoForm } from "./Pages/RecuperacaoSenha/RecuperacaoForm.jsx";
 import { EdicaoUsuarioForm } from "./Pages/Edicao Usuario/EdicaoUsuarioForm.jsx";
 import { Home } from "./Pages/Home/Home.jsx";
 import { CadastroPacote } from "./Pages/Cadastro/CadastroPacote.jsx";
-import { VisualizacaoAgendAtend } from "./Pages/Agendamentos/VisualizacaoAgendAtend.jsx";
+import { Calendario } from "./Pages/Login/Calendario.jsx";
 import { Menu } from "./Pages/Menu/MenuFunc.jsx";
 import { DefinirSessoes } from './Pages/Cadastro Pacote/DefinirSessoes.jsx';
 import { PacotesCadastrados } from './Pages/Cadastro Pacote/PacotesCadastrados.jsx';
-import { IndisponibilidadeDia } from "./Pages/Indisponibilidade/IndisponibilidadeDia.jsx";
-
+import { ServicosPacotes } from "./Pages/Menu/ServicosPacotes.jsx";
+import {RecuperacaoCodigo} from "./Pages/RecuperacaoSenha/RecuperacaoCodigo.jsx";
 export const routes = createBrowserRouter([
+  {
+    path: "/*",
+    element: <div style={{color:"#282828"}}>Página não encontrada</div>
+  },
+  { path: "/Login", 
+    element: <LoginForm />, 
+    errorElement: <div>Erro ao carregar a página</div> },
+  { path: "/Cadastro",
+    element: <CadastroForm />,
+    errorElement: <div>Erro ao carregar a página</div> },
+  { path: "/RecuperacaoSenha",
+    element: <RecuperacaoForm />,
+    errorElement: <div>Erro ao carregar a página</div> },
+    { path: "/Cadastro/Funcionario",
+    element: <CadastroFuncForm />,
+    errorElement: <div>Erro ao carregar a página</div> },
+    { path: "/EdicaoUsuario",
+    element: <EdicaoUsuarioForm />,
+    errorElement: <div>Erro ao carregar a página</div> },
+    { path: "/Calendario",
+    element: <Calendario />,
+    errorElement: <div>Erro ao carregar a página</div> },
+    { path: "/",
+    element: <Home />,
+    errorElement: <div>Erro ao carregar a página</div> },
     {
-      path: "/*",
-      element: <div style={{color:"#282828"}}>Página não encontrada</div>
+    path: "/Cadastro/Pacote",
+    element: <CadastroPacote />,
+    errorElement: <div>Erro ao carregar a página</div>
     },
-    { 
-      path: "/Login", 
-      element: <LoginForm />, 
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Cadastro",
-      element: <CadastroForm />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/RecuperacaoSenha",
-      element: <RecuperacaoForm />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Cadastro/Funcionario",
-      element: <CadastroFuncForm />,
-      errorElement: <div>Erro ao carregar a página</div> },
-    { 
-      path: "/EdicaoUsuario",
-      element: <EdicaoUsuarioForm />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Agendamentos/Visualizacao",
-      element: <VisualizacaoAgendAtend />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/",
-      element: <Home />,
-      errorElement: <div>Erro ao carregar a página</div> },
-    {
-      path: "/Cadastro/Pacote",
-      element: <CadastroPacote />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    { 
-      path: "/Menu",
-      element: <Menu />,
-      errorElement: <div>Erro ao carregar a página</div> },
+    { path: "/Menu",
+    element: <Menu />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+    { path: "/ServicosPacotes",
+    element: <ServicosPacotes />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
     {
       path: "/DefinirSessoes",
       element: <DefinirSessoes />,
@@ -70,8 +62,8 @@ export const routes = createBrowserRouter([
       errorElement: <div>Erro ao carregar a página</div>
     },
     {
-      path: "/Indisponibilidade/Dia",
-      element: <IndisponibilidadeDia />,
+      path: "/RecuperacaoCodigo",
+      element: <RecuperacaoCodigo />,
       errorElement: <div>Erro ao carregar a página</div>
-    },
+    }
 ])

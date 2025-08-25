@@ -1,4 +1,3 @@
-// Menu.jsx
 import "../Styles/Botao.css"
 import "../Styles/Header.css"
 import { BotaoMenu } from "../../Components/Botao"
