@@ -4,7 +4,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { LuNotebookPen } from "react-icons/lu";
 import "../Pages/Styles/Card.css";
 
-export function PacoteCard({ nome, duracao, preco }) {
+export function PacoteCard({ nome, preco }) {
   return (
     <div className="card">
           <Subtitulo texto={nome}/>
