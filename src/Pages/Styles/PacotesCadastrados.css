@@ -1,7 +1,14 @@
 /* Fundo geral */
 .min-h-screen {
   background: #e6fcfb;
-  min-height: 100vh;
+}
+.content-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  padding: 20px 0;
+  height: fit-content;
 }
 
 /* Container principal */
@@ -22,6 +29,7 @@
   margin: 24px auto;
   width: 350px;
   min-height: 600px;
+  height: 70%;
 }
 
 /* Header */
@@ -104,4 +112,42 @@ button:hover, .botao-voltar:hover {
   .w-72 {
     width: 98vw;
   }
+}
+
+select {
+  color: #282828 !important;
+}
+
+
+.lista::-webkit-scrollbar {
+  width: 8px;
+  margin: 5px;
+}
+
+.lista::-webkit-scrollbar-track {
+  background: #bbbbbb;
+  border-radius: 5px;
+}
+
+.lista::-webkit-scrollbar-thumb {
+  background-color: #282828;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+.lista::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.botao-agendar {
+  width: 100%;
+  background-color: #90FCF9;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
 }

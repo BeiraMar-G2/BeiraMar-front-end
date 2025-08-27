@@ -10,7 +10,7 @@ export function Header(props) {
 
     return(
         <div onClick={handleLogout} className="header">
-            <div style={{ justifyContent: props.alinhamento, padding: props.padding }} className="navbarMenu">
+            <div style={{ backgroundColor: props.cor, justifyContent: props.alinhamento, padding: props.padding }} className="navbarMenu">
                 {props.icone}
                 <span className="textoUsuario">{props.texto}</span>
             </div>
