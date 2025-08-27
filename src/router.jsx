@@ -12,6 +12,8 @@ import { DefinirSessoes } from './Pages/Cadastro Pacote/DefinirSessoes.jsx';
 import { PacotesCadastrados } from './Pages/Cadastro Pacote/PacotesCadastrados.jsx';
 import { ServicosPacotes } from "./Pages/Menu/ServicosPacotes.jsx";
 import {RecuperacaoCodigo} from "./Pages/RecuperacaoSenha/RecuperacaoCodigo.jsx";
+import { ResumoPacote } from "./Pages/Cadastro Pacote/ResumoPacote.jsx";
+
 export const routes = createBrowserRouter([
   {
     path: "/*",
@@ -64,6 +66,11 @@ export const routes = createBrowserRouter([
     {
       path: "/RecuperacaoCodigo",
       element: <RecuperacaoCodigo />,
+      errorElement: <div>Erro ao carregar a página</div>
+    }, 
+    {
+      path: "/ResumoPacote",
+      element: <ResumoPacote />,
       errorElement: <div>Erro ao carregar a página</div>
     }
 ])
