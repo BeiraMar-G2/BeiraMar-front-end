@@ -6,7 +6,7 @@ import { RecuperacaoForm } from "./Pages/RecuperacaoSenha/RecuperacaoForm.jsx";
 import { EdicaoUsuarioForm } from "./Pages/Edicao Usuario/EdicaoUsuarioForm.jsx";
 import { Home } from "./Pages/Home/Home.jsx";
 import { CadastroPacote } from "./Pages/Cadastro/CadastroPacote.jsx";
-import { Calendario } from "./Pages/Login/Calendario.jsx";
+import { VisualizacaoAgendAtend } from "./Pages/Agendamentos/VisualizacaoAgendAtend.jsx";
 import { Menu } from "./Pages/Menu/MenuFunc.jsx";
 import { DefinirSessoes } from './Pages/Cadastro Pacote/DefinirSessoes.jsx';
 import { PacotesCadastrados } from './Pages/Cadastro Pacote/PacotesCadastrados.jsx';
@@ -32,8 +32,8 @@ export const routes = createBrowserRouter([
     { path: "/EdicaoUsuario",
     element: <EdicaoUsuarioForm />,
     errorElement: <div>Erro ao carregar a página</div> },
-    { path: "/Calendario",
-    element: <Calendario />,
+    { path: "/Agendamentos/Visualizar",
+    element: <VisualizacaoAgendAtend />,
     errorElement: <div>Erro ao carregar a página</div> },
     { path: "/",
     element: <Home />,
