@@ -76,8 +76,8 @@ export function DefinirSessoes() {
         </div>
 
         <div className="botoes">
-          <Botao texto="Voltar" cor="cinza" onClick={() => navigate("/CadastroPacote")} />
-          <Botao texto="Continuar" onClick={handleContinuar} />
+          <Botao texto="Voltar" cor="cinza" onClick={() => navigate("/Cadastro/Pacote")} />
+          <Botao texto="Continuar" onClick={() => navigate("/ResumoPacote")} />
         </div>
       </div>
     </div>
