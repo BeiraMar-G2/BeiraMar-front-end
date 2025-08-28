@@ -84,24 +84,6 @@ input-pesquisa {
   max-height: 320px;
 }
 
-/* Botão Voltar */
-button, .botao-voltar {
-  width: 90%;
-  margin-top: 18px;
-  background: #d9d9d9;
-  color: #222;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 0;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-button:hover, .botao-voltar:hover {
-  background: #b2dfdb;
-}
-
 /* Responsivo */
 @media (max-width: 400px) {
   .bg-gray-50 {
