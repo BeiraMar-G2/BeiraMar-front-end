@@ -27,9 +27,9 @@ export function PacoteCard({ nome, preco, duracao, tipo}) {
             </div>
         ) : (
             <div>
-                <button className="botao-agendar">
-                Agendar 
-                <FaRegCalendarPlus />
+                <button className="botao-agendamento" >
+                  Agendar
+                  <FaRegCalendarPlus style={{ marginLeft: 4 }} />
                 </button>
             </div>
         )}

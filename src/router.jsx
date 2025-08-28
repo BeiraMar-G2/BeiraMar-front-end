@@ -69,6 +69,11 @@ export const routes = createBrowserRouter([
       errorElement: <div>Erro ao carregar a página</div>
     },
     {
+      path: "/PacotesCadastradosCliente",
+      element: <PacotesCadastradosCliente />,
+      errorElement: <div>Erro ao carregar a página</div>
+    },
+    {
       path: "/RecuperacaoCodigo",
       element: <RecuperacaoCodigo />,
       errorElement: <div>Erro ao carregar a página</div>
