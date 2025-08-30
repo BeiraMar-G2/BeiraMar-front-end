@@ -5,7 +5,7 @@ import { Header } from "../../Components/Header"
 import { Titulo } from "../../Components/Fontes"
 import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { TbShoppingBagPlus } from "react-icons/tb";
+import { RiShoppingBag4Fill } from "react-icons/ri";
 export function ServicosPacotes() {
   return (
     <div className="containerMenu">
@@ -22,7 +22,7 @@ export function ServicosPacotes() {
 </h2>
 
       <div className="botoesMenu">
-        <BotaoMenu texto="Criar Serviço" imagem="/Assets/calendario.png"/>
+        <BotaoMenu texto="Criar Serviço" imagem={<RiShoppingBag4Fill size={24} />} />
         <BotaoMenu texto="Criar Pacote" imagem="/Assets/historico.png"/>
       </div>
       <div className="botoesMenu">
