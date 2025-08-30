@@ -13,6 +13,10 @@ import { PacotesCadastrados } from './Pages/Cadastro Pacote/PacotesCadastrados.j
 import { ServicosPacotes } from "./Pages/Menu/ServicosPacotes.jsx";
 import {RecuperacaoCodigo} from "./Pages/RecuperacaoSenha/RecuperacaoCodigo.jsx";
 import { HorarioAgendamento } from "./Pages/Agendamentos/HorarioAgendamento.jsx";
+import { VisualizacaoAgendAtendDia } from "./Pages/Agendamentos/VisualizacaoAgendAtendDia.jsx";
+import { ResumoPacote } from "./Pages/Cadastro Pacote/ResumoPacote.jsx";
+import { PacotesCadastradosCliente } from "./Pages/Cadastro Pacote/PacotesCadastradosCliente.jsx";
+
 export const routes = createBrowserRouter([
   {
     path: "/*",
@@ -35,6 +39,9 @@ export const routes = createBrowserRouter([
     errorElement: <div>Erro ao carregar a página</div> },
     { path: "/Agendamentos/Visualizar",
     element: <VisualizacaoAgendAtend />,
+    errorElement: <div>Erro ao carregar a página</div> },
+    { path: "/Agendamentos/VisualizarPorDia",
+    element: <VisualizacaoAgendAtendDia />,
     errorElement: <div>Erro ao carregar a página</div> },
     { path: "/",
     element: <Home />,
@@ -63,6 +70,11 @@ export const routes = createBrowserRouter([
       errorElement: <div>Erro ao carregar a página</div>
     },
     {
+      path: "/PacotesCadastradosCliente",
+      element: <PacotesCadastradosCliente />,
+      errorElement: <div>Erro ao carregar a página</div>
+    },
+    {
       path: "/RecuperacaoCodigo",
       element: <RecuperacaoCodigo />,
       errorElement: <div>Erro ao carregar a página</div>
@@ -70,6 +82,11 @@ export const routes = createBrowserRouter([
     {
       path: "/Agendamentos/Horario",
       element: <HorarioAgendamento />,
+
+    }, 
+    {
+      path: "/ResumoPacote",
+      element: <ResumoPacote />,
       errorElement: <div>Erro ao carregar a página</div>
     }
 ])

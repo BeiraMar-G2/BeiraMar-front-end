@@ -71,9 +71,9 @@ export function CadastroPacote() {
         <div className="content pacote">
             <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Retornar ao Menu"/>
             
-            <div className="formulario">
-                <Titulo texto="Cadastro de Pacotes" />
-                <Subtitulo texto="Serviços do Pacote" />
+            <div className="tela1">
+                <Titulo texto="Cadastro de Pacotes" className="titulo" />
+                <h3 className="titulo-servicos">Serviços do Pacote</h3>
 
                 <div className="servicos-box">
                     

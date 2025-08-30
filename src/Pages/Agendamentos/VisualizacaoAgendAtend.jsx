@@ -51,7 +51,7 @@ export function VisualizacaoAgendAtend() {
 
             <div className="calendario-wrapper">
 
-                <Subtitulo texto="Selecione o dia para vizualizar mais detalhes:" />
+                <Subtitulo texto="Selecione o dia para visualizar mais detalhes:" />
 
                 <Calendar 
                 onActiveStartDateChange={({ activeStartDate, view }) => {

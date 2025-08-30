@@ -19,6 +19,7 @@
 .conteudo-card {
     display: flex;
     flex-direction: column;
+    
     gap: 10px;
 }
 
@@ -38,4 +39,16 @@
     color: #282828;
     width: 35px;
     height: 35px;
+}
+
+.botao-agendamento{
+    background-color: #CE2D4F ;
+    border: none;
+    color: white;
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    display: "flex"; 
+    align-items: "center";
+     gap: "8px"
 }

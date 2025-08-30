@@ -8,7 +8,7 @@ import { Titulo } from "../../Components/Fontes";
 import { InputPesquisa } from "../../Components/Input";
 import { Botao } from "../../Components/Botao"; // Adicione esta linha
 
-export function PacotesCadastrados() {
+export function PacotesCadastradosCliente() {
   const [search, setSearch] = useState("");
   const [tipo, setTipo] = useState("Pacotes");
 
@@ -63,8 +63,8 @@ export function PacotesCadastrados() {
         alinhamento="flex-start"
         padding="0 10px"
         icone={<FaHouse size={28} />}
-        cor="#90FCF9"
-        texto="Retornar ao Menu"
+        cor="#CE2D4F"
+        texto="Menu"
       />
 
       <Titulo
@@ -95,14 +95,13 @@ export function PacotesCadastrados() {
         <div className="lista flex flex-col gap-3 w-72 overflow-y-auto max-h-96">
           {filtrados.map((item) =>
             tipo === "Pacotes" ? (
-              <PacoteCard key={item.id} nome={item.nome} preco={item.preco} tipo={"Func"} />
+              <PacoteCard key={item.id} nome={item.nome} preco={item.preco} />
             ) : (
               <PacoteCard
                 key={item.id}
                 nome={item.nome}
                 preco={item.preco}
                 duracao={item.duracao}
-                tipo="Func"
               />
             )
           )}
