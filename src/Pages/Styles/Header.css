@@ -12,9 +12,13 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: rgb(0, 0, 0);
+  color: white;
   background-color: #90FCF9; 
   font-weight: bold;
+}
+
+.navbarMenu * {
+  color: white !important;
 }
 
 .botoesMenu {
