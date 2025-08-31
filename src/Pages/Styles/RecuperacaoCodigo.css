@@ -1,0 +1,130 @@
+.recuperacao-codigo {
+    min-height: 100vh;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.header-voltar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #9efffc;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-right-radius: 15px;
+}
+
+
+
+.container-codigo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.titulo-recuperacao {
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.titulo-recuperacao h2 {
+    font-size: 50px;
+    font-weight: bold;
+    color: #000000;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.campos-codigo {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 60px;
+    justify-content: center;
+}
+
+.campo-codigo {
+    width: 50px;
+    height: 60px;
+    border: 1px solid #000000;
+    border-radius: 12px;
+    background-color: #f0f0f0;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #000000;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.campo-codigo:focus {
+    border-color: #000000;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(206, 45, 79, 0.3);
+}
+
+.campo-codigo:not(:placeholder-shown) {
+    background-color: #DAE4F2;
+    border-color: #ffffff;
+}
+
+.botao-entrar {
+    width: 100%;
+    max-width: 300px;
+}
+
+.botao-entrar .botao {
+    width: 100%;
+    height: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.botao-entrar .textoBotao {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+@media (max-width: 480px) {
+    .container-codigo {
+        padding: 50px;
+    }
+    
+    .campos-codigo {
+        gap: 8px;
+        margin-bottom: 50px;
+    }
+    
+    .campo-codigo {
+        width: 45px;
+        height: 55px;
+        font-size: 20px;
+    }
+    
+    .titulo-recuperacao {
+        margin-bottom: 70px;
+    }
+    
+    .titulo-recuperacao h2 {
+        font-size: 30px;
+    }
+    
+    .header-voltar {
+        top: 15px;
+        left: 15px;
+    }
+    
+    .icone-voltar {
+        font-size: 20px;
+    }
+}
