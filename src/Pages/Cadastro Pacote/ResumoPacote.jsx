@@ -10,14 +10,13 @@ export function ResumoPacote() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Mantém os dados anteriores (não exibimos aqui, mas levamos adiante)
+  // Mantém os dados anteriores
   const { servicosSelecionados = {}, quantidades = {} } = location.state || {};
 
   const [nomePacote, setNomePacote] = useState("");
   const [preco, setPreco] = useState("");
 
   const finalizar = () => {
-    // envie para API / próxima tela
     console.log({
       nomePacote,
       preco,
@@ -28,7 +27,7 @@ export function ResumoPacote() {
   };
 
   return (
-    <div className="content resumo-pacote">
+    <div className="resumo-container">
       <Header
         alinhamento="flex-start"
         padding="0 10px"
@@ -38,27 +37,33 @@ export function ResumoPacote() {
 
       <div className="formulario">
         <Titulo texto="Cadastro de Pacotes" />
-        <Subtitulo texto="Selecione o preço do pacote" />
+        <p class="subtitulo">Coloque o Nome e o Preço Desejado</p>
 
         <div className="resumo-box">
           <div className="campo-group">
-            <label className="campo-label">Nome do pacote</label>
+            <label className="campo-label">Nome do Pacote</label>
             <input
               type="text"
               className="campo"
-              placeholder="Digite o nome do pacote"
+              placeholder="Digite o nome do procedimento"
               value={nomePacote}
               onChange={(e) => setNomePacote(e.target.value)}
             />
           </div>
 
           <div className="campo-group">
-            <label className="campo-label">Preço do pacote</label>
+            <div className="campo-label-linha">
+              <label className="campo-label">Preço</label>
+              <span className="campo-descricao">
+                De acordo com os serviços selecionados o total seria R$ 500
+              </span>
+            </div>
+
             <input
               type="number"
               min="0"
               className="campo"
-              placeholder="Digite o preço do pacote"
+              placeholder="Digite o preço desejado"
               value={preco}
               onChange={(e) => setPreco(e.target.value)}
             />
@@ -68,12 +73,12 @@ export function ResumoPacote() {
         <div className="botoes">
           <Botao
             texto="Voltar"
+            cor="cinza"
             onClick={() =>
               navigate("/DefinirSessoes", { state: { servicosSelecionados } })
             }
-            style={{ backgroundColor: "#d3d3d3", color: "#000" }}
           />
-          <Botao texto="Finalizar" onClick={finalizar} />
+          <Botao texto="Finalizar" cor="rosa" onClick={finalizar} />
         </div>
       </div>
     </div>

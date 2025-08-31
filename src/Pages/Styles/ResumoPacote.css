@@ -22,7 +22,7 @@
   max-width: 420px;
   padding: 18px;
   margin-top: 12px;
-  background: #f5f5f5; /* cinza igual aos botões */
+  background: #e6e6e6; /* cinza igual aos botões */
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
   display: flex;
@@ -46,7 +46,7 @@
 
 /* Input */
 .campo {
-  width: 100%;
+  width: 80%;
   padding: 10px 12px;
   border: 1px solid #d6d6d6;
   border-radius: 6px;
@@ -73,4 +73,45 @@
   margin-top: 20px;
   width: 100%;
   max-width: 420px;
+}
+
+.campo-ajuda {
+  font-size: 12px;
+  color: #555;
+  margin-left: 2px;
+}
+
+/* Linha do label + descrição */
+.campo-label-linha {
+  display: flex;
+  align-items: flex-start; /* alinha pelo topo */
+  gap: 6px;
+  flex-wrap: wrap;        /* permite quebra de linha */
+  width: 100%;            /* ocupa toda a largura */
+}
+
+/* Label "Preço" */
+.campo-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  white-space: nowrap; /* mantém só o "Preço" em uma linha */
+}
+
+/* Texto ao lado do label */
+.campo-descricao {
+  font-size: 13px;
+  color: #555;
+  font-weight: 400;
+  flex: 1;                /* ocupa o espaço restante */
+  white-space: normal;    /* permite quebra de linha */
+  word-break: break-word; /* quebra caso ultrapasse */
+}
+
+.subtitulo {
+  text-align: center;   /* centraliza o texto */
+  font-weight: 600;     /* deixa em negrito */
+  font-size: 14px;      /* tamanho do texto */
+  color: #333;          /* cor parecida com o título */
+  margin-top: 6px;      /* espaço do título */
 }
