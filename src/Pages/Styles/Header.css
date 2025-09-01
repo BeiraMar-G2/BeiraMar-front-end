@@ -12,13 +12,8 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: white;
   background-color: #90FCF9; 
   font-weight: bold;
-}
-
-.navbarMenu * {
-  color: white !important;
 }
 
 .botoesMenu {
@@ -33,6 +28,5 @@ body {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  color: black;
 }
 

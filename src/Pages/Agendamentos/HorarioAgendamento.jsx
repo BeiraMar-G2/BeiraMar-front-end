@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Header } from '../../Components/Header';
 import { Botao } from '../../Components/Botao';
 import { useNavigate } from 'react-router-dom';
+import { FaHouse } from "react-icons/fa6";
 import "../Styles/HorarioAgendamento.css";
 
 export function HorarioAgendamento() {
@@ -27,11 +28,16 @@ export function HorarioAgendamento() {
 
     return (
         <div className="horario-agendamento">
-
         
-                <Header  
+            <Header  
                 texto="Menu" 
-                cor = "#CE2D4F" />
+                cor = "#CE2D4F"
+                alinhamento="flex-start" 
+                padding="0 10px" 
+                icone={<FaHouse size={28}/>} 
+                color="#f8f8f8"
+                isCliente={true}
+            />
             
             <div className="container-agendamento">
                 <div className="servico-info">
@@ -68,9 +74,9 @@ export function HorarioAgendamento() {
                         onClick={botaoVoltar}
                     />
                     <Botao 
-                        texto="Continuar"
-                        cor="#CE2D4F"
-                        onClick={botaoContinuar}
+                        texto="Continuar" 
+                        cor="#f8c7ccbb" 
+                        onClick={botaoContinuar} 
                     />
                 </div>
             </div>

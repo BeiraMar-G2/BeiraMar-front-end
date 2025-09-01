@@ -45,7 +45,7 @@ export function VisualizacaoAgendAtend() {
 
     return (
         <div className="agendamento-container">
-            <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Retornar ao Menu"/>
+            <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Menu" color="#282828"/>
 
             <Titulo texto="Agendamentos"/>
 

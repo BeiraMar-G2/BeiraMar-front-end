@@ -5,14 +5,18 @@ export function Header(props) {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-      navigate("/Menu"); 
+      if (props.isCliente) {
+        navigate("/MenuCliente");
+      } else {
+        navigate("/Menu");
+      }
     };
 
     return(
         <div onClick={handleLogout} className="header">
-            <div style={{ backgroundColor: props.cor, justifyContent: props.alinhamento, padding: props.padding }} className="navbarMenu">
+            <div style={{ backgroundColor: props.cor, justifyContent: props.alinhamento, padding: props.padding, color: props.color }} className="navbarMenu">
                 {props.icone}
-                <span className="textoUsuario">{props.texto}</span>
+                <p className="textoUsuario">{props.texto}</p>
             </div>
         </div>
     )

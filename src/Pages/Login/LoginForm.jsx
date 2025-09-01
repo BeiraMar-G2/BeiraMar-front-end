@@ -40,7 +40,7 @@ export function LoginForm(){
             </div>
             </div>
             <Link className='recuperacao-senha' to={"/RecuperacaoSenha"}>Esqueceu a senha?</Link>
-            <Botao texto="Entrar"/>
+            <Botao cor="#F8C7CC" texto="Entrar"/>
             <div className='wrapper-cadastro'>
                 <span>Não possui cadastro? </span><Link className='link' to={"/Cadastro"}>Cadastre-se aqui</Link>
             </div>

@@ -6,6 +6,7 @@ import { Titulo } from "../../Components/Fontes"
 import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { RiShoppingBag4Fill } from "react-icons/ri";
+
 export function ServicosPacotes() {
   return (
     <div className="containerMenu">
@@ -18,8 +19,8 @@ export function ServicosPacotes() {
         color: "#000",
         fontSize: "20px"
       }}>
-  Gerencie seus serviços!
-</h2>
+        Gerencie seus serviços!
+      </h2>
 
       <div className="botoesMenu">
         <BotaoMenu texto="Criar Serviço" imagem={<RiShoppingBag4Fill size={24} />} />

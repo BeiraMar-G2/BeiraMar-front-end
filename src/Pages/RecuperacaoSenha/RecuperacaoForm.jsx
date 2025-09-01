@@ -28,7 +28,7 @@ export function RecuperacaoForm(){
             <Input type="text" placeholder="Digite seu email"/>
             <IoIosMail className='icon' size={30}/>
           </div>
-          <Botao texto="Enviar"/>
+          <Botao cor="#F8C7CC" texto="Enviar"/>
       </div>
   </div>
 )}

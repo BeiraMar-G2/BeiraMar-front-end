@@ -10,7 +10,7 @@ export function Menu() {
   const navigate = useNavigate();
 
     const direcionarAgendamentos = () => {
-      navigate("/Agendamentos/Visualizacao"); 
+      navigate("/Agendamentos/Visualizar"); 
     };
 
     const direcionarHistAgendamentos = () => {
@@ -36,7 +36,7 @@ export function Menu() {
 
   return (
     <div className="containerMenu">
-      <Header texto="Olá, Ana!" alinhamento="center" icone={<FaUser size={28}/>}/>
+      <Header texto="Olá, Ana!" alinhamento="center" icone={<FaUser size={28}/>} color="#282828"/>
       <Titulo texto="Boas Vindas ao Menu!"/>
 
       <div className="botoesMenu">

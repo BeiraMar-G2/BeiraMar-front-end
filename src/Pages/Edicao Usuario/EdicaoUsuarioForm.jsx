@@ -17,10 +17,15 @@ export function EdicaoUsuarioForm(){
   const [telefone, setTelefone] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
+  const usuario = {
+    nome: 'Roberta Silva',
+    telefone: '(11) 91234-5678',
+    email: 'Roberta@gmail.com'
+  }
 
 return (
   <div className='content cliente'>
-  <div onClick={() => navigate("/Login")} className='voltar-wrapper'>
+  <div onClick={() => navigate("/MenuCliente")} className='voltar-wrapper'>
     <FaArrowLeft size={28} color="#000" className='voltar'/>
   </div>
     <div className='formulario'>
@@ -33,23 +38,25 @@ return (
       </div>
         <Label texto="Nome"/>
       <div className='conjuntoInput'>
-        <Input valor="nome" type="text" placeholder="Digite seu nome"/>
+        <Input valor="nome" type="text" placeholder={usuario.nome}/>
         <FaUser className='icon' size={24} />
       </div>
         <Label texto="Telefone"/>
       <div className='conjuntoInput'>
-        <Input telefone='true' valor="telefone" type="text" placeholder="Digite seu telefone"/>
+        <Input telefone='true' valor="telefone" type="text" placeholder={usuario.telefone}/>
         <FaPhone className='icon' size={24} />
       </div>
         <Label texto="Email"/>
       <div className='conjuntoInput'>
-        <Input valor="email" type="text" placeholder="Digite seu email"/>
+        <Input valor="email" type="text" placeholder={usuario.email}/>
         <IoIosMail className='icon' size={30} />
       </div>
       </div>
-      <Botao texto="Salvar"/>
+      <Botao texto="Salvar" cor="#f8c7ccbb"/>
       <div className='alterarSenha'>
-      <Botao texto="Alterar Senha"/> 
+      <Botao texto="Alterar Senha" cor="#f8c7ccbb" onClick={() => {
+        navigate("/Perfil/Senha");
+      }}/> 
       <FaArrowRight size={18} color="#282828" />
       </div>
     </div>

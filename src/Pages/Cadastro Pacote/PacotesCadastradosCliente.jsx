@@ -6,7 +6,7 @@ import { FaHouse } from "react-icons/fa6";
 import "../../Pages/Styles/PacotesCadastrados.css";
 import { Titulo } from "../../Components/Fontes";
 import { InputPesquisa } from "../../Components/Input";
-import { Botao } from "../../Components/Botao"; // Adicione esta linha
+import { Botao } from "../../Components/Botao";
 
 export function PacotesCadastradosCliente() {
   const [search, setSearch] = useState("");
@@ -65,6 +65,8 @@ export function PacotesCadastradosCliente() {
         icone={<FaHouse size={28} />}
         cor="#CE2D4F"
         texto="Menu"
+        color="#f8f8f8"
+        isCliente={true}
       />
 
       <Titulo

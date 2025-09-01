@@ -14,7 +14,7 @@ export function MenuCliente() {
 
     const handleServicosEPacotes = () => {
         console.log('Navegando para Serviços e Pacotes');
-       // navigate('/--------');
+        navigate('/PacotesCadastradosCliente');
     };
 
     const handleHistoricoAgendamentos = () => {
@@ -24,7 +24,7 @@ export function MenuCliente() {
 
     const handlePerfil = () => {
         console.log('Navegando para Perfil');
-        // navigate('/perfil');
+        navigate('/Perfil');
     };
 
     return (
@@ -34,6 +34,7 @@ export function MenuCliente() {
                 cor="#CE2D4F"
                 icone={<FaUser />}
                 alinhamento="center"
+                color="#f8f8f8"
             />
             
             <div className="container-menu">

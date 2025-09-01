@@ -75,7 +75,7 @@ return (
       </div>
       </div>
       <div onClick={cadastrarUsuario}>
-        <Botao texto="Cadastrar"/>
+        <Botao cor="#F8C7CC" texto="Cadastrar"/>
       </div>
       <div>
           <span>Já possui cadastro?</span> <Link className='link' to={"/Login"}>Faça o Login aqui</Link>
