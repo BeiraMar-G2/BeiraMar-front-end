@@ -70,8 +70,8 @@ export function CadastroFuncForm(){
           <FaKey className='icon' size={24}/>
         </div>
         </div>
-        <div onClick={cadastrarUsuario}>
-          <Botao cor="#f8c7ccbb" texto="Cadastrar"/>
+        <div >
+          <Botao onClick={cadastrarUsuario} cor="#f8c7ccbb" texto="Cadastrar"/>
         </div>
       </div>
     </div>

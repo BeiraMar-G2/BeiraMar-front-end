@@ -74,8 +74,8 @@ return (
         <FaKey className='icon' size={24}/>
       </div>
       </div>
-      <div onClick={cadastrarUsuario}>
-        <Botao cor="#F8C7CC" texto="Cadastrar"/>
+      <div>
+        <Botao onClick={cadastrarUsuario} cor="#F8C7CC" texto="Cadastrar"/>
       </div>
       <div>
           <span>Já possui cadastro?</span> <Link className='link' to={"/Login"}>Faça o Login aqui</Link>

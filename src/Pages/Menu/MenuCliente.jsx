@@ -30,7 +30,7 @@ export function MenuCliente() {
     return (
         <div className="menu-cliente">
             <Header 
-                texto="Olá, Roberta!"
+                texto={`Olá, ${localStorage.getItem('nome')}!`}
                 cor="#CE2D4F"
                 icone={<FaUser />}
                 alinhamento="center"

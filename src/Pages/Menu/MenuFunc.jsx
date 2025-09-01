@@ -36,20 +36,20 @@ export function Menu() {
 
   return (
     <div className="containerMenu">
-      <Header texto="Olá, Ana!" alinhamento="center" icone={<FaUser size={28}/>} color="#282828"/>
+      <Header texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<FaUser size={28}/>} color="#282828"/>
       <Titulo texto="Boas Vindas ao Menu!"/>
 
       <div className="botoesMenu">
         <BotaoMenu onClick={direcionarAgendamentos} texto="Agendamentos" imagem="/Assets/calendario.png"/>
         <BotaoMenu onClick={direcionarHistAgendamentos} texto="Histórico de Agendamentos" imagem="/Assets/historico.png"/>
       </div>
-      <div className="botoesMenu">
+      {localStorage.getItem('cargo')=="Administrador" ? <div className="botoesMenu">
         <BotaoMenu onClick={direcionarServPacotes} texto="Serviços e Pacotes" imagem="/Assets/servicos.png"/>
         <BotaoMenu onClick={direcionarCadAtendente} texto="Cadastro de Atendentes" imagem="/Assets/cadastro.png"/>
-      </div>
+      </div> : ""}
       <div className="botoesMenu">
         <BotaoMenu onClick={direcionarDisponibilidade} texto="Disponibilidade" imagem="/Assets/disponibilidade.png"/>
-        <BotaoMenu onClick={direcionarDashboards} texto="Dashboards" imagem="/Assets/dashboards.png"/>
+        {localStorage.getItem('cargo')=="Administrador" ? <BotaoMenu onClick={direcionarDashboards} texto="Dashboards" imagem="/Assets/dashboards.png"/>  : ""}
       </div>
     </div>
   )
