@@ -19,6 +19,13 @@
   margin-bottom: 15px;
   border-left: 4px solid transparent;
   padding-left: 10px;
+  cursor: pointer;
+}
+
+.selecionado{
+  border-radius: 5px;
+  border: 2px solid black;
+  
 }
 
 .consulta .hora {
@@ -27,11 +34,7 @@
   color: #444;
 }
 
-.consulta .hora.destaque {
-  background: #fdecec;
-  border-radius: 5px;
-  padding: 2px 4px;
-}
+
 
 .consulta .info {
   flex: 1;

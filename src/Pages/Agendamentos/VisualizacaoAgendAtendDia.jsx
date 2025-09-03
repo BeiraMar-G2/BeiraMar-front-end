@@ -12,7 +12,7 @@ import "../Styles/VisuAtendPorDia.css";
 export function VisualizacaoAgendAtendDia() {
 return (
     <div>
-
+      <br />
     <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Retornar ao Menu" color="#282828"/>
     <Titulo texto="Agendamentos"/>
     <br></br>
