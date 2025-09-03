@@ -17,6 +17,7 @@ import { HorarioAgendamento } from "./Pages/Agendamentos/HorarioAgendamento.jsx"
 import { VisualizacaoAgendAtendDia } from "./Pages/Agendamentos/VisualizacaoAgendAtendDia.jsx";
 import { ResumoPacote } from "./Pages/Cadastro Pacote/ResumoPacote.jsx";
 import { PacotesCadastradosCliente } from "./Pages/Cadastro Pacote/PacotesCadastradosCliente.jsx";
+import { AgendamentoServicoPacote } from "./Pages/Agendamentos/AgendamentoServicoPacote.jsx";
 import { MenuCliente } from "./Pages/Menu/MenuCliente.jsx";
 
 export const routes = createBrowserRouter([
@@ -107,6 +108,11 @@ export const routes = createBrowserRouter([
     {
       path: "/Agendamentos/Horario",
       element: <HorarioAgendamento />,
+      errorElement: <div>Erro ao carregar a página</div>
+    },
+    {
+      path: "/Agendamentos/${tipo}",
+      element: <AgendamentoServicoPacote />,
       errorElement: <div>Erro ao carregar a página</div>
     }, 
     {

@@ -2,79 +2,78 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Botao } from "../../Components/Botao.jsx";
 import { Titulo, Label } from "../../Components/Fontes.jsx";
-import { FaHouse } from "react-icons/fa6"; // mesmo ícone usado no CadastroPacote
-import { Header } from "../../Components/Header.jsx"; // import do Header
-import "../Styles/DefinirSessoes.css"; // <<< css exclusivo desta tela
+import { FaHouse } from "react-icons/fa6";
+import { Header } from "../../Components/Header.jsx";
+import "../Styles/DefinirSessoes.css";
 
 export function DefinirSessoes() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // vindo da tela anterior
-  const { servicosSelecionados } = location.state || { servicosSelecionados: {} };
+  // Recebendo da tela anterior (array de objetos)
+  const { servicosSelecionados = [] } = location.state || {};
 
-  // id -> nome completo
-  const servicosNomes = {
-    sobrancelha: "Design de Sobrancelha",
-    massagem: "Massagem Modeladora",
-    drenagem: "Drenagem",
-    limpeza: "Limpeza de Pele",
-  };
-
-  // somente ids marcados como true
-  const servicosAtivos = Object.keys(servicosSelecionados || {}).filter(
-    (k) => servicosSelecionados[k]
-  );
-
-  // quantidades por serviço
+  // Quantidades por serviço (id -> quantidade)
   const [quantidades, setQuantidades] = useState({});
 
   const handleQuantidadeChange = (servicoId, valor) => {
-    setQuantidades((prev) => ({ ...prev, [servicoId]: valor }));
+    setQuantidades((prev) => ({
+      ...prev,
+      [servicoId]: valor
+    }));
   };
 
   const handleContinuar = () => {
+    console.log("Serviços selecionados:", servicosSelecionados);
     console.log("Quantidades:", quantidades);
-    // navegue para onde quiser levando os dados
-    // navigate("/confirmar", { state: { servicosSelecionados, quantidades } });
+
+    // Se quiser levar para a próxima tela
+    navigate("/ResumoPacote", {
+      state: { servicosSelecionados, quantidades }
+    });
+
+    useEffect(() => {
+      const box = document.querySelector(".definir");
+      if (box) box.scrollTop = 0;
+      }, []);
   };
 
   return (
     <div className="content definirsessoes">
-      {/* Header padronizado */}
       <Header
         alinhamento="flex-start"
         padding="0 10px"
         icone={<FaHouse size={28} />}
         texto="Retornar ao Menu"
+        color="#282828"
       />
 
       <div className="tela2">
         <Titulo texto="Cadastro de Pacotes" />
-        <h3 className="titulo-servicos">Serviços do Pacote</h3>
 
-        <div className="servicos-box">
-          <Label texto="Defina a quantidade de sessões" tamanho="18px" />
+        <Label texto="Defina a quantidade de sessões" tamanho="18px" />
+        <div className="servicos-box definir">
 
-          {servicosAtivos.length === 0 && (
+          {servicosSelecionados.length === 0 && (
             <div className="aviso-vazio">
               Nenhum serviço selecionado na etapa anterior.
             </div>
           )}
 
-          {servicosAtivos.map((servicoId) => (
-            <div key={servicoId} className="servico-bloco">
-              {/* Nome do serviço - apenas exibição */}
-              <div className="nome-servico-card">{servicosNomes[servicoId]}</div>
+          {servicosSelecionados.map((servico) => (
+            <div key={servico.id} className="servico-bloco">
+              {/* Nome do serviço vindo da tela anterior */}
+              <div className="nome-servico-card">{servico.nomeServico}</div>
 
-              {/* Input numérico */}
               <input
                 className="quantidade-input"
                 type="number"
                 min="1"
                 placeholder="Digite a quantidade"
-                value={quantidades[servicoId] || ""}
-                onChange={(e) => handleQuantidadeChange(servicoId, e.target.value)}
+                value={quantidades[servico.id] || ""}
+                onChange={(e) =>
+                  handleQuantidadeChange(servico.id, e.target.value)
+                }
               />
             </div>
           ))}
@@ -83,12 +82,13 @@ export function DefinirSessoes() {
         <div className="botoes">
           <Botao
             texto="Voltar"
-            cor="cinza"
+            cor="#C8C5C5"
             onClick={() => navigate("/Cadastro/Pacote")}
           />
           <Botao
             texto="Continuar"
-            onClick={() => navigate("/ResumoPacote")}
+            cor="#f8c7ccbb"
+            onClick={handleContinuar}
           />
         </div>
       </div>

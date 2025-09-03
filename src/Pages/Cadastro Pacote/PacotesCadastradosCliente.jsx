@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Input } from "../../Components/Input";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "../../Components/Header";
 import { PacoteCard } from "../../Components/PacoteCard";
 import { FaHouse } from "react-icons/fa6";
@@ -7,55 +7,78 @@ import "../../Pages/Styles/PacotesCadastrados.css";
 import { Titulo } from "../../Components/Fontes";
 import { InputPesquisa } from "../../Components/Input";
 import { Botao } from "../../Components/Botao";
+import api from "../../Provider/api";
 
 export function PacotesCadastradosCliente() {
   const [search, setSearch] = useState("");
   const [tipo, setTipo] = useState("Pacotes");
+  const navigate = useNavigate();
 
-  const pacotes = [
+  const [pacotes, setPacotes] = useState([
     {
       id: 1,
       nome: "3 Massagens Modeladoras + 2 Drenagens Linfáticas",
-      preco: 470,
+      precoTotalSemDesconto: 470,
+      qtdSessoesTotal: 5,
+      tempoLimiteDias: 30
     },
     {
-      id: 2,
-      nome: "3 Hidrolipo NA + 3 Detox Corporal",
-      preco: 630,
-    },
-    {
-      id: 3,
-      nome: "3 Aplicações de Enzimas + 2 Drenagens Linfáticas",
-      preco: 840,
-    },
-  ];
+      idPacote: 1,
+      nome: "Pacote Relax Total",
+      precoTotalSemDesconto: 500,
+      qtdSessoesTotal: 5,
+      tempoLimiteDias: 60
+    }
+  ]);
 
-  const servicos = [
+  const [servicos, setServicos] = useState([
     {
       id: 1,
       nome: "Massagem Relaxante",
       duracao: "60 min",
       preco: 120,
     },
-    {
-      id: 2,
-      nome: "Drenagem Linfática",
-      duracao: "50 min",
-      preco: 100,
-    },
-    {
-      id: 3,
-      nome: "Limpeza de Pele",
-      duracao: "45 min",
-      preco: 90,
-    },
-  ];
+  ]);
 
   const dados = tipo === "Pacotes" ? pacotes : servicos;
 
   const filtrados = dados.filter((item) =>
     item.nome.toLowerCase().includes(search.toLowerCase())
   );
+
+  function buscarServicosPacotes() {
+    api.get("/pacotes")
+    .then((response) => {
+        console.log("Pacotes:", response.data);
+        setPacotes(response.data.map(pacote => ({
+            idPacote: pacote.idPacote,
+            nome: pacote.nome,
+            precoTotalSemDesconto: pacote.precoTotalSemDesconto,
+            qtdSessoesTotal: pacote.qtdSessoesTotal,
+            tempoLimiteDias: pacote.tempoLimiteDias
+        })));
+    })
+    .catch((error) => {
+        console.error("Erro ao buscar pacotes ou serviços:", error);
+    });
+    api.get("/servicos")
+    .then((response) => {
+        console.log("Serviços:", response.data);
+        setServicos(response.data.map(servico => ({
+            idServico: servico.idServico,
+            nome: servico.nome,
+            duracao: servico.duracao,
+            preco: servico.preco
+        })));
+    })
+    .catch((error) => {
+        console.error("Erro ao buscar pacotes ou serviços:", error);
+    });
+  }
+
+  useEffect(() => {
+        buscarServicosPacotes();
+    }, []);
 
   return (
     <div className="content-page">
@@ -85,7 +108,6 @@ export function PacotesCadastradosCliente() {
           <option>Serviços</option>
         </select>
 
-        {/* Pesquisa */}
         <InputPesquisa
           className="input-pesquisa"
           placeholder={`Pesquisar ${tipo.toLowerCase()}...`}
@@ -93,25 +115,24 @@ export function PacotesCadastradosCliente() {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        {/* Lista */}
         <div className="lista flex flex-col gap-3 w-72 overflow-y-auto max-h-96">
           {filtrados.map((item) =>
             tipo === "Pacotes" ? (
-              <PacoteCard key={item.id} nome={item.nome} preco={item.preco} />
+              <PacoteCard key={item.idPacote} nome={item.nome} preco={item.precoTotalSemDesconto} />
             ) : (
               <PacoteCard
-                key={item.id}
+                key={item.idServico}
                 nome={item.nome}
                 preco={item.preco}
                 duracao={item.duracao}
+                onClick={() => navigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { servicoId: item.idServico, servicoNome: item.nome, servicoPreco: item.preco } } })}
               />
             )
           )}
         </div>
 
-        {/* Botão Voltar */}
         <div style={{ width: "90%", marginTop: "18px" }}>
-          <Botao cor="#d9d9d9" texto="Voltar" />
+          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {navigate("/MenuCliente")}}/>
         </div>
       </div>
     </div>

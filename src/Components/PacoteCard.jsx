@@ -4,14 +4,14 @@ import { LuNotebookPen } from "react-icons/lu";
 import { FaRegCalendarPlus } from "react-icons/fa";
 import "../Pages/Styles/Card.css";
 
-export function PacoteCard({ nome, preco, duracao, tipo}) {
+export function PacoteCard({ nome, preco, duracao, tipo, ...props}) {
   return (
     <div className="card">
           <Subtitulo texto={nome}/>
       <div className="card-section">
 
         <div className="conteudo-card">
-          {duracao && <span className="text-sm text-gray-700 font-semibold">{duracao}</span>}
+          {duracao && <span className="text-sm text-gray-700 font-semibold">{duracao} min</span>}
           <span className="text-sm text-gray-700 font-semibold">R$ {preco},00</span>
         </div>
 
@@ -27,7 +27,7 @@ export function PacoteCard({ nome, preco, duracao, tipo}) {
             </div>
         ) : (
             <div>
-                <button className="botao-agendamento" >
+                <button onClick={(e) => props.onClick(e.target.value)} className="botao-agendamento" >
                   Agendar
                   <FaRegCalendarPlus style={{ marginLeft: 4 }} />
                 </button>

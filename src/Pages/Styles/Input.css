@@ -32,7 +32,8 @@
 
 .input-pesquisa {
     background-color: #ffffff;
-    border: none;
+    border: 0.01em solid #b2dfdb;
+    border-radius: 10px;
     width: 80%;
     height: 30px;
     font-size: 16px;

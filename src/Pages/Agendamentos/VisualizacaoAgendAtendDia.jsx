@@ -13,7 +13,7 @@ export function VisualizacaoAgendAtendDia() {
 return (
     <div>
 
-    <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Retornar ao Menu"/>
+    <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Retornar ao Menu" color="#282828"/>
     <Titulo texto="Agendamentos"/>
     <br></br>
     <Subtitulo texto="Consultas a realizar" />

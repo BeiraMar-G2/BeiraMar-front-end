@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Header } from '../../Components/Header';
+import { Titulo, Subtitulo } from '../../Components/Fontes';
+import { useLocation } from 'react-router-dom';
 import { Botao } from '../../Components/Botao';
 import { useNavigate } from 'react-router-dom';
 import { FaHouse } from "react-icons/fa6";
@@ -8,11 +10,41 @@ import "../Styles/HorarioAgendamento.css";
 export function HorarioAgendamento() {
     const navigate = useNavigate();
     const [horarioSelecionado, setHorarioSelecionado] = useState('16:20');
+    const location = useLocation();
+    const { servicoDataEscolhido } = location.state || {};
 
     const horarios = [
         '10:30', '11:30', '12:40',
         '16:20', '19:40', '21:00'
     ];
+
+    function formatarDataCompleta({ dia, mes, ano }) {
+      const meses = {
+        1: 'Janeiro',
+        2: 'Fevereiro',
+        3: 'Março',
+        4: 'Abril',
+        5: 'Maio',
+        6: 'Junho',
+        7: 'Julho',
+        8: 'Agosto',
+        9: 'Setembro',
+        10: 'Outubro',
+        11: 'Novembro',
+        12: 'Dezembro'
+      };
+
+      const diasSemana = [
+        'Domingo', 'Segunda-feira', 'Terça-feira', 
+        'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'
+      ];
+
+      const data = new Date(Number(ano), Number(mes) - 1, Number(dia));
+      const nomeDiaSemana = diasSemana[data.getDay()];
+
+      return `${dia} de ${meses[Number(mes)]} de ${ano} - ${nomeDiaSemana}`;
+    }
+
 
     const ClickHorario = (horario) => {
         setHorarioSelecionado(horario);
@@ -41,8 +73,8 @@ export function HorarioAgendamento() {
             
             <div className="container-agendamento">
                 <div className="servico-info">
-                    <span className="servico-label">Serviço escolhido:</span> <br />
-                    <h2 className="servico-titulo">Design de sobrancelha</h2>
+                    <Subtitulo texto="Serviço Escolhido:" /> <br />
+                    <Titulo texto={servicoDataEscolhido.servicoEscolhido.servicoNome}/>
                 </div>
 
                 <div className="novo-agendamento">
@@ -51,7 +83,9 @@ export function HorarioAgendamento() {
 
                 <div className="horarios-grid">
                     <div className="data-info">
-                        <p>21 de Maio de 2025 - Quarta Feira</p>
+                        <p>
+                        {formatarDataCompleta(servicoDataEscolhido.dataEscolhida)}
+                        </p>
                     </div>
                     {horarios.map((horario) => (
                         <button

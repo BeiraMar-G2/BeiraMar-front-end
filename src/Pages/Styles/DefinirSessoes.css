@@ -38,7 +38,8 @@
 /* === Box central === */
 .servicos-box {
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
+  overflow-y: auto;
   width: 80%;
   max-width: 400px;
   border-radius: 10px;
@@ -91,15 +92,6 @@
 .quantidade-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-/* === Botões === */
-.botoes {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  width: 80%;
-  max-width: 400px;
 }
 
 /* Aviso quando não há serviços */

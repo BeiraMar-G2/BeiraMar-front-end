@@ -26,10 +26,11 @@ export function LoginForm(){
     })
     .then((response)=>{
       console.log(response.data);
-      const { token, cargo, nome } = response.data;
+      const { token, cargo, nome, email } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("cargo", cargo);
       localStorage.setItem("nome", nome);
+      localStorage.setItem("email", email);
       if(cargo === "Cliente"){
         navigate("/MenuCliente");
       }

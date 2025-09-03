@@ -15,42 +15,39 @@ export function CadastroPacote() {
     const navigate = useNavigate();
     const [filtro, setFiltro] = useState('');
     const [formData, setFormData] = useState({
-        nomeServico: '',
-        sobrancelha: false,
-        massagem: false,
-        drenagem: false,
-        limpeza: false,
     });
     const [servicos, setServicos] = useState([
-        {id: 'sobrancelha', nome: 'Sobrancelha'},
     ]);
 
     function buscarServico() {
         api.get("/servicos")
             .then((response) => {
-                console.log("Serviços disponíveis:", response.data);
                 setServicos(response.data.map(servico => ({
                     id: servico.idServico,
                     nome: servico.nome
                 })));
-                console.log("Serviços atualizados:", servicos);
+                setFormData(response.data.map(servico => ({
+                    id: servico.idServico,
+                    nomeServico: servico.nome,
+                    selecionado: false
+                })));
             })
             .catch((error) => {
                 console.error("Erro ao buscar serviços:", error);
             });
     }
 
-
-
     const handleChange = (e) => {
-        const {value } = e.target;
-
-        setFormData(prev => ({ ...prev, nomeServico: value }));
+        const {value } = e.target;  
         setFiltro(value);
     };
 
-    const handleCardClick = (servico) => {
-        setFormData(prev => ({ ...prev, [servico]: !prev[servico] }));
+    const handleCardClick = (id, nome, selecionado) => {
+        setFormData(prev => (prev.map(servico =>
+            servico.id === id 
+            ? { ...servico, selecionado: !servico.selecionado } 
+            : servico
+        )));
     };
 
     const servicosFiltrados = servicos.filter(({ nome }) =>
@@ -60,7 +57,7 @@ export function CadastroPacote() {
     const destacarTexto = (nome) => {
         if (!filtro) return nome;
         const regex = new RegExp(`(${filtro})`, 'gi');
-        return nome.replace(regex, '<mark>$1</mark>');
+        return nome;
     };
 
     useEffect(() => {
@@ -69,7 +66,7 @@ export function CadastroPacote() {
 
     return (
         <div className="content pacote">
-            <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Retornar ao Menu"/>
+            <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Retornar ao Menu" color="#282828"/>
             
             <div className="tela1">
                 <Titulo texto="Cadastro de Pacotes" className="titulo" />
@@ -92,11 +89,12 @@ export function CadastroPacote() {
                         {servicosFiltrados.map(({ id, nome }) => (
                             <div
                                 key={id}
-                                className={`card-servico ${formData[id] ? 'selecionado' : ''}`}
-                                onClick={() => handleCardClick(id)}
+                                className={`card-servico ${formData[id-1].selecionado ? 'selecionado' : ''}`}
+                                onClick={() => {handleCardClick(id, nome, formData[id-1].selecionado) 
+                                }}
                             >
                                 <span dangerouslySetInnerHTML={{ __html: destacarTexto(nome) }} />
-                                {formData[id] && <FaCheck className="check-icon" />}
+                                {formData[id-1].selecionado && <FaCheck className="check-icon" />}
                             </div>
                         ))}
                         {servicosFiltrados.length === 0 && (
@@ -106,10 +104,11 @@ export function CadastroPacote() {
                 </div>
 
                 <div className="botoes">
-                    <Botao texto="Voltar" cor="cinza" onClick={() => navigate("/")} />
+                    <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate("/")} />
                     <Botao 
                         texto="Continuar" 
-                        onClick={() => navigate("/DefinirSessoes", { state: { servicosSelecionados: formData } })} 
+                        cor="#f8c7ccbb" 
+                        onClick={() => navigate("/DefinirSessoes", { state: { servicosSelecionados: formData.filter(servico => servico.selecionado) } })} 
                     />
                 </div>
             </div>

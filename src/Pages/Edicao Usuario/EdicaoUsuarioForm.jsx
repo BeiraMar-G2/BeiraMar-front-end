@@ -18,9 +18,9 @@ export function EdicaoUsuarioForm(){
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
   const usuario = {
-    nome: 'Roberta Silva',
-    telefone: '(11) 91234-5678',
-    email: 'Roberta@gmail.com'
+    nome: localStorage.getItem('nome'),
+    telefone: localStorage.getItem('telefone'),
+    email: localStorage.getItem('email')
   }
 
 return (
@@ -38,17 +38,17 @@ return (
       </div>
         <Label texto="Nome"/>
       <div className='conjuntoInput'>
-        <Input valor="nome" type="text" placeholder={usuario.nome}/>
+        <Input valor="nome" type="text" placeholder={usuario.nome == null ? "Insira seu nome" : usuario.nome}/>
         <FaUser className='icon' size={24} />
       </div>
         <Label texto="Telefone"/>
       <div className='conjuntoInput'>
-        <Input telefone='true' valor="telefone" type="text" placeholder={usuario.telefone}/>
+        <Input telefone='true' valor="telefone" type="text" placeholder={usuario.telefone == null ? "Insira seu telefone" : usuario.telefone}/>
         <FaPhone className='icon' size={24} />
       </div>
         <Label texto="Email"/>
       <div className='conjuntoInput'>
-        <Input valor="email" type="text" placeholder={usuario.email}/>
+        <Input valor="email" type="text" placeholder={usuario.email == null ? "Insira seu email" : usuario.email}/>
         <IoIosMail className='icon' size={30} />
       </div>
       </div>
