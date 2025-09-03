@@ -97,7 +97,7 @@ export function VisualizacaoAgendAtend() {
 
             <hr />
 
-            <div className="botoes">
+            <div className="botoes-acao">
                 <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate("/Menu")} />
                 <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => navigate("/")} />
             </div>

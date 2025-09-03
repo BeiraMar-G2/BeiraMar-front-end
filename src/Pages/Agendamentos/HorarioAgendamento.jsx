@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Botao } from '../../Components/Botao';
 import { useNavigate } from 'react-router-dom';
 import { FaHouse } from "react-icons/fa6";
+import api from '../../Provider/api';
 import "../Styles/HorarioAgendamento.css";
 
 export function HorarioAgendamento() {
@@ -55,7 +56,33 @@ export function HorarioAgendamento() {
     };
 
     const botaoContinuar = () => {
-        console.log('Horário selecionado:', horarioSelecionado);
+        console.log("Agendamento a ser enviado:", {
+            idServico: servicoDataEscolhido.servicoEscolhido.id,
+            fkCliente: localStorage.getItem("idUsuario"),
+            fkFuncionario: 1,
+            dtHora: `${servicoDataEscolhido.dataEscolhida.formato}T${horarioSelecionado}:00`,
+            valorPago: servicoDataEscolhido.servicoEscolhido.preco,
+            statusAgendamento: "Agendado",
+            status: "Agendado",
+            dataValidade: null,
+            fkPacote: null
+        })
+        //navigate("/Agendamentos/Confirmacao", { state: { servicoDataHorarioEscolhido: { ...servicoDataEscolhido, horarioSelecionado } } });
+        api.post("/agendamentos", {
+            idServico: servicoDataEscolhido.servicoEscolhido.id,
+            fkCliente: localStorage.getItem("idUsuario"),
+            fkFuncionario: 1,
+            dtHora: `${servicoDataEscolhido.dataEscolhida.formato}T${horarioSelecionado}:00`,
+            valorPago: servicoDataEscolhido.servicoEscolhido.preco,
+            statusAgendamento: "Agendado",
+            status: "Agendado",
+            dataValidade: null,
+            fkPacote: null
+        })
+        .then((response) => {
+            console.log("Agendamento criado:", response.data);
+            navigate("/Agendamentos/Confirmacao", { state: { servicoDataHorarioEscolhido: { ...servicoDataEscolhido, horarioSelecionado } } });
+        })
     };
 
     return (

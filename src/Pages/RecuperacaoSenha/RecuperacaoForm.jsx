@@ -18,7 +18,7 @@ export function RecuperacaoForm(){
 
   return (
   <div className='content atendente'>
-    <div onClick={() => navigate("/Login")} className='voltar-wrapper'>
+    <div onClick={() => navigate(-1)} className='voltar-wrapper'>
       <FaArrowLeft size={28} color="#000" className='voltar'/>
     </div>
       <div className='formulariocentrado'>

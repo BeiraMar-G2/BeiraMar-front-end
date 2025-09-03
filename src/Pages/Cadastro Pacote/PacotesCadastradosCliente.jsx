@@ -21,13 +21,6 @@ export function PacotesCadastradosCliente() {
       precoTotalSemDesconto: 470,
       qtdSessoesTotal: 5,
       tempoLimiteDias: 30
-    },
-    {
-      idPacote: 1,
-      nome: "Pacote Relax Total",
-      precoTotalSemDesconto: 500,
-      qtdSessoesTotal: 5,
-      tempoLimiteDias: 60
     }
   ]);
 
@@ -59,7 +52,7 @@ export function PacotesCadastradosCliente() {
         })));
     })
     .catch((error) => {
-        console.error("Erro ao buscar pacotes ou serviços:", error);
+        console.error("Erro ao buscar pacotes", error);
     });
     api.get("/servicos")
     .then((response) => {
@@ -72,7 +65,7 @@ export function PacotesCadastradosCliente() {
         })));
     })
     .catch((error) => {
-        console.error("Erro ao buscar pacotes ou serviços:", error);
+        console.error("Erro ao buscar serviços:", error);
     });
   }
 
@@ -131,8 +124,8 @@ export function PacotesCadastradosCliente() {
           )}
         </div>
 
-        <div style={{ width: "90%", marginTop: "18px" }}>
-          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {navigate("/MenuCliente")}}/>
+        <div style={{ display:"flex", justifyContent:"center", width: "90%", marginTop: "18px" }}>
+          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {navigate(-1)}}/>
         </div>
       </div>
     </div>

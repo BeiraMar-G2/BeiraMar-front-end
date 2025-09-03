@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Input } from "../../Components/Input";
 import { Header } from "../../Components/Header";
 import { PacoteCard } from "../../Components/PacoteCard";
+import { useNavigate } from "react-router-dom";
 import { FaHouse } from "react-icons/fa6";
 import "../../Pages/Styles/PacotesCadastrados.css";
 import { Titulo } from "../../Components/Fontes";
@@ -11,6 +12,7 @@ import { Botao } from "../../Components/Botao";
 export function PacotesCadastrados() {
   const [search, setSearch] = useState("");
   const [tipo, setTipo] = useState("Pacotes");
+  const navigate = useNavigate();
 
   const pacotes = [
     {
@@ -110,8 +112,8 @@ export function PacotesCadastrados() {
         </div>
 
         {/* Botão Voltar */}
-        <div style={{ width: "90%", marginTop: "18px" }}>
-          <Botao cor="#d9d9d9" texto="Voltar" />
+        <div style={{ display:"flex", justifyContent:"center", width: "90%", marginTop: "18px" }}>
+          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {navigate(-1)}}/>
         </div>
       </div>
     </div>

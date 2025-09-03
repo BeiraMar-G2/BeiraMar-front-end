@@ -110,8 +110,8 @@ export function AgendamentoServicoPacote() {
 
             <hr />
 
-            <div className="botoes">
-                <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate("/PacotesCadastradosCliente")} />
+            <div className="botoes-acao">
+                <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate(-1)} />
                 <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => navigate("/Agendamentos/Horario", { state: {servicoDataEscolhido: {servicoEscolhido, dataEscolhida}}  })} />
             </div>
         </div>

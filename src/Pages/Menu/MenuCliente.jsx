@@ -47,24 +47,28 @@ export function MenuCliente() {
                         texto="Próximos Agendamentos"
                         imagem={<FaClock className="icone-menu" />}
                         onClick={handleProximosAgendamentos}
+                        funcao="Cliente"
                     />
                     
                     <BotaoMenu
                         texto="Serviços e Pacotes"
                         imagem={<FaShoppingBag className="icone-menu" />}
                         onClick={handleServicosEPacotes}
+                        funcao="Cliente"
                     />
                     
                     <BotaoMenu
                         texto="Histórico de Agendamentos"
                         imagem={<FaCalendarAlt className="icone-menu" />}
                         onClick={handleHistoricoAgendamentos}
+                        funcao="Cliente"
                     />
                     
                     <BotaoMenu
                         texto="Perfil"
                         imagem={<FaUser className="icone-menu" />}
                         onClick={handlePerfil}
+                        funcao="Cliente"
                     />
                 </div>
             </div>
