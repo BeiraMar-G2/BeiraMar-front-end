@@ -13,7 +13,7 @@ export function Menu() {
   const navigate = useNavigate();
 
     const direcionarAgendamentos = () => {
-      navigate("/Agendamentos/Visualizar"); 
+      navigate('/Agendamentos/VisualizarPorDia'); 
     };
 
     const direcionarHistAgendamentos = () => {

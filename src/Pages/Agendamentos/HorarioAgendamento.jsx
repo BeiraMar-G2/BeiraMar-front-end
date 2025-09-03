@@ -67,13 +67,14 @@ export function HorarioAgendamento() {
             dataValidade: null,
             fkPacote: null
         })
+        console.log(servicoDataEscolhido.servicoDataEscolhido)
         //navigate("/Agendamentos/Confirmacao", { state: { servicoDataHorarioEscolhido: { ...servicoDataEscolhido, horarioSelecionado } } });
         api.post("/agendamentos", {
-            idServico: servicoDataEscolhido.servicoEscolhido.id,
+            idServico: servicoDataEscolhido.servicoEscolhido.servicoId,
             fkCliente: localStorage.getItem("idUsuario"),
             fkFuncionario: 1,
             dtHora: `${servicoDataEscolhido.dataEscolhida.formato}T${horarioSelecionado}:00`,
-            valorPago: servicoDataEscolhido.servicoEscolhido.preco,
+            valorPago: servicoDataEscolhido.servicoEscolhido.servicoPreco,
             statusAgendamento: "Agendado",
             status: "Agendado",
             dataValidade: null,

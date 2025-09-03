@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function VisuClientePorDia() {
   return (
     <div className="agendamentos">
       {/* Primeiro agendamento */}
       <h3>21 de Maio de 2025 - Quarta Feira</h3>
-      <div className="card">
+      <div className="card-visu card">
         <div className="hora">16:20</div>
         <div className="info">
           <p><strong>Serviço:</strong> Design de Sobrancelha</p>
@@ -18,7 +19,7 @@ export default function VisuClientePorDia() {
 
       {/* Segundo agendamento */}
       <h3>28 de Maio de 2025 - Quarta Feira</h3>
-      <div className="card">
+      <div className="card-visu card">
         <div className="hora">11:00</div>
         <div className="info">
           <p><strong>Serviço:</strong> Massagem Modeladora</p>

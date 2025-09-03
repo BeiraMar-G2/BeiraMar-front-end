@@ -9,17 +9,16 @@ export function MenuCliente() {
 
     const handleProximosAgendamentos = () => {
         console.log('Navegando para Próximos Agendamentos');
-        // navigate('/--------');
+        navigate('/Agendamentos/VisualizarConsultas');
     };
-
+    
     const handleServicosEPacotes = () => {
         console.log('Navegando para Serviços e Pacotes');
         navigate('/PacotesCadastradosCliente');
     };
-
+    
     const handleHistoricoAgendamentos = () => {
-        console.log('Navegando para Histórico de Agendamentos');
-        // navigate('/HistoricoAgendamentos');
+        // navigate('/--------');
     };
 
     const handlePerfil = () => {
