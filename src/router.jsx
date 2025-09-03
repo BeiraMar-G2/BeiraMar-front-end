@@ -15,6 +15,7 @@ import { ServicosPacotes } from "./Pages/Menu/ServicosPacotes.jsx";
 import { RecuperacaoCodigo } from "./Pages/RecuperacaoSenha/RecuperacaoCodigo.jsx";
 import { HorarioAgendamento } from "./Pages/Agendamentos/HorarioAgendamento.jsx";
 import { VisualizacaoAgendAtendDia } from "./Pages/Agendamentos/VisualizacaoAgendAtendDia.jsx";
+import { VisualizacaoAgendClienteDia } from "./Pages/Agendamentos/VisualizacaoAgendClienteDia.jsx";
 import { ResumoPacote } from "./Pages/Cadastro Pacote/ResumoPacote.jsx";
 import { PacotesCadastradosCliente } from "./Pages/Cadastro Pacote/PacotesCadastradosCliente.jsx";
 import { AgendamentoServicoPacote } from "./Pages/Agendamentos/AgendamentoServicoPacote.jsx";
@@ -63,6 +64,11 @@ export const routes = createBrowserRouter([
     { 
       path: "/Agendamentos/VisualizarPorDia",
       element: <VisualizacaoAgendAtendDia />,
+      errorElement: <div>Erro ao carregar a página</div> 
+    },
+    { 
+      path: "/Agendamentos/VisualizarConsultas",
+      element: <VisualizacaoAgendClienteDia />,
       errorElement: <div>Erro ao carregar a página</div> 
     },
     { 
