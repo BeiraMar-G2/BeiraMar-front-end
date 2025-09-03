@@ -31,7 +31,6 @@
 .botaoMenu {
   width: 130px;
   height: 120px;
-  background: linear-gradient(180deg, #c0f7f7 0%, #ffe7b7 100%);
   border-radius: 12px;
   box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
   display: flex;

@@ -9,17 +9,16 @@ export function MenuCliente() {
 
     const handleProximosAgendamentos = () => {
         console.log('Navegando para Próximos Agendamentos');
-        // navigate('/--------');
+        navigate('/Agendamentos/VisualizarConsultas');
     };
-
+    
     const handleServicosEPacotes = () => {
         console.log('Navegando para Serviços e Pacotes');
         navigate('/PacotesCadastradosCliente');
     };
-
+    
     const handleHistoricoAgendamentos = () => {
-        console.log('Navegando para Histórico de Agendamentos');
-        // navigate('/HistoricoAgendamentos');
+        // navigate('/--------');
     };
 
     const handlePerfil = () => {
@@ -47,24 +46,28 @@ export function MenuCliente() {
                         texto="Próximos Agendamentos"
                         imagem={<FaClock className="icone-menu" />}
                         onClick={handleProximosAgendamentos}
+                        funcao="Cliente"
                     />
                     
                     <BotaoMenu
                         texto="Serviços e Pacotes"
                         imagem={<FaShoppingBag className="icone-menu" />}
                         onClick={handleServicosEPacotes}
+                        funcao="Cliente"
                     />
                     
                     <BotaoMenu
                         texto="Histórico de Agendamentos"
                         imagem={<FaCalendarAlt className="icone-menu" />}
                         onClick={handleHistoricoAgendamentos}
+                        funcao="Cliente"
                     />
                     
                     <BotaoMenu
                         texto="Perfil"
                         imagem={<FaUser className="icone-menu" />}
                         onClick={handlePerfil}
+                        funcao="Cliente"
                     />
                 </div>
             </div>

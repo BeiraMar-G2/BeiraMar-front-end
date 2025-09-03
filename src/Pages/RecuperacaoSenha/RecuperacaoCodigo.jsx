@@ -44,12 +44,12 @@ export function RecuperacaoCodigo() {
     };
 
     return (
-        <div className="recuperacao-codigo">
-            <div className="header-voltar">
-                <FaArrowLeft className="icone-voltar" onClick={handleVoltar} />
-            </div>
+        <div className="content atendente">
+            <div onClick={() => navigate("/Login")} className='voltar-wrapper'>
+                  <FaArrowLeft size={28} color="#000" className='voltar'/>
+                </div>
 
-            <div className="container-codigo">
+            <div className="formulariocentrado">
                 <div className="titulo-recuperacao">
                     <h2>Recuperação de Senha</h2>
                 </div>

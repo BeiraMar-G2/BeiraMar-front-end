@@ -14,13 +14,13 @@
   color: #111;
 }
 
-.card {
+.card-visu {
   display: flex;
   margin-bottom: 20px;
   background-color: #fcecec;
 }
 
-.card .hora {
+.card-visu .hora {
   font-weight: bold;
   background: #fcecec;
   border-radius: 5px;
@@ -30,11 +30,11 @@
   font-size: 13px;
 }
 
-.card .info {
+.card-visu .info {
   flex: 1;
 }
 
-.card .info p {
+.card-visu .info p {
   margin: 3px 0;
   font-size: 14px;
   color: #333;

@@ -25,12 +25,12 @@ export function LoginForm(){
       senha: senha
     })
     .then((response)=>{
-      console.log(response.data);
-      const { token, cargo, nome, email } = response.data;
+      const { token, cargo, nome, email, id } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("cargo", cargo);
       localStorage.setItem("nome", nome);
       localStorage.setItem("email", email);
+      localStorage.setItem("idUsuario", id);
       if(cargo === "Cliente"){
         navigate("/MenuCliente");
       }
