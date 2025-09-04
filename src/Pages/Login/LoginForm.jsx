@@ -33,6 +33,7 @@ export function LoginForm(){
       localStorage.setItem("idUsuario", id);
       if(cargo === "Cliente"){
         navigate("/MenuCliente");
+        console.log(response.data);
       }
       else {
         navigate("/Menu");

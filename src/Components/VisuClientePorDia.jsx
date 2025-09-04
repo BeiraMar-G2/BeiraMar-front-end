@@ -1,39 +1,104 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../Provider/api";
 
 export default function VisuClientePorDia() {
+  const navigate = useNavigate();
+  const [agendamentos, setAgendamentos] = useState({
+    teste: "teste"
+  });
+
+  function buscarAgendamentos() {
+    api.get(`/agendamentos/cliente/${localStorage.getItem("idUsuario")}`)
+    .then((response) => {
+        setAgendamentos(response.data.map(agendamento => ({
+            idAgendamento: agendamento.idAgendamento,
+            servicoNome: agendamento.nomeServico,
+            dtHora: agendamento.dtHora,
+            preco: agendamento.valorPago
+        })));
+    })
+    .catch((error) => {
+        console.error("Erro ao buscar agendamentos do cliente", error);
+    });
+  }
+
+  function formatarDataCompleta({ dia, mes, ano }) {
+      const meses = {
+        1: 'Janeiro',
+        2: 'Fevereiro',
+        3: 'Março',
+        4: 'Abril',
+        5: 'Maio',
+        6: 'Junho',
+        7: 'Julho',
+        8: 'Agosto',
+        9: 'Setembro',
+        10: 'Outubro',
+        11: 'Novembro',
+        12: 'Dezembro'
+      };
+
+      const diasSemana = [
+        'Domingo', 'Segunda-feira', 'Terça-feira', 
+        'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'
+      ];
+
+      const data = new Date(Number(ano), Number(mes) - 1, Number(dia));
+      const nomeDiaSemana = diasSemana[data.getDay()];
+
+      return `${dia} de ${meses[Number(mes)]} de ${ano} - ${nomeDiaSemana}`;
+    }
+
+    function handleDiaAgendamento(dateString) {
+        const date = new Date(dateString);
+
+        const dia = date.getDate().toString().padStart(2, '0');
+        const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+        const ano = date.getFullYear();
+        return {dia, mes, ano};
+    }
+
+    function handleHorario(dateString) {
+      const date = new Date(dateString);
+      const horas = date.getHours().toString().padStart(2, "0");
+      const minutos = date.getMinutes().toString().padStart(2, "0");
+      return `${horas}:${minutos}`;
+    }
+
+  useEffect(() => {
+    buscarAgendamentos();
+  }, []);
+
   return (
-    <div className="agendamentos">
-      {/* Primeiro agendamento */}
-      <h3>21 de Maio de 2025 - Quarta Feira</h3>
-      <div className="card-visu card">
-        <div className="hora">16:20</div>
-        <div className="info">
-          <p><strong>Serviço:</strong> Design de Sobrancelha</p>
-          <p><strong>Preço:</strong> R$ 20,00</p>
-          <button className="cancelar">
-            ⚠ Cancelar
-          </button>
-        </div>
+    
+    <div>
+      <div className="agendamentos">
+        {agendamentos && agendamentos.length > 0 ? (
+          agendamentos.map((servico) => (
+            <div key={servico.idAgendamento}>
+              <h3>{formatarDataCompleta(handleDiaAgendamento(servico.dtHora))}</h3>
+              <div className="card-visu card">
+                <div className="hora">{handleHorario(servico.dtHora)}</div>
+                <div className="info">
+                  <div>
+                    <p><strong>Serviço:</strong> {servico.servicoNome}</p>
+                    <p><strong>Preço:</strong> R$ {servico.preco},00</p>
+                  </div>
+                  <button className="cancelar">⚠ Cancelar</button>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>Sem agendamentos...</p>
+        )}
       </div>
 
-      {/* Segundo agendamento */}
-      <h3>28 de Maio de 2025 - Quarta Feira</h3>
-      <div className="card-visu card">
-        <div className="hora">11:00</div>
-        <div className="info">
-          <p><strong>Serviço:</strong> Massagem Modeladora</p>
-          <p><strong>Preço:</strong> R$ 80,00</p>
-          <button className="cancelar">
-            ⚠ Cancelar
-          </button>
-        </div>
-      </div>
-
-      {/* Mensagem final */}
-      <p className="mensagem-final">
-        <em>Sem mais agendamentos... <br/> Faça sua reserva hoje!</em>
-      </p>
+        {/* Mensagem final */}
+        <p className="mensagem-final">
+          <em>Sem mais agendamentos... <br/> Faça sua reserva hoje!</em>
+        </p>
     </div>
   );
 }
