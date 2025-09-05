@@ -87,7 +87,7 @@ export function PacotesCadastradosCliente() {
 
       <Titulo
         texto={
-          tipo === "Pacotes" ? "Pacotes Cadastrados" : "Serviços Cadastrados"
+          tipo === "Pacotes" ? "Pacotes Para Você!" : "Serviços Para Você!"
         }
       />
 
@@ -111,14 +111,14 @@ export function PacotesCadastradosCliente() {
         <div className="lista flex flex-col gap-3 w-72 overflow-y-auto max-h-96">
           {filtrados.map((item) =>
             tipo === "Pacotes" ? (
-              <PacoteCard key={item.idPacote} nome={item.nome} preco={item.precoTotalSemDesconto} />
+              <PacoteCard key={item.idPacote} nome={item.nome} preco={item.precoTotalSemDesconto} onClick={() => navigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { pacoteId: item.idPacote, pacoteNome: item.nome, pacoteQtdSessoes: item.qtdSessoesTotal, tipo: tipo } } } )}/>
             ) : (
               <PacoteCard
                 key={item.idServico}
                 nome={item.nome}
                 preco={item.preco}
                 duracao={item.duracao}
-                onClick={() => navigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { servicoId: item.idServico, servicoNome: item.nome, servicoPreco: item.preco } } })}
+                onClick={() => navigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { servicoId: item.idServico, servicoNome: item.nome, servicoPreco: item.preco, tipo: tipo } } })}
               />
             )
           )}

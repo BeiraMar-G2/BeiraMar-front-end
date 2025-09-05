@@ -39,7 +39,10 @@ export function CadastroForm(){
       dtNasc: "2003-08-19", 
       fkCargo: 6
     })
-    .then((response)=>console.log(response))
+    .then((response)=>{
+      console.log(response)
+      navigate("/Login");
+    })
   }
 
 return (

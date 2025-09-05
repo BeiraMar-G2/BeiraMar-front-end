@@ -18,7 +18,7 @@ export function MenuCliente() {
     };
     
     const handleHistoricoAgendamentos = () => {
-        // navigate('/--------');
+        navigate('/Agendamentos/HistoricoAgendCliente');
     };
 
     const handlePerfil = () => {
@@ -50,7 +50,7 @@ export function MenuCliente() {
                     />
                     
                     <BotaoMenu
-                        texto="Serviços e Pacotes"
+                        texto="Agendar Sessão"
                         imagem={<FaShoppingBag className="icone-menu" />}
                         onClick={handleServicosEPacotes}
                         funcao="Cliente"

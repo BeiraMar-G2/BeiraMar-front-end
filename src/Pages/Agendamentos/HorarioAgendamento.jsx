@@ -56,17 +56,6 @@ export function HorarioAgendamento() {
     };
 
     const botaoContinuar = () => {
-        console.log("Agendamento a ser enviado:", {
-            idServico: servicoDataEscolhido.servicoEscolhido.servicoId,
-            fkCliente: Number(localStorage.getItem("idUsuario")),
-            fkFuncionario: 1,
-            dtHora: `${servicoDataEscolhido.dataEscolhida.formato}T${horarioSelecionado}:00`,
-            valorPago: servicoDataEscolhido.servicoEscolhido.servicoPreco,
-            statusAgendamento: "Agendado",
-            status: "Agendado",
-            dataValidade: null,
-            fkPacote: null
-        })
         api.post("/agendamentos", {
             fkServico: `${servicoDataEscolhido.servicoEscolhido.servicoId}`,
             fkCliente: Number(localStorage.getItem("idUsuario")),
@@ -80,6 +69,7 @@ export function HorarioAgendamento() {
         })
         .then((response) => {
             console.log("Agendamento criado:", response.data);
+            navigate("/Agendamentos/VisualizarConsultas");
         })
     };
 
