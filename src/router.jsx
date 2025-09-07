@@ -22,6 +22,8 @@ import { ResumoPacote } from "./Pages/Cadastro Pacote/ResumoPacote.jsx";
 import { PacotesCadastradosCliente } from "./Pages/Cadastro Pacote/PacotesCadastradosCliente.jsx";
 import { AgendamentoServicoPacote } from "./Pages/Agendamentos/AgendamentoServicoPacote.jsx";
 import { MenuCliente } from "./Pages/Menu/MenuCliente.jsx";
+import { CadastroServico } from "./Pages/CadastroServiço/CadastroServico.jsx";
+
 
 export const routes = createBrowserRouter([
     {
@@ -141,6 +143,11 @@ export const routes = createBrowserRouter([
     {
       path: "/MenuCliente",
       element: <MenuCliente />,
+      errorElement: <div>Erro ao carregar a página</div>
+    },
+    {
+      path: "/CadastroServico",
+      element: <CadastroServico />,
       errorElement: <div>Erro ao carregar a página</div>
     }
 ])
