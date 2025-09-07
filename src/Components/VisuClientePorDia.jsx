@@ -5,7 +5,6 @@ import api from "../Provider/api";
 export default function VisuClientePorDia() {
   const navigate = useNavigate();
   const [agendamentos, setAgendamentos] = useState({
-    teste: "teste"
   });
 
   function buscarAgendamentos() {
@@ -24,47 +23,47 @@ export default function VisuClientePorDia() {
   }
 
   function formatarDataCompleta({ dia, mes, ano }) {
-      const meses = {
-        1: 'Janeiro',
-        2: 'Fevereiro',
-        3: 'Março',
-        4: 'Abril',
-        5: 'Maio',
-        6: 'Junho',
-        7: 'Julho',
-        8: 'Agosto',
-        9: 'Setembro',
-        10: 'Outubro',
-        11: 'Novembro',
-        12: 'Dezembro'
-      };
+    const meses = {
+      1: 'Janeiro',
+      2: 'Fevereiro',
+      3: 'Março',
+      4: 'Abril',
+      5: 'Maio',
+      6: 'Junho',
+      7: 'Julho',
+      8: 'Agosto',
+      9: 'Setembro',
+      10: 'Outubro',
+      11: 'Novembro',
+      12: 'Dezembro'
+    };
 
-      const diasSemana = [
-        'Domingo', 'Segunda-feira', 'Terça-feira', 
-        'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'
-      ];
+    const diasSemana = [
+      'Domingo', 'Segunda-feira', 'Terça-feira', 
+      'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'
+    ];
 
-      const data = new Date(Number(ano), Number(mes) - 1, Number(dia));
-      const nomeDiaSemana = diasSemana[data.getDay()];
+    const data = new Date(Number(ano), Number(mes) - 1, Number(dia));
+    const nomeDiaSemana = diasSemana[data.getDay()];
 
-      return `${dia} de ${meses[Number(mes)]} de ${ano} - ${nomeDiaSemana}`;
-    }
+    return `${dia} de ${meses[Number(mes)]} de ${ano} - ${nomeDiaSemana}`;
+  }
 
-    function handleDiaAgendamento(dateString) {
-        const date = new Date(dateString);
-
-        const dia = date.getDate().toString().padStart(2, '0');
-        const mes = (date.getMonth() + 1).toString().padStart(2, '0');
-        const ano = date.getFullYear();
-        return {dia, mes, ano};
-    }
-
-    function handleHorario(dateString) {
+  function handleDiaAgendamento(dateString) {
       const date = new Date(dateString);
-      const horas = date.getHours().toString().padStart(2, "0");
-      const minutos = date.getMinutes().toString().padStart(2, "0");
-      return `${horas}:${minutos}`;
-    }
+
+      const dia = date.getDate().toString().padStart(2, '0');
+      const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+      const ano = date.getFullYear();
+      return {dia, mes, ano};
+  }
+
+  function handleHorario(dateString) {
+    const date = new Date(dateString);
+    const horas = date.getHours().toString().padStart(2, "0");
+    const minutos = date.getMinutes().toString().padStart(2, "0");
+    return `${horas}:${minutos}`;
+  }
 
   useEffect(() => {
     buscarAgendamentos();

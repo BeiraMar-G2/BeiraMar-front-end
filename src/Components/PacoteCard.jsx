@@ -18,11 +18,11 @@ export function PacoteCard({ nome, preco, duracao, tipo, ...props}) {
 
         {tipo == "Func" ? (
             <div className="card-modificacoes">
-                <button className="p-2 rounded-full hover:bg-red-300 transition">
+                <button className="p-2 rounded-full hover:bg-red-300 transition" onClick={() => props.onClick("editar", props.id)}>
                     <LuNotebookPen size={"100%"} />
                 </button>
-                <button className="p-2 rounded-full hover:bg-red-300 transition">
-                    <FaTrashAlt size={"100%"}/>
+                <button className="p-2 rounded-full hover:bg-red-300 transition" onClick={() => props.onClick("excluir", props.id)}>
+                    <FaTrashAlt size={"80%"} />
                 </button>
             </div>
         ) : (

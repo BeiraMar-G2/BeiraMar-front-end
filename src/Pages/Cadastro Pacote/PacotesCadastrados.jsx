@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input } from "../../Components/Input";
+import { useEffect } from "react";
 import { Header } from "../../Components/Header";
 import { PacoteCard } from "../../Components/PacoteCard";
 import { useNavigate } from "react-router-dom";
@@ -8,56 +8,87 @@ import "../../Pages/Styles/PacotesCadastrados.css";
 import { Titulo } from "../../Components/Fontes";
 import { InputPesquisa } from "../../Components/Input";
 import { Botao } from "../../Components/Botao"; 
+import api from "../../Provider/api";
+
 
 export function PacotesCadastrados() {
   const [search, setSearch] = useState("");
   const [tipo, setTipo] = useState("Pacotes");
   const navigate = useNavigate();
 
-  const pacotes = [
+  const [pacotes, setPacotes] = useState([
     {
       id: 1,
       nome: "3 Massagens Modeladoras + 2 Drenagens Linfáticas",
-      preco: 470,
-    },
-    {
-      id: 2,
-      nome: "3 Hidrolipo NA + 3 Detox Corporal",
-      preco: 630,
-    },
-    {
-      id: 3,
-      nome: "3 Aplicações de Enzimas + 2 Drenagens Linfáticas",
-      preco: 840,
-    },
-  ];
+      precoTotalSemDesconto: 470,
+      qtdSessoesTotal: 5,
+      tempoLimiteDias: 30
+    }
+  ]);
 
-  const servicos = [
+  const [servicos, setServicos] = useState([
     {
       id: 1,
       nome: "Massagem Relaxante",
       duracao: "60 min",
       preco: 120,
     },
-    {
-      id: 2,
-      nome: "Drenagem Linfática",
-      duracao: "50 min",
-      preco: 100,
-    },
-    {
-      id: 3,
-      nome: "Limpeza de Pele",
-      duracao: "45 min",
-      preco: 90,
-    },
-  ];
+  ]);
 
   const dados = tipo === "Pacotes" ? pacotes : servicos;
 
   const filtrados = dados.filter((item) =>
     item.nome.toLowerCase().includes(search.toLowerCase())
   );
+
+  function handleAcao(acao, id) {
+    if (acao === "editar") {
+        alert("desenvolvimento!");
+    } else if (acao === "excluir") {
+      if(tipo === "Pacotes"){
+          console.log("Excluir Pacote ID:", id);
+          api.delete(`/pacotes/${id}`)
+          window.reload();
+      } else {
+          api.delete(`/servicos/${id}`)
+          window.location.reload();
+      }
+    }
+  }
+
+  function buscarServicosPacotes() {
+    api.get("/pacotes")
+    .then((response) => {
+        console.log("Pacotes:", response.data);
+        setPacotes(response.data.map(pacote => ({
+            idPacote: pacote.idPacote,
+            nome: pacote.nome,
+            precoTotalSemDesconto: pacote.precoTotalSemDesconto,
+            qtdSessoesTotal: pacote.qtdSessoesTotal,
+            tempoLimiteDias: pacote.tempoLimiteDias
+        })));
+    })
+    .catch((error) => {
+        console.error("Erro ao buscar pacotes", error);
+    });
+    api.get("/servicos")
+    .then((response) => {
+        console.log("Serviços:", response.data);
+        setServicos(response.data.map(servico => ({
+            idServico: servico.idServico,
+            nome: servico.nome,
+            duracao: servico.duracao,
+            preco: servico.preco
+        })));
+    })
+    .catch((error) => {
+        console.error("Erro ao buscar serviços:", error);
+    });
+  }
+
+  useEffect(() => {
+        buscarServicosPacotes();
+    }, []);
 
   return (
     <div className="content-page">
@@ -66,7 +97,7 @@ export function PacotesCadastrados() {
         padding="0 10px"
         icone={<FaHouse size={28} />}
         cor="#90FCF9"
-        texto="Retornar ao Menu"
+        texto="Menu"
         color="#282828"
       />
 
@@ -98,14 +129,16 @@ export function PacotesCadastrados() {
         <div className="lista flex flex-col gap-3 w-72 overflow-y-auto max-h-96">
           {filtrados.map((item) =>
             tipo === "Pacotes" ? (
-              <PacoteCard key={item.id} nome={item.nome} preco={item.preco} tipo={"Func"} />
+              <PacoteCard key={item.idPacote} id={item.idPacote} nome={item.nome} preco={item.precoTotalSemDesconto} tipo={"Func"} onClick={handleAcao}/>
             ) : (
               <PacoteCard
-                key={item.id}
+                key={item.idServico}
+                id={item.idServico}
                 nome={item.nome}
                 preco={item.preco}
                 duracao={item.duracao}
                 tipo="Func"
+                onClick={handleAcao}
               />
             )
           )}
