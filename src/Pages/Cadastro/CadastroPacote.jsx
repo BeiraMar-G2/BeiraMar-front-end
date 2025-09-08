@@ -29,6 +29,7 @@ export function CadastroPacote() {
                 setFormData(response.data.map(servico => ({
                     id: servico.idServico,
                     nomeServico: servico.nome,
+                    preco: servico.preco,
                     selecionado: false
                 })));
             })
@@ -66,7 +67,7 @@ export function CadastroPacote() {
 
     return (
         <div className="content pacote">
-            <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Retornar ao Menu" color="#282828"/>
+            <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Menu" color="#282828"/>
             
             <div className="tela1">
                 <Titulo texto="Cadastro de Pacotes" className="titulo" />

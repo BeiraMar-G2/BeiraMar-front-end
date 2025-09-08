@@ -22,7 +22,8 @@ import { ResumoPacote } from "./Pages/Cadastro Pacote/ResumoPacote.jsx";
 import { PacotesCadastradosCliente } from "./Pages/Cadastro Pacote/PacotesCadastradosCliente.jsx";
 import { AgendamentoServicoPacote } from "./Pages/Agendamentos/AgendamentoServicoPacote.jsx";
 import { MenuCliente } from "./Pages/Menu/MenuCliente.jsx";
-import { CadastroServico } from "./Pages/CadastroServiço/CadastroServico.jsx";
+import { CadastroServico } from "./Pages/Cadastro/CadastroServico.jsx";
+import { EdicaoServico } from "./Pages/Edicao Servico/EdicaoServico.jsx";
 
 
 export const routes = createBrowserRouter([
@@ -90,18 +91,13 @@ export const routes = createBrowserRouter([
       element: <Home />,
       errorElement: <div>Erro ao carregar a página</div> 
     },
-    {
-      path: "/Cadastro/Pacote",
-      element: <CadastroPacote />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
     { 
       path: "/Menu",
       element: <Menu />,
       errorElement: <div>Erro ao carregar a página</div> 
     },
     { 
-      path: "/ServicosPacotes",
+      path: "/Servicos&Pacotes",
       element: <ServicosPacotes />,
       errorElement: <div>Erro ao carregar a página</div>
     },
@@ -111,12 +107,12 @@ export const routes = createBrowserRouter([
       errorElement: <div>Erro ao carregar a página</div>
     },
     {
-      path: "/PacotesCadastrados",
+      path: "/Pacotes",
       element: <PacotesCadastrados />,
       errorElement: <div>Erro ao carregar a página</div>
     },
     {
-      path: "/PacotesCadastradosCliente",
+      path: "/PacotesCliente",
       element: <PacotesCadastradosCliente />,
       errorElement: <div>Erro ao carregar a página</div>
     },
@@ -146,8 +142,20 @@ export const routes = createBrowserRouter([
       errorElement: <div>Erro ao carregar a página</div>
     },
     {
-      path: "/CadastroServico",
+      path: "/Servico/Cadastro",
       element: <CadastroServico />,
       errorElement: <div>Erro ao carregar a página</div>
     }
+    ,
+    {
+      path: "/Servico/Edicao",
+      element: <EdicaoServico />,
+      errorElement: <div>Erro ao carregar a página</div>
+    },
+    {
+      path: "/Pacote/Cadastro",
+      element: <CadastroPacote />,
+      errorElement: <div>Erro ao carregar a página</div>
+    },
+
 ])

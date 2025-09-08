@@ -102,6 +102,7 @@
   color: #282828;
   font-weight: 600;
   font-size: 32px;
+  margin-top: 10px;
 }
 
 .form-container {
@@ -136,6 +137,7 @@
   border-radius: 8px;
   font-size: 16px;
   background-color: #ffffff;
+  color: #282828;
   box-sizing: border-box; /* Garante que o padding não afete a largura */
 }
 

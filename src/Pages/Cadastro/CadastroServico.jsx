@@ -5,12 +5,15 @@ import { Titulo, Label } from "../../Components/Fontes.jsx";
 import { FaHouse } from "react-icons/fa6";
 import { Header } from "../../Components/Header.jsx";
 import "../Styles/CadastroServico.css";
+import api from '../../Provider/api.js';
 
 export function CadastroServico() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    nomeProcedimento: '',
+    idServico: "default",
+    nome: '',
     duracao: '',
+    descricao: '',
     preco: ''
   });
 
@@ -23,8 +26,11 @@ export function CadastroServico() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     console.log(formData);
+    api.post("/servicos", formData)
+    .then((response) => {
+      console.log(response)
+    })
   };
 
   useEffect(() => {
@@ -38,7 +44,7 @@ export function CadastroServico() {
         alinhamento="flex-start"
         padding="0 10px"
         icone={<FaHouse size={28} />}
-        texto="Retornar ao Menu"
+        texto="Menu"
         color="#282828"
       />
 
@@ -50,10 +56,22 @@ export function CadastroServico() {
             <Label texto="Nome do Procedimento" tamanho="18px" />
             <input 
               type="text" 
-              name="nomeProcedimento"
+              name="nome"
               className="input-padrao"
               placeholder="Digite o nome do procedimento"
-              value={formData.nomeProcedimento}
+              value={formData.nome}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <Label texto="Descrição" tamanho="18px" />
+            <input 
+              type="text" 
+              name="descricao"
+              className="input-padrao"
+              placeholder="Digite a descrição desse serviço"
+              value={formData.descricao}
               onChange={handleInputChange}
             />
           </div>
@@ -83,7 +101,7 @@ export function CadastroServico() {
           </div>
         </div>
 
-        <div className="botoes">
+        <div className="botoes-acao">
           <Botao
             texto="Voltar"
             cor="#C8C5C5"

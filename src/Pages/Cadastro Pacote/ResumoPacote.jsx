@@ -1,14 +1,19 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Botao } from "../../Components/Botao.jsx";
 import { Header } from "../../Components/Header.jsx";
-import { Titulo, Subtitulo } from "../../Components/Fontes.jsx";
+import { Titulo, Label } from "../../Components/Fontes.jsx";
 import { FaHouse } from "react-icons/fa6";
 import "../Styles/ResumoPacote.css";
+import api from "../../Provider/api.js";
 
 export function ResumoPacote() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [precoSugerido, setPrecoSugerido] = useState(0);
+  const [sessoesTotal, setSessoesTotal] = useState(0);
+  const [limitePacote, setLimitePacote] = useState(0);
+  const [idPacote, setIdPacote ] = useState(0);
 
   // Mantém os dados anteriores
   const { servicosSelecionados = {}, quantidades = {} } = location.state || {};
@@ -17,14 +22,50 @@ export function ResumoPacote() {
   const [preco, setPreco] = useState("");
 
   const finalizar = () => {
-    console.log({
-      nomePacote,
-      preco,
-      servicosSelecionados,
-      quantidades,
+    api.post("/pacotes", {
+      idPacote: "default",
+      nome: nomePacote,
+      precoTotalSemDesconto: preco == null ? precoSugerido : preco,
+      qtdSessoesTotal: sessoesTotal,
+      tempoLimiteDia: limitePacote
+    })
+    .then((response) => {
+      console.log(response)
+      setIdPacote(response.data.idPacote)
+      const novoPacoteId = response.data.idPacote; 
+      setIdPacote(novoPacoteId);
+      return (
+        servicosSelecionados.map(servico =>
+          api.post("/sessoes", {
+            fkPacote: novoPacoteId,
+            fkServico: servico.id,
+            qtdSessoes: quantidades[servico.id]
+          })
+        )
+      );
+    })
+    .then((responses) => {
+      console.log("Sessões criadas:", responses);
+    })
+    .catch((error) => {
+      console.error("Erro ao finalizar cadastro de Sessões:", error);
     });
-    // navigate("/sucesso", { state: { nomePacote, preco, servicosSelecionados, quantidades } });
   };
+
+  useEffect(() => {
+    if (Array.isArray(servicosSelecionados)) {
+      const soma = servicosSelecionados.reduce(
+        (acc, servico) => acc + servico.preco * (quantidades[servico.id] || 1),
+        0
+      );
+      const somaSessoes = servicosSelecionados.reduce(
+        (ac, servico) => parseInt(ac + Number(quantidades[servico.id]), 10),
+        0
+      )
+      setSessoesTotal(somaSessoes)
+      setPrecoSugerido(soma);
+    }
+  }, [servicosSelecionados]);
 
   return (
     <div className="resumo-container">
@@ -32,16 +73,18 @@ export function ResumoPacote() {
         alinhamento="flex-start"
         padding="0 10px"
         icone={<FaHouse size={28} />}
-        texto="Retornar ao Menu"
+        texto="Menu"
+        color="#282828"
       />
+      {console.log(servicosSelecionados, quantidades, sessoesTotal)}
 
       <div className="formulario">
         <Titulo texto="Cadastro de Pacotes" />
-        <p class="subtitulo">Coloque o Nome e o Preço Desejado</p>
+        <p className="subtitulo">Coloque o Nome e o Preço Desejado</p>
 
         <div className="resumo-box">
           <div className="campo-group">
-            <label className="campo-label">Nome do Pacote</label>
+            <Label texto="Nome do Pacote"/>
             <input
               type="text"
               className="campo"
@@ -53,9 +96,9 @@ export function ResumoPacote() {
 
           <div className="campo-group">
             <div className="campo-label-linha">
-              <label className="campo-label">Preço</label>
+              <Label texto="Preço"/>
               <span className="campo-descricao">
-                De acordo com os serviços selecionados o total seria R$ 500
+                Baseado na quantidade de sessões e nos serviços o total seria: R$ {precoSugerido}
               </span>
             </div>
 
@@ -68,17 +111,32 @@ export function ResumoPacote() {
               onChange={(e) => setPreco(e.target.value)}
             />
           </div>
+
+          <div className="campo-group">
+            <Label texto="Tempo Limite do Pacote"/>
+            <input
+              type="text"
+              className="campo"
+              placeholder="Digite o tempo limite de existência do Pacote"
+              value={limitePacote}
+              onChange={(e) => setLimitePacote(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="botoes">
           <Botao
             texto="Voltar"
-            cor="cinza"
+            cor="#C8C5C5"
             onClick={() =>
               navigate("/DefinirSessoes", { state: { servicosSelecionados } })
             }
           />
-          <Botao texto="Finalizar" cor="rosa" onClick={finalizar} />
+          <Botao 
+            texto="Finalizar" 
+            cor="#f8c7ccbb" 
+            onClick={finalizar} 
+          />
         </div>
       </div>
     </div>

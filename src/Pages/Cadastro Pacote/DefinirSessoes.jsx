@@ -5,15 +5,13 @@ import { Titulo, Label } from "../../Components/Fontes.jsx";
 import { FaHouse } from "react-icons/fa6";
 import { Header } from "../../Components/Header.jsx";
 import "../Styles/DefinirSessoes.css";
+import { useEffect } from "react";
 
 export function DefinirSessoes() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Recebendo da tela anterior (array de objetos)
   const { servicosSelecionados = [] } = location.state || {};
-
-  // Quantidades por serviço (id -> quantidade)
   const [quantidades, setQuantidades] = useState({});
 
   const handleQuantidadeChange = (servicoId, valor) => {
@@ -27,7 +25,6 @@ export function DefinirSessoes() {
     console.log("Serviços selecionados:", servicosSelecionados);
     console.log("Quantidades:", quantidades);
 
-    // Se quiser levar para a próxima tela
     navigate("/ResumoPacote", {
       state: { servicosSelecionados, quantidades }
     });
@@ -44,14 +41,14 @@ export function DefinirSessoes() {
         alinhamento="flex-start"
         padding="0 10px"
         icone={<FaHouse size={28} />}
-        texto="Retornar ao Menu"
+        texto="Menu"
         color="#282828"
       />
 
       <div className="tela2">
         <Titulo texto="Cadastro de Pacotes" />
 
-        <Label texto="Defina a quantidade de sessões" tamanho="18px" />
+        <Label texto="Defina a quantidade de sessões"/>
         <div className="servicos-box definir">
 
           {servicosSelecionados.length === 0 && (
@@ -83,7 +80,7 @@ export function DefinirSessoes() {
           <Botao
             texto="Voltar"
             cor="#C8C5C5"
-            onClick={() => navigate("/Cadastro/Pacote")}
+            onClick={() => navigate("/Pacote/Cadastro")}
           />
           <Botao
             texto="Continuar"
