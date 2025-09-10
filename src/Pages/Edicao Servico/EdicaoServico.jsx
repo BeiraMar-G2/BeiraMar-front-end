@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Botao } from "../../Components/Botao.jsx";
 import { Titulo, Label } from "../../Components/Fontes.jsx";
 import { FaHouse } from "react-icons/fa6";
 import { Header } from "../../Components/Header.jsx";
 import "../Styles/CadastroServico.css";
+import api from '../../Provider/api.js';
 
 export function EdicaoServico() {
   const navigate = useNavigate();
@@ -13,27 +14,42 @@ export function EdicaoServico() {
     duracao: '',
     preco: ''
   });
+  const location = useLocation();
+  const { servicoEditado = [] } = location.state || {};
+  const [ servicoSelecionado, setServicoSelecionado ] = useState({})
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setServicoSelecionado(prevState => ({
       ...prevState,
       [name]: value
     }));
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
+    if(servicoEditado.nome == "" || servicoEditado.duracao == "" || servicoEditado.preco == ""){
+        console.log(servicoSelecionado.nome)
+        console.log(servicoEditado.nome);
+    } else {
+        console.log("a")
+    }
   };
+
+  function buscarServico(id) {
+    api.get(`/servicos/${id}`)
+    .then((response) => {
+        console.log(response)
+        setServicoSelecionado(response.data)
+    })
+}
 
   useEffect(() => {
     const box = document.querySelector(".service-content");
-    if (box) box.scrollTop = 0;
+    buscarServico(Number(servicoEditado.id))
   }, []);
 
   return (
-    <div className="content cadastro-servico">
+      <div className="content cadastro-servico">
       <Header
         alinhamento="flex-start"
         padding="0 10px"
@@ -43,17 +59,18 @@ export function EdicaoServico() {
       />
 
       <div className="tela-servico">
-        <span className="titulo-servico">Cadastro de Serviços</span>
+        <span className="titulo-servico">Edição de Serviços</span>
+        <Label texto="Altere somente os campos a serem atualizados" tamanho="18px" />
 
         <div className="form-container">
           <div className="form-group">
             <Label texto="Nome do Procedimento" tamanho="18px" />
             <input 
               type="text" 
-              name="nomeProcedimento"
+              name="nome"
               className="input-padrao"
               placeholder="Digite o nome do procedimento"
-              value={formData.nomeProcedimento}
+              value={servicoSelecionado.nome}
               onChange={handleInputChange}
             />
           </div>
@@ -65,7 +82,7 @@ export function EdicaoServico() {
               name="duracao"
               className="input-padrao"
               placeholder="Digite a duração em Minutos"
-              value={formData.duracao}
+              value={servicoSelecionado.duracao}
               onChange={handleInputChange}
             />
           </div>
@@ -77,7 +94,7 @@ export function EdicaoServico() {
               name="preco"
               className="input-padrao"
               placeholder="Digite o preço desejado"
-              value={formData.preco}
+              value={servicoSelecionado.preco}
               onChange={handleInputChange}
             />
           </div>

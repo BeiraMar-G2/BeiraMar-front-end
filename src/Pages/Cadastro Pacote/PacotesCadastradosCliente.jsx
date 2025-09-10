@@ -42,7 +42,6 @@ export function PacotesCadastradosCliente() {
   function buscarServicosPacotes() {
     api.get("/pacotes")
     .then((response) => {
-        console.log("Pacotes:", response.data);
         setPacotes(response.data.map(pacote => ({
             idPacote: pacote.idPacote,
             nome: pacote.nome,
@@ -56,7 +55,6 @@ export function PacotesCadastradosCliente() {
     });
     api.get("/servicos")
     .then((response) => {
-        console.log("Serviços:", response.data);
         setServicos(response.data.map(servico => ({
             idServico: servico.idServico,
             nome: servico.nome,

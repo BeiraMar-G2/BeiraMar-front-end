@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Botao } from '../../Components/Botao';
 import { useNavigate } from 'react-router-dom';
 import { FaHouse } from "react-icons/fa6";
+import { Sucesso } from '../../Components/Modal';
 import api from '../../Provider/api';
 import "../Styles/HorarioAgendamento.css";
 
@@ -13,6 +14,7 @@ export function HorarioAgendamento() {
     const [horarioSelecionado, setHorarioSelecionado] = useState('16:20');
     const location = useLocation();
     const { servicoDataEscolhido } = location.state || {};
+    const [showAlert, setShowAlert] = useState(false);
 
     const horarios = [
         '10:30', '11:30', '12:40',
@@ -56,7 +58,7 @@ export function HorarioAgendamento() {
     };
 
     const botaoContinuar = () => {
-        api.post("/agendamentos", {
+        console.log({
             fkServico: `${servicoDataEscolhido.servicoEscolhido.servicoId}`,
             fkCliente: Number(localStorage.getItem("idUsuario")),
             fkFuncionario: 1,
@@ -67,9 +69,26 @@ export function HorarioAgendamento() {
             dataValidade: null,
             fkPacote: null
         })
+        api.post("/agendamentos", {
+            fkServico: `${Number(servicoDataEscolhido.servicoEscolhido.servicoId)}`,
+            fkCliente: Number(localStorage.getItem("idUsuario")),
+            fkFuncionario: 1,
+            dtHora: `${servicoDataEscolhido.dataEscolhida.formato}T${horarioSelecionado}:00`,
+            valorPago: servicoDataEscolhido.servicoEscolhido.servicoPreco,
+            statusAgendamento: "Agendado",
+            status: "Agendado",
+            dataValidade: null,
+            fkPacote: 1
+        })
         .then((response) => {
-            console.log("Agendamento criado:", response.data);
-            navigate("/Agendamentos/VisualizarConsultas");
+            console.log("Agendamento criado:", response);
+            setShowAlert(true);
+            if(response.status == "201") {
+                setTimeout(() => setShowAlert(false), 6000);
+    
+                setTimeout(() => 
+                    navigate("/Agendamentos/VisualizarConsultas"), 6000);
+            }
         })
     };
 
@@ -95,6 +114,12 @@ export function HorarioAgendamento() {
                 <div className="novo-agendamento">
                     <h3>Novo Agendamento</h3>
                 </div>
+
+            <Sucesso
+             show={showAlert} 
+             onClose={() => setShowAlert(false)}
+             texto="Seu agendamento foi marcado com Sucesso!  Redirecionando..."
+             />
 
                 <div className="horarios-grid">
                     <div className="data-info">

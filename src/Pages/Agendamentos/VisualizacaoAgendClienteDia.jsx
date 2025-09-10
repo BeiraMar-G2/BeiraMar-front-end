@@ -21,7 +21,7 @@ return (
     <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
       <VisuClientePorDia />
     </div>
-     <div className="botoes">
+     <div className="botoes-acao">
         <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate(-1)} />
     </div>
     </div>

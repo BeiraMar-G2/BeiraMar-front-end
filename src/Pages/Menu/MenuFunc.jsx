@@ -21,7 +21,7 @@ export function Menu() {
     };
     
     const direcionarServPacotes = () => {
-      navigate("/ServicosPacotes"); 
+      navigate("/Servicos&Pacotes"); 
     };
     
     const direcionarCadAtendente = () => {

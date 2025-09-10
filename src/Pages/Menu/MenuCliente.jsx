@@ -14,7 +14,7 @@ export function MenuCliente() {
     
     const handleServicosEPacotes = () => {
         console.log('Navegando para Serviços e Pacotes');
-        navigate('/PacotesCadastradosCliente');
+        navigate('/PacotesCliente');
     };
     
     const handleHistoricoAgendamentos = () => {

@@ -28,11 +28,11 @@ export function ServicosPacotes() {
       </h2>
 
       <div className="botoesMenu">
-        <BotaoMenu texto="Criar Serviço" imagem={<IoBagAddSharp className="icone-menu"/>} onClick={() => {navigate("/")}}/>
-        <BotaoMenu texto="Criar Pacote" imagem={<MdOutlineAddShoppingCart className="icone-menu"/>} onClick={() => {navigate("/Cadastro/Pacote")}}/>
+        <BotaoMenu texto="Criar Serviço" imagem={<IoBagAddSharp className="icone-menu"/>} onClick={() => {navigate("/Servico/Cadastro")}}/>
+        <BotaoMenu texto="Criar Pacote" imagem={<MdOutlineAddShoppingCart className="icone-menu"/>} onClick={() => {navigate("/Pacote/Cadastro")}}/>
       </div>
       <div className="botoesMenu">
-        <BotaoMenu texto="Serviços e Pacotes" imagem={<BiSolidShoppingBags className="icone-menu"/>} onClick={() => {navigate("/PacotesCadastrados")}}/>
+        <BotaoMenu texto="Serviços e Pacotes" imagem={<BiSolidShoppingBags className="icone-menu"/>} onClick={() => {navigate("/Pacotes")}}/>
       </div>
     
     </div>

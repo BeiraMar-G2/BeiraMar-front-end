@@ -43,7 +43,9 @@ export function PacotesCadastrados() {
 
   function handleAcao(acao, id) {
     if (acao === "editar") {
-        alert("desenvolvimento!");
+        if(tipo === "Serviços") {
+          navigate("/Servico/Edicao", {state: { servicoEditado: {id: id} }})
+        }
     } else if (acao === "excluir") {
       if(tipo === "Pacotes"){
           console.log("Excluir Pacote ID:", id);
