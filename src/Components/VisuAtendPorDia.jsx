@@ -1,75 +1,105 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../Provider/api";
 import "../Pages/Styles/VisuAtendPorDia.css";
 
 export default function VisuAtendPorDia() {
   const [selecionado, setSelecionado] = useState(null);
-  const [consultas, setConsultas] = useState([
-  ])
+  const [consultas, setConsultas] = useState([]);
 
   function buscarAgendamentos() {
-    api.get(`/agendamentos`)
-    .then((response) => {
-      console.log(response.data)
-        setConsultas(response.data.map(agendamento => ({
+    api
+      .get(`/agendamentos`)
+      .then((response) => {
+        console.log(response.data);
+        setConsultas(
+          response.data.map((agendamento) => ({
             idAgendamento: agendamento.idAgendamento,
-            servico: agendamento.nomeServico,
-            cliente: agendamento.nomeCliente,
-            atendente: agendamento.nomeFuncionario,
-            dtHora: agendamento.dtHora,
+            servico: agendamento.servico.nome,
+            cliente: agendamento.cliente.nome,
+            atendente: agendamento.funcionario.nome,
+            dtHora: agendamento.dtHora, 
             preco: agendamento.valorPago,
-            status: agendamento.status
-        })));
-    })
-    .catch((error) => {
+            status: agendamento.status,
+          }))
+        );
+      })
+      .catch((error) => {
         console.error("Erro ao buscar agendamentos do cliente", error);
-    });
+      });
   }
 
   function confirmarConsulta() {
     if (selecionado !== null) {
-      setConsultas(prev =>
-        prev.map((consulta, idx) =>
-          idx === selecionado
-            ? { ...consulta, status: "✔ Consulta Realizada" }
-            : consulta
-        )
-      );
+      const consultaAtualizada = { ...consultas[selecionado] };
+
+      api
+        .put(`/agendamentos/${consultaAtualizada.idAgendamento}`, {
+          status: "Concluido",
+        })
+        .then(() => {
+          setConsultas((prev) =>
+            prev.map((consulta, idx) =>
+              idx === selecionado
+                ? { ...consulta, status: "Concluido" }
+                : consulta
+            )
+          );
+          setSelecionado(null);
+        })
+        .catch((error) => {
+          console.error("Erro ao confirmar consulta", error);
+        });
     }
   }
 
   function cancelarConsulta() {
     if (selecionado !== null) {
-      setConsultas(prev =>
-        prev.map((consulta, idx) =>
-          idx === selecionado
-            ? { ...consulta, status: undefined }
-            : consulta
-        )
-      );
+      const consultaAtualizada = { ...consultas[selecionado] };
+
+      api
+        .put(`/agendamentos/${consultaAtualizada.idAgendamento}`, {
+          status: "Cancelado",
+        })
+        .then(() => {
+          setConsultas((prev) =>
+            prev.map((consulta, idx) =>
+              idx === selecionado
+                ? { ...consulta, status: "Cancelado" }
+                : consulta
+            )
+          );
+          setSelecionado(null);
+        })
+        .catch((error) => {
+          console.error("Erro ao cancelar consulta", error);
+        });
     }
   }
 
-    function formatarDataCompleta({ dia, mes, ano }) {
+  function formatarDataCompleta({ dia, mes, ano }) {
     const meses = {
-      1: 'Janeiro',
-      2: 'Fevereiro',
-      3: 'Março',
-      4: 'Abril',
-      5: 'Maio',
-      6: 'Junho',
-      7: 'Julho',
-      8: 'Agosto',
-      9: 'Setembro',
-      10: 'Outubro',
-      11: 'Novembro',
-      12: 'Dezembro'
+      1: "Janeiro",
+      2: "Fevereiro",
+      3: "Março",
+      4: "Abril",
+      5: "Maio",
+      6: "Junho",
+      7: "Julho",
+      8: "Agosto",
+      9: "Setembro",
+      10: "Outubro",
+      11: "Novembro",
+      12: "Dezembro",
     };
 
     const diasSemana = [
-      'Domingo', 'Segunda-feira', 'Terça-feira', 
-      'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado",
     ];
 
     const data = new Date(Number(ano), Number(mes) - 1, Number(dia));
@@ -79,12 +109,12 @@ export default function VisuAtendPorDia() {
   }
 
   function handleDiaAgendamento(dateString) {
-      const date = new Date(dateString);
+    const date = new Date(dateString);
 
-      const dia = date.getDate().toString().padStart(2, '0');
-      const mes = (date.getMonth() + 1).toString().padStart(2, '0');
-      const ano = date.getFullYear();
-      return {dia, mes, ano};
+    const dia = date.getDate().toString().padStart(2, "0");
+    const mes = (date.getMonth() + 1).toString().padStart(2, "0");
+    const ano = date.getFullYear();
+    return { dia, mes, ano };
   }
 
   function handleHorario(dateString) {
@@ -94,42 +124,84 @@ export default function VisuAtendPorDia() {
     return `${horas}:${minutos}`;
   }
 
+  function agruparPorDia(consultas) {
+    const grupos = {};
+
+    consultas.forEach((consulta, idx) => {
+      const dataObj = handleDiaAgendamento(consulta.dtHora);
+      const chaveData = `${dataObj.dia}/${dataObj.mes}/${dataObj.ano}`;
+
+      if (!grupos[chaveData]) {
+        grupos[chaveData] = {
+          dataFormatada: formatarDataCompleta(dataObj),
+          agendamentos: [],
+        };
+      }
+
+      grupos[chaveData].agendamentos.push({ ...consulta, indiceOriginal: idx });
+    });
+
+    return grupos;
+  }
+
   useEffect(() => {
-      buscarAgendamentos();
-    }, []);
+    buscarAgendamentos();
+  }, []);
+
+  const agendamentosAgrupados = agruparPorDia(consultas);
 
   return (
     <div className="agenda">
-        {consultas && consultas.length > 0 ? (
-          consultas.map((consulta, idx) => (
-            <div>
-              <h3>{formatarDataCompleta(handleDiaAgendamento(consulta.dtHora))}</h3>
+      {Object.keys(agendamentosAgrupados).length > 0 ? (
+        Object.entries(agendamentosAgrupados).map(([data, grupo]) => (
+          <div key={data} className="grupo-dia">
+            <h3>{grupo.dataFormatada}</h3>
+            {grupo.agendamentos.map((consulta) => (
               <div
-              key={idx}
-              className={`consulta${selecionado === idx ? " selecionado" : ""}${consulta.status ? " destaque" : ""}`}
-              onClick={() => setSelecionado(idx)}
+                key={consulta.idAgendamento}
+                className={`consulta${
+                  selecionado === consulta.indiceOriginal ? " selecionado" : ""
+                }${consulta.status ? " destaque" : ""}`}
+                onClick={() => setSelecionado(consulta.indiceOriginal)}
               >
-              <div className="hora">{handleHorario(consulta.dtHora)}</div>
-              <div className="info">
-                <p><strong>Cliente:</strong> {consulta.cliente}</p>
-                <p><strong>Responsável:</strong> {consulta.atendente}</p>
-                <p><strong>Serviço:</strong> {consulta.servico}</p>
-                {consulta.status && (
-                  <div className="status">
-                    <span>{consulta.status}</span>
-                  </div>
-                )}
+                <div className="hora">{handleHorario(consulta.dtHora)}</div>
+                <div className="info">
+                  <p>
+                    <strong>Cliente:</strong> {consulta.cliente}
+                  </p>
+                  <p>
+                    <strong>Responsável:</strong> {consulta.atendente}
+                  </p>
+                  <p>
+                    <strong>Serviço:</strong> {consulta.servico}
+                  </p>
+                  {consulta.status && (
+                    <div className="status">
+                      <span>
+                        {consulta.status === "Concluido" && "✔ Consulta Realizada"}
+                        {consulta.status === "Cancelado" && "✖ Consulta Cancelada"}
+                        {consulta.status !== "Concluido" &&
+                          consulta.status !== "Cancelado" &&
+                          consulta.status}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         ))
-        ) : (
-          <p>Sem agendamentos...</p>
-        )}
+      ) : (
+        <p>Sem agendamentos...</p>
+      )}
 
       <div className="acoes">
-        <button className="confirmar" onClick={confirmarConsulta}>Confirmar</button>
-        <button className="cancelar" onClick={cancelarConsulta}>Cancelar</button>
+        <button className="confirmar" onClick={confirmarConsulta}>
+          Confirmar
+        </button>
+        <button className="cancelar" onClick={cancelarConsulta}>
+          Cancelar
+        </button>
       </div>
     </div>
   );
