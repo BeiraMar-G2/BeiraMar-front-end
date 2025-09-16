@@ -7,6 +7,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Sucesso, Erro } from '../../Components/Modal.jsx';
 import api from '../../Provider/api';
 import '../Styles/Form.css'
 import '../Styles/Input.css'
@@ -20,10 +21,18 @@ export function CadastroForm(){
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertError, setShowAlertError] = useState(false);
   const navigate = useNavigate();
 
 
   function cadastrarUsuario() {
+    if (senha !== confirmarSenha) {
+      console.log("As senhas não coincidem.");
+      setShowAlertError(true);
+      setTimeout(() => setShowAlertError(false), 5000);
+      return;
+    }
     console.log("Cadastrando usuário:", {
       nome,
       telefone,
@@ -42,6 +51,13 @@ export function CadastroForm(){
     .then((response)=>{
       console.log(response)
       navigate("/Login");
+      if(response.status == "201") {
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 6000);
+        setTimeout(() => {  
+          navigate("/Login");
+        }, 4000);
+      }
     })
   }
 
@@ -50,6 +66,18 @@ return (
   <div onClick={() => navigate("/")} className='voltar-wrapper'>
     <FaArrowLeft size={28} color="#000" className='voltar'/>
   </div>
+
+  <Erro
+    show={showAlertError} 
+    onClose={() => setShowAlertError(false)}
+    texto="As senhas não coincidem. Por favor, tente novamente."
+  />
+  <Sucesso
+  show={showAlert} 
+  onClose={() => setShowAlert(false)}
+  texto="Cadastro realizado com sucesso!  Redirecionando..."
+  />
+
     <div className='formulario'>
       <img src="../Assets/Logo.png" alt="" />
       <div>
@@ -73,7 +101,7 @@ return (
         <FaKey className='icon' size={24} />
       </div>
       <div className='conjuntoInput'>
-        <Input valor="confirmarSenha" icon="FaKey" type="password" placeholder="Confirme sua senha"/>
+        <Input valor="confirmarSenha" icon="FaKey" type="password" placeholder="Confirme sua senha" onChange={setConfirmarSenha}/>
         <FaKey className='icon' size={24}/>
       </div>
       </div>

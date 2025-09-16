@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from '../../Components/Header';
 import { Titulo, Subtitulo } from '../../Components/Fontes';
 import { useLocation } from 'react-router-dom';
@@ -82,8 +82,8 @@ export function HorarioAgendamento() {
         })
         .then((response) => {
             console.log("Agendamento criado:", response);
-            setShowAlert(true);
             if(response.status == "201") {
+                setShowAlert(true);
                 setTimeout(() => setShowAlert(false), 6000);
     
                 setTimeout(() => 
@@ -91,6 +91,18 @@ export function HorarioAgendamento() {
             }
         })
     };
+
+    function buscarDisponibilidade() {
+        api.get("/disponibilidades")
+        .then((response) => {
+            console.log(response)
+        })
+    }
+
+    useEffect(() => {
+        buscarDisponibilidade();
+    }, []);
+    
 
     return (        
         <div className="horario-agendamento">

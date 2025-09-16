@@ -7,6 +7,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Sucesso } from '../../Components/Modal.jsx';
 import api from '../../Provider/api';
 import '../Styles/Form.css'
 import '../Styles/Input.css'
@@ -17,6 +18,7 @@ export function LoginForm(){
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
   function validarLogin() {
@@ -31,18 +33,29 @@ export function LoginForm(){
       localStorage.setItem("nome", nome);
       localStorage.setItem("email", email);
       localStorage.setItem("idUsuario", id);
-      if(cargo === "Cliente"){
-        navigate("/MenuCliente");
-        console.log(response.data);
-      }
-      else {
-        navigate("/Menu");
+      setShowAlert(true);
+      console.log("Login realizado com sucesso:", response);
+      if(response.status == "200") {
+        setTimeout(() => setShowAlert(false), 6000);
+        setTimeout(() => {  
+          if(cargo === "Cliente"){
+            navigate("/MenuCliente");
+          }
+          else {
+            navigate("/Menu");
+          }
+        }, 4000);
       }
     })
   }
 
     return (
     <div className='content atendente'>
+      <Sucesso
+      show={showAlert} 
+      onClose={() => setShowAlert(false)}
+      texto="Login realizado com sucesso, boas vindas!  Redirecionando..."
+      />
     <div onClick={() => navigate("/")} className='voltar-wrapper'>
       <FaArrowLeft size={28} color="#000" className='voltar'/>
     </div>
