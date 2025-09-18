@@ -8,6 +8,7 @@ import { IoBagAddSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { BiSolidShoppingBags } from "react-icons/bi";
+import { Botao } from "../../Components/Botao";
 
 export function ServicosPacotes() {
   const navigate = useNavigate();
@@ -22,8 +23,6 @@ export function ServicosPacotes() {
         color: "#000",
         fontSize: "20px"
       }}>
-        <Label texto="Clique no seu nome para retornar!"/>
-        <br />
         Gerencie seus serviços!
       </h2>
 
@@ -33,6 +32,10 @@ export function ServicosPacotes() {
       </div>
       <div className="botoesMenu">
         <BotaoMenu texto="Serviços e Pacotes" imagem={<BiSolidShoppingBags className="icone-menu"/>} onClick={() => {navigate("/Pacotes")}}/>
+      </div>
+
+      <div className="botoes-acao">
+        <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate("/Menu")} />
       </div>
     
     </div>

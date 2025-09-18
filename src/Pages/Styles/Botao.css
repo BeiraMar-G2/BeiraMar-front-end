@@ -5,6 +5,7 @@
   cursor: pointer;
   transition: border-color 0.25s;
   border-radius: 10px;
+  align-self: center;
 }
 
 .botao:hover .textoBotao{

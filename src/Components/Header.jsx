@@ -15,13 +15,7 @@ export function Header(props) {
       setPopupVisivel(false);
     };
 
-    const handleMenu = () => {
-      if (props.isCliente) {
-        navigate("/MenuCliente");
-      } else {
-        navigate("/Menu");
-      }
-    };
+    
 
     const handleLogout = () => {
       localStorage.removeItem("token")
@@ -35,7 +29,7 @@ export function Header(props) {
     }
 
     return(
-        <div onClick={handleMenu} className="header">
+        <div className="header">
             <div onClick={(e) => {
               e.stopPropagation(); 
               exibirPopUp();

@@ -8,10 +8,12 @@ import "../../Pages/Styles/PacotesCadastrados.css";
 import { Titulo } from "../../Components/Fontes";
 import { InputPesquisa } from "../../Components/Input";
 import { Botao } from "../../Components/Botao"; 
+import { Sucesso, Erro } from "../../Components/Modal";
 import api from "../../Provider/api";
 
 
 export function PacotesCadastrados() {
+  const [showAlert, setShowAlert] = useState(false);
   const [search, setSearch] = useState("");
   const [tipo, setTipo] = useState("Pacotes");
   const navigate = useNavigate();
@@ -53,7 +55,19 @@ export function PacotesCadastrados() {
           window.reload();
       } else {
           api.delete(`/servicos/${id}`)
-          window.location.reload();
+          .then((response) => {
+            if (response.status === 204) {
+              setShowAlert(true);
+              setTimeout(() => setShowAlert(false), 5000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 4000);
+              console.log("Serviço excluído com sucesso:", response);
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao excluir serviço:", error);
+          });
       }
     }
   }
@@ -103,6 +117,12 @@ export function PacotesCadastrados() {
         color="#282828"
       />
 
+      <Sucesso
+        show={showAlert} 
+        onClose={() => setShowAlert(false)}
+        texto="Serviço excluído com sucesso!  Recarregando página..."
+        />
+
       <Titulo
         texto={
           tipo === "Pacotes" ? "Pacotes Cadastrados" : "Serviços Cadastrados"
@@ -148,7 +168,7 @@ export function PacotesCadastrados() {
 
         {/* Botão Voltar */}
         <div style={{ display:"flex", justifyContent:"center", width: "90%", marginTop: "18px" }}>
-          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {navigate(-1)}}/>
+          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {navigate("/Servicos&Pacotes")}}/>
         </div>
       </div>
     </div>

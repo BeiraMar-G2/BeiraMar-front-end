@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Botao } from '../../Components/Botao.jsx';
 import { InputPesquisa } from '../../Components/Input.jsx';
@@ -6,32 +6,26 @@ import { Header } from '../../Components/Header.jsx';
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from '../../Components/Fontes.jsx';
 import { FaCheck } from 'react-icons/fa';
-import { useEffect } from "react";
 import '../Styles/CadastroPacote.css';
 import api from '../../Provider/api.js'; 
 
 export function CadastroPacote() {
-    
     const navigate = useNavigate();
     const [filtro, setFiltro] = useState('');
-    const [formData, setFormData] = useState({
-    });
-    const [servicos, setServicos] = useState([
-    ]);
+    const [formData, setFormData] = useState([]);
+    const [servicos, setServicos] = useState([]);
 
     function buscarServico() {
         api.get("/servicos")
             .then((response) => {
-                setServicos(response.data.map(servico => ({
-                    id: servico.idServico,
-                    nome: servico.nome
-                })));
-                setFormData(response.data.map(servico => ({
+                const servicosData = response.data.map(servico => ({
                     id: servico.idServico,
                     nomeServico: servico.nome,
                     preco: servico.preco,
                     selecionado: false
-                })));
+                }));
+                setServicos(servicosData);
+                setFormData(servicosData);
             })
             .catch((error) => {
                 console.error("Erro ao buscar serviços:", error);
@@ -39,31 +33,33 @@ export function CadastroPacote() {
     }
 
     const handleChange = (e) => {
-        const {value } = e.target;  
+        const { value } = e.target;  
         setFiltro(value);
     };
 
-    const handleCardClick = (id, nome, selecionado) => {
-        setFormData(prev => (prev.map(servico =>
-            servico.id === id 
-            ? { ...servico, selecionado: !servico.selecionado } 
-            : servico
-        )));
+    const handleCardClick = (id) => {
+        setFormData(prev =>
+            prev.map(servico =>
+                servico.id === id
+                    ? { ...servico, selecionado: !servico.selecionado }
+                    : servico
+            )
+        );
     };
 
-    const servicosFiltrados = servicos.filter(({ nome }) =>
-        nome.toLowerCase().includes(filtro.toLowerCase())
+    const servicosFiltrados = servicos.filter(({ nomeServico }) =>
+        nomeServico.toLowerCase().includes(filtro.toLowerCase())
     );
 
     const destacarTexto = (nome) => {
         if (!filtro) return nome;
         const regex = new RegExp(`(${filtro})`, 'gi');
-        return nome;
+        return nome.replace(regex, '<strong>$1</strong>');
     };
 
     useEffect(() => {
         buscarServico();
-        }, []);
+    }, []);
 
     return (
         <div className="content pacote">
@@ -74,30 +70,31 @@ export function CadastroPacote() {
                 <h3 className="titulo-servicos">Serviços do Pacote</h3>
 
                 <div className="servicos-box">
-                    
                     <Subtitulo texto="Serviços Incluídos" tamanho="18px" />
 
                     <InputPesquisa
                         name="nomeServico"
                         type="text"
                         placeholder="Digite o nome do serviço"    
-                        value={formData.nomeServico}
+                        value={filtro}
                         onChange={handleChange}
                         className="input-pacote"
                     />
 
                     <div className="lista-servicos">
-                        {servicosFiltrados.map(({ id, nome }) => (
-                            <div
-                                key={id}
-                                className={`card-servico ${formData[id-1].selecionado ? 'selecionado' : ''}`}
-                                onClick={() => {handleCardClick(id, nome, formData[id-1].selecionado) 
-                                }}
-                            >
-                                <span dangerouslySetInnerHTML={{ __html: destacarTexto(nome) }} />
-                                {formData[id-1].selecionado && <FaCheck className="check-icon" />}
-                            </div>
-                        ))}
+                        {servicosFiltrados.map(({ id, nomeServico }) => {
+                            const servico = formData.find(s => s.id === id); // Localiza o serviço correspondente
+                            return (
+                                <div
+                                    key={id}
+                                    className={`card-servico ${servico?.selecionado ? 'selecionado' : ''}`}
+                                    onClick={() => handleCardClick(id)}
+                                >
+                                    <span dangerouslySetInnerHTML={{ __html: destacarTexto(nomeServico) }} />
+                                    {servico?.selecionado && <FaCheck className="check-icon" />}
+                                </div>
+                            );
+                        })}
                         {servicosFiltrados.length === 0 && (
                             <div className="card-servico vazio">Nenhum serviço encontrado</div>
                         )}

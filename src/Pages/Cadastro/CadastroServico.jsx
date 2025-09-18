@@ -4,10 +4,12 @@ import { Botao } from "../../Components/Botao.jsx";
 import { Titulo, Label } from "../../Components/Fontes.jsx";
 import { FaHouse } from "react-icons/fa6";
 import { Header } from "../../Components/Header.jsx";
+import { Sucesso, Erro } from '../../Components/Modal.jsx';
 import "../Styles/CadastroServico.css";
 import api from '../../Provider/api.js';
 
 export function CadastroServico() {
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     idServico: "default",
@@ -30,6 +32,13 @@ export function CadastroServico() {
     api.post("/servicos", formData)
     .then((response) => {
       console.log(response)
+      if(response.status == "201") {
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 6000);
+        setTimeout(() => {  
+          navigate("/Servicos&Pacotes");
+        }, 4000);
+      }
     })
   };
 
@@ -47,6 +56,12 @@ export function CadastroServico() {
         texto="Menu"
         color="#282828"
       />
+
+      <Sucesso
+            show={showAlert} 
+            onClose={() => setShowAlert(false)}
+            texto="Serviço criado com sucesso. Vamos vender!  Redirecionando..."
+            />
 
       <div className="tela-servico">
         <span className="titulo-servico">Cadastro de Serviços</span>

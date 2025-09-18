@@ -4,12 +4,14 @@ import { Botao } from "../../Components/Botao.jsx";
 import { Header } from "../../Components/Header.jsx";
 import { Titulo, Label } from "../../Components/Fontes.jsx";
 import { FaHouse } from "react-icons/fa6";
+import { Sucesso, Erro } from "../../Components/Modal.jsx";
 import "../Styles/ResumoPacote.css";
 import api from "../../Provider/api.js";
 
 export function ResumoPacote() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [showAlert, setShowAlert] = useState(false);  
   const [precoSugerido, setPrecoSugerido] = useState(0);
   const [sessoesTotal, setSessoesTotal] = useState(0);
   const [limitePacote, setLimitePacote] = useState(0);
@@ -40,6 +42,14 @@ export function ResumoPacote() {
             fkPacote: novoPacoteId,
             fkServico: servico.id,
             qtdSessoes: quantidades[servico.id]
+          })
+          .then((res) => {
+            console.log("Sessão criada:", res.data);
+            setShowAlert(true);
+            setTimeout(() => setShowAlert(false), 6000);
+            setTimeout(() => {  
+              navigate("/Servicos&Pacotes");
+            }, 4000);
           })
         )
       );
@@ -76,7 +86,12 @@ export function ResumoPacote() {
         texto="Menu"
         color="#282828"
       />
-      {console.log(servicosSelecionados, quantidades, sessoesTotal)}
+
+      <Sucesso
+        show={showAlert} 
+        onClose={() => setShowAlert(false)}
+        texto="Pacote criado com sucesso. Vamos vender!  Redirecionando..."
+        />
 
       <div className="formulario">
         <Titulo texto="Cadastro de Pacotes" />
