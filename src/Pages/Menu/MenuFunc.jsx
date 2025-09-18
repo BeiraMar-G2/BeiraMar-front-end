@@ -3,7 +3,7 @@ import "../Styles/Header.css"
 import { BotaoMenu } from "../../Components/Botao"
 import { Header } from "../../Components/Header"
 import { Titulo } from "../../Components/Fontes"
-import { FaUser } from "react-icons/fa";
+import { RiLogoutBoxLine } from "react-icons/ri";
 import { FaCalendarAlt, FaCalendarCheck, FaChartLine } from "react-icons/fa";
 import { LuAlarmClock, LuUserPlus } from "react-icons/lu";
 import { BiSolidShoppingBags } from "react-icons/bi";
@@ -44,7 +44,7 @@ export function Menu() {
 
   return (
     <div className="containerMenu">
-      <Header onClick={deslogar} texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<FaUser size={28}/>} color="#282828"/>
+      <Header onClick={deslogar} texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<RiLogoutBoxLine size={28}/>} color="#282828"/>
       <Titulo texto="Boas Vindas ao Menu!"/>
 
       <div className="botoesMenu">

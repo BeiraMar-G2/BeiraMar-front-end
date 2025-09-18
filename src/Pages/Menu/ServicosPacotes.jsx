@@ -2,8 +2,7 @@ import "../Styles/Botao.css"
 import "../Styles/Header.css"
 import { BotaoMenu } from "../../Components/Botao"
 import { Header } from "../../Components/Header"
-import { Label } from "../../Components/Fontes"
-import { FaUser } from "react-icons/fa";
+
 import { IoBagAddSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
@@ -14,7 +13,7 @@ export function ServicosPacotes() {
   const navigate = useNavigate();
   return (
     <div className="containerMenu">
-      <Header texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<FaUser size={28}/>} color="#282828"/>
+      <Header texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<RiLogoutBoxLine size={28}/>} color="#282828"/>
       <h2 style={{
         textAlign: "center",
         marginTop: "-100px",

@@ -2,7 +2,6 @@ import "../Pages/Styles/Header.css"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 
-
 export function Header(props) {
     const navigate = useNavigate();
     const [popupVisivel, setPopupVisivel] = useState(false);

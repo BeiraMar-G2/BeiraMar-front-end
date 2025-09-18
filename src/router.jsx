@@ -24,6 +24,7 @@ import { AgendamentoServicoPacote } from "./Pages/Agendamentos/AgendamentoServic
 import { MenuCliente } from "./Pages/Menu/MenuCliente.jsx";
 import { CadastroServico } from "./Pages/Cadastro/CadastroServico.jsx";
 import { EdicaoServico } from "./Pages/Edicao Servico/EdicaoServico.jsx";
+import { PrivateRoute } from "./Components/PrivateRoute.jsx";
 
 
 export const routes = createBrowserRouter([
@@ -76,7 +77,7 @@ export const routes = createBrowserRouter([
       element: <VisualizacaoAgendClienteDia />,
       errorElement: <div>Erro ao carregar a página</div> 
     },
-      { 
+    { 
       path: "/Agendamentos/HistoricoAgendCliente",
       element: <HistoricoAgendCliente />,
       errorElement: <div>Erro ao carregar a página</div> 
@@ -93,12 +94,20 @@ export const routes = createBrowserRouter([
     },
     { 
       path: "/Menu",
-      element: <Menu />,
+      element: (
+        <PrivateRoute allowedRoles={["Administrador", "Atendente"]}>
+          <Menu />
+        </PrivateRoute>
+      ),
       errorElement: <div>Erro ao carregar a página</div> 
     },
     { 
       path: "/Servicos&Pacotes",
-      element: <ServicosPacotes />,
+      element: (
+        <PrivateRoute allowedRoles={["Administrador", "Atendente"]}>
+          <ServicosPacotes />
+        </PrivateRoute>
+      ),
       errorElement: <div>Erro ao carregar a página</div>
     },
     {
@@ -138,15 +147,18 @@ export const routes = createBrowserRouter([
     },
     {
       path: "/MenuCliente",
-      element: <MenuCliente />,
+      element: (
+        <PrivateRoute allowedRoles={["Cliente", "Administrador", "Atendente"]}>
+          <MenuCliente />
+        </PrivateRoute>
+      ),
       errorElement: <div>Erro ao carregar a página</div>
     },
     {
       path: "/Servico/Cadastro",
       element: <CadastroServico />,
       errorElement: <div>Erro ao carregar a página</div>
-    }
-    ,
+    },
     {
       path: "/Servico/Edicao",
       element: <EdicaoServico />,
@@ -157,5 +169,4 @@ export const routes = createBrowserRouter([
       element: <CadastroPacote />,
       errorElement: <div>Erro ao carregar a página</div>
     },
-
-])
+]);

@@ -2,7 +2,9 @@ import { Header } from '../../Components/Header';
 import { BotaoMenu } from '../../Components/Botao';
 import { useNavigate } from 'react-router-dom';
 import { FaClock, FaShoppingBag, FaCalendarAlt, FaUser } from 'react-icons/fa';
+import { RiLogoutBoxLine } from "react-icons/ri";
 import '../Styles/MenuCliente.css';
+import { useEffect } from 'react';
 
 export function MenuCliente() {
     const navigate = useNavigate();
@@ -26,12 +28,20 @@ export function MenuCliente() {
         navigate('/Perfil');
     };
 
+    useEffect(() => {
+        console.log(localStorage.getItem("cargo"));
+        if (localStorage.getItem("cargo") !== "Cliente") {
+            alert("Acesso negado! Você será redirecionado para a página de login.");
+            navigate("/Login");
+        }
+    }, [navigate]);
+
     return (
         <div className="menu-cliente">
             <Header 
                 texto={`Olá, ${localStorage.getItem('nome')}!`}
                 cor="#CE2D4F"
-                icone={<FaUser />}
+                icone={<RiLogoutBoxLine size={28}/>}
                 alinhamento="center"
                 color="#f8f8f8"
             />
