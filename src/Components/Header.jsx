@@ -36,13 +36,17 @@ export function Header(props) {
 
     return(
         <div onClick={handleMenu} className="header">
-            <div onClick={exibirPopUp} style={{ backgroundColor: props.cor, justifyContent: props.alinhamento, padding: props.padding, color: props.color }} className="navbarMenu">
+            <div onClick={(e) => {
+              e.stopPropagation(); 
+              exibirPopUp();
+              }} 
+              style={{ backgroundColor: props.cor, justifyContent: props.alinhamento, padding: props.padding, color: props.color }} className="navbarMenu">
                 {props.icone}
                 <p className="textoUsuario">{props.texto}</p>
             </div>
 
             {popupVisivel && (
-              <>            
+              <>
               <div
                 onClick={(e) => {
                   e.stopPropagation();
