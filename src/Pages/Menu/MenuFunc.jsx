@@ -12,6 +12,11 @@ import { useNavigate } from "react-router-dom";
 export function Menu() {
   const navigate = useNavigate();
 
+    function deslogar() {
+      navigate("/Login");
+      console.log("Deslogando...");
+    }
+
     const direcionarAgendamentos = () => {
       navigate('/Agendamentos/VisualizarPorDia'); 
     };
@@ -39,7 +44,7 @@ export function Menu() {
 
   return (
     <div className="containerMenu">
-      <Header texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<FaUser size={28}/>} color="#282828"/>
+      <Header onClick={deslogar} texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<FaUser size={28}/>} color="#282828"/>
       <Titulo texto="Boas Vindas ao Menu!"/>
 
       <div className="botoesMenu">
