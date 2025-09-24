@@ -10,12 +10,10 @@ export function MenuCliente() {
     const navigate = useNavigate();
 
     const handleProximosAgendamentos = () => {
-        console.log('Navegando para Próximos Agendamentos');
         navigate('/Agendamentos/VisualizarConsultas');
     };
     
     const handleServicosEPacotes = () => {
-        console.log('Navegando para Serviços e Pacotes');
         navigate('/PacotesCliente');
     };
     
@@ -24,17 +22,8 @@ export function MenuCliente() {
     };
 
     const handlePerfil = () => {
-        console.log('Navegando para Perfil');
         navigate('/Perfil');
     };
-
-    useEffect(() => {
-        console.log(localStorage.getItem("cargo"));
-        if (localStorage.getItem("cargo") !== "Cliente") {
-            alert("Acesso negado! Você será redirecionado para a página de login.");
-            navigate("/Login");
-        }
-    }, [navigate]);
 
     return (
         <div className="menu-cliente">
@@ -49,7 +38,11 @@ export function MenuCliente() {
             <div className="container-menu">
                 <div className="boas-vindas">
                     <h2>Boas vindas ao menu!</h2>
+                {localStorage.getItem('loginGoogle') == 'true' ? (
+                    <p style={{ color: '#282828' }}>Lembre-se de inserir seu telefone para receber notificações sobre suas consultas</p>
+                ) : null}
                 </div>
+
 
                 <div className="botoes-menu">
                     <BotaoMenu

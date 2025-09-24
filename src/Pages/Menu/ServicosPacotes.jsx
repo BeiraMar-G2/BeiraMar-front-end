@@ -2,7 +2,6 @@ import "../Styles/Botao.css"
 import "../Styles/Header.css"
 import { BotaoMenu } from "../../Components/Botao"
 import { Header } from "../../Components/Header"
-
 import { IoBagAddSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineAddShoppingCart } from "react-icons/md";

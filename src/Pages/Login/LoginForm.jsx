@@ -65,6 +65,7 @@ export function LoginForm() {
         localStorage.setItem("nome", nome);
         localStorage.setItem("email", email);
         localStorage.setItem("idUsuario", id);
+        localStorage.setItem("loginGoogle", "true");
         setShowAlert(true);
         console.log("Login com Google realizado com sucesso:", response);
         if (response.status === 200) {

@@ -28,145 +28,148 @@ import { PrivateRoute } from "./Components/PrivateRoute.jsx";
 
 
 export const routes = createBrowserRouter([
-    {
-      path: "/*",
-      element: <div style={{color:"#282828"}}>Página não encontrada</div>
-    },
-    { 
-      path: "/Login", 
-      element: <LoginForm />, 
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Cadastro",
-      element: <CadastroForm />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/RecuperacaoSenha",
-      element: <RecuperacaoForm />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Cadastro/Funcionario",
-      element: <CadastroFuncForm />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Perfil",
-      element: <EdicaoUsuarioForm />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Perfil/Senha",
-      element: <EdicaoSenha />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Agendamentos/Visualizar",
-      element: <VisualizacaoAgendAtend />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Agendamentos/VisualizarPorDia",
-      element: <VisualizacaoAgendAtendDia />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Agendamentos/VisualizarConsultas",
-      element: <VisualizacaoAgendClienteDia />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Agendamentos/HistoricoAgendCliente",
-      element: <HistoricoAgendCliente />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Agendamentos/HistoricoAgendAtend",
-      element: <HistoricoAgendAtend />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/",
-      element: <Home />,
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Menu",
-      element: (
-        <PrivateRoute allowedRoles={["Administrador", "Atendente"]}>
-          <Menu />
-        </PrivateRoute>
-      ),
-      errorElement: <div>Erro ao carregar a página</div> 
-    },
-    { 
-      path: "/Servicos&Pacotes",
-      element: (
-        <PrivateRoute allowedRoles={["Administrador", "Atendente"]}>
-          <ServicosPacotes />
-        </PrivateRoute>
-      ),
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/DefinirSessoes",
-      element: <DefinirSessoes />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/Pacotes",
-      element: <PacotesCadastrados />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/PacotesCliente",
-      element: <PacotesCadastradosCliente />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/RecuperacaoCodigo",
-      element: <RecuperacaoCodigo />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/Agendamentos/Horario",
-      element: <HorarioAgendamento />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/Agendamentos/${tipo}",
-      element: <AgendamentoServicoPacote />,
-      errorElement: <div>Erro ao carregar a página</div>
-    }, 
-    {
-      path: "/ResumoPacote",
-      element: <ResumoPacote />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/MenuCliente",
-      element: (
-        <PrivateRoute allowedRoles={["Cliente", "Administrador", "Atendente"]}>
-          <MenuCliente />
-        </PrivateRoute>
-      ),
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/Servico/Cadastro",
-      element: <CadastroServico />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/Servico/Edicao",
-      element: <EdicaoServico />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
-    {
-      path: "/Pacote/Cadastro",
-      element: <CadastroPacote />,
-      errorElement: <div>Erro ao carregar a página</div>
-    },
+  {
+    path: "/*",
+    element: <div style={{color:"#282828"}}>Página não encontrada</div>
+  },
+  { 
+    path: "/Login", 
+    element: (() => {
+    localStorage.clear();
+    return <LoginForm />;
+    })(),
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Cadastro",
+    element: <CadastroForm />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/RecuperacaoSenha",
+    element: <RecuperacaoForm />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Cadastro/Funcionario",
+    element: <CadastroFuncForm />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Perfil",
+    element: <EdicaoUsuarioForm />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Perfil/Senha",
+    element: <EdicaoSenha />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Agendamentos/Visualizar",
+    element: <VisualizacaoAgendAtend />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Agendamentos/VisualizarPorDia",
+    element: <VisualizacaoAgendAtendDia />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Agendamentos/VisualizarConsultas",
+    element: <VisualizacaoAgendClienteDia />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Agendamentos/HistoricoAgendCliente",
+    element: <HistoricoAgendCliente />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Agendamentos/HistoricoAgendAtend",
+    element: <HistoricoAgendAtend />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/",
+    element: <Home />,
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Menu",
+    element: (
+    <PrivateRoute allowedRoles={["Administrador", "Atendente"]}>
+      <Menu />
+    </PrivateRoute>
+    ),
+    errorElement: <div>Erro ao carregar a página</div> 
+  },
+  { 
+    path: "/Servicos&Pacotes",
+    element: (
+    <PrivateRoute allowedRoles={["Administrador", "Atendente"]}>
+      <ServicosPacotes />
+    </PrivateRoute>
+    ),
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/DefinirSessoes",
+    element: <DefinirSessoes />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/Pacotes",
+    element: <PacotesCadastrados />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/PacotesCliente",
+    element: <PacotesCadastradosCliente />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/RecuperacaoCodigo",
+    element: <RecuperacaoCodigo />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/Agendamentos/Horario",
+    element: <HorarioAgendamento />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/Agendamentos/${tipo}",
+    element: <AgendamentoServicoPacote />,
+    errorElement: <div>Erro ao carregar a página</div>
+  }, 
+  {
+    path: "/ResumoPacote",
+    element: <ResumoPacote />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/MenuCliente",
+    element: (
+    <PrivateRoute allowedRoles={["Cliente", "Administrador", "Atendente"]}>
+      <MenuCliente />
+    </PrivateRoute>
+    ),
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/Servico/Cadastro",
+    element: <CadastroServico />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/Servico/Edicao",
+    element: <EdicaoServico />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/Pacote/Cadastro",
+    element: <CadastroPacote />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
 ]);
