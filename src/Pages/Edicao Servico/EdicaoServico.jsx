@@ -28,10 +28,21 @@ export function EdicaoServico() {
 
   const handleSubmit = (e) => {
     if(servicoEditado.nome == "" || servicoEditado.duracao == "" || servicoEditado.preco == ""){
-        console.log(servicoSelecionado.nome)
-        console.log(servicoEditado.nome);
+        alert("Preencha todos os campos!");
     } else {
-        console.log("a")
+      console.log("Serviço selecionado:", servicoSelecionado);
+        api.put(`/servicos/${servicoEditado.id}`, {
+            nome: servicoSelecionado.nome,
+            duracao: Number(servicoSelecionado.duracao),
+            preco: Number(servicoSelecionado.preco),
+            descricao: servicoEditado.descricao
+        })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.error("Erro ao atualizar o serviço:", error);
+        });
     }
   };
 

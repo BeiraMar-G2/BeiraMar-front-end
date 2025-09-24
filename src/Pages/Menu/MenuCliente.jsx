@@ -33,6 +33,7 @@ export function MenuCliente() {
                 icone={<RiLogoutBoxLine size={28}/>}
                 alinhamento="center"
                 color="#f8f8f8"
+                exibirPopup={true}
             />
             
             <div className="container-menu">

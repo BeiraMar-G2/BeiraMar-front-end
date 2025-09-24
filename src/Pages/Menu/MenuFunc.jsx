@@ -42,7 +42,7 @@ export function Menu() {
 
   return (
     <div className="containerMenu">
-      <Header onClick={deslogar} texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<RiLogoutBoxLine size={28}/>} color="#282828"/>
+      <Header exibirPopup={true} onClick={deslogar} texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<RiLogoutBoxLine size={28}/>} color="#282828"/>
       <Titulo texto="Boas Vindas ao Menu!"/>
 
       <div className="botoesMenu">

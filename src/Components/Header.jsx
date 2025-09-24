@@ -14,8 +14,6 @@ export function Header(props) {
       setPopupVisivel(false);
     };
 
-    
-
     const handleLogout = () => {
       localStorage.removeItem("token")
       localStorage.removeItem("idUsuario")
@@ -27,18 +25,31 @@ export function Header(props) {
       navigate("/Login");
     }
 
+    const handleMenu = () => {
+      if(localStorage.getItem("cargo") === "Cliente"){
+        navigate("/MenuCliente");
+      }
+      else{
+        navigate("/Menu");
+      }
+    }
+
     return(
         <div className="header">
             <div onClick={(e) => {
               e.stopPropagation(); 
-              exibirPopUp();
+              if (props.exibirPopup) {
+                exibirPopUp();
+              } else {
+                handleMenu();
+              }
               }} 
               style={{ backgroundColor: props.cor, justifyContent: props.alinhamento, padding: props.padding, color: props.color }} className="navbarMenu">
                 {props.icone}
                 <p className="textoUsuario">{props.texto}</p>
             </div>
 
-            {popupVisivel && (
+            {props.exibirPopup && popupVisivel && (
               <>
               <div
                 onClick={(e) => {

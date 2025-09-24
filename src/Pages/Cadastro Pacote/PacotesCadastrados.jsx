@@ -166,7 +166,6 @@ export function PacotesCadastrados() {
           )}
         </div>
 
-        {/* Botão Voltar */}
         <div style={{ display:"flex", justifyContent:"center", width: "90%", marginTop: "18px" }}>
           <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {navigate("/Servicos&Pacotes")}}/>
         </div>

@@ -67,7 +67,7 @@ export function HorarioAgendamento() {
             statusAgendamento: "Agendado",
             status: "Agendado",
             dataValidade: null,
-            fkPacote: null
+            fkPacote: servicoDataEscolhido.servicoEscolhido.pacote.pacoteId
         })
         api.post("/agendamentos", {
             fkServico: `${Number(servicoDataEscolhido.servicoEscolhido.servicoId)}`,
@@ -78,7 +78,7 @@ export function HorarioAgendamento() {
             statusAgendamento: "Agendado",
             status: "Agendado",
             dataValidade: null,
-            fkPacote: 1
+            fkPacote: servicoDataEscolhido.servicoEscolhido.pacote.pacoteId
         })
         .then((response) => {
             console.log("Agendamento criado:", response);
@@ -116,6 +116,8 @@ export function HorarioAgendamento() {
                 color="#f8f8f8"
                 isCliente={true}
             />
+
+            {console.log(servicoDataEscolhido)}
             
             <div className="container-agendamento">
                 <div className="servico-info">
@@ -130,7 +132,7 @@ export function HorarioAgendamento() {
             <Sucesso
              show={showAlert} 
              onClose={() => setShowAlert(false)}
-             texto="Seu agendamento foi marcado com Sucesso!  Redirecionando..."
+             texto="Sua Consulta foi Agendada com Sucesso!  Redirecionando..."
              />
 
                 <div className="horarios-grid">

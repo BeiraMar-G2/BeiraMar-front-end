@@ -1,4 +1,3 @@
-// import { useEffect } from "react";
 import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from "../../Components/Fontes";
@@ -22,7 +21,7 @@ return (
       <VisuClientePorDia />
     </div>
      <div className="botoes-acao">
-        <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate(-1)} />
+        <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate("/MenuCliente")} />
     </div>
     </div>
 

@@ -50,7 +50,6 @@ export function AgendamentoServicoPacote() {
         tipo === "Pacotes" ? 
         api.get(`/sessoes/buscar/${servicoEscolhido.pacoteId}`)
             .then((response) => {
-                console.log("Serviços do pacote:", response.data);
                 setServicos(response.data.map(sessao => ({
                     idServico: sessao.idServico,
                     nome: sessao.nome,
@@ -136,7 +135,7 @@ export function AgendamentoServicoPacote() {
                     }}
                     className={"calendario"} />
 
-                <p>Essa será sua {servicoEscolhido.pacoteQtdSessoes}ª sessão</p>
+                {servicoEscolhido.tipo === "Pacotes" ? <p>Essa será sua {servicoEscolhido.pacoteQtdSessoes}ª sessão</p> : null}
 
                 <div className="legenda-agendamentos">
                     <div className="legenda-wrapper">

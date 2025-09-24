@@ -10,9 +10,10 @@ export default function VisuClientePorDia() {
   function buscarAgendamentos() {
     api.get(`/agendamentos/cliente/${localStorage.getItem("idUsuario")}`)
     .then((response) => {
+      console.log("Agendamentos do cliente:", response.data);
         setAgendamentos(response.data.map(agendamento => ({
             idAgendamento: agendamento.idAgendamento,
-            servicoNome: agendamento.nomeServico,
+            servicoNome: agendamento.servico.nome,
             dtHora: agendamento.dtHora,
             preco: agendamento.valorPago
         })));
