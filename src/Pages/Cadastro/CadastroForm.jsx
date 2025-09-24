@@ -50,7 +50,6 @@ export function CadastroForm(){
     })
     .then((response)=>{
       console.log(response)
-      navigate("/Login");
       if(response.status == "201") {
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 6000);
@@ -70,7 +69,7 @@ return (
   <Erro
     show={showAlertError} 
     onClose={() => setShowAlertError(false)}
-    texto="As senhas não coincidem. Por favor, tente novamente."
+    texto="Erro ao realizar o cadastro. Por favor, tente novamente."
   />
   <Sucesso
   show={showAlert} 
