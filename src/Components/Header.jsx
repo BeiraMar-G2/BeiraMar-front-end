@@ -40,6 +40,8 @@ export function Header(props) {
               e.stopPropagation(); 
               if (props.exibirPopup) {
                 exibirPopUp();
+              } else if (props.customAction) {
+                props.customAction();
               } else {
                 handleMenu();
               }

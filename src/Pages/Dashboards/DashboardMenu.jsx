@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import { Header } from '../../Components/Header';
 import { Botao } from '../../Components/Botao';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/DashboardMenu.css';
 
 export function DashboardMenu() {
-  const [periodo, setPeriodo] = useState('Últimos 7 dias');
+  const navigate = useNavigate();
 
-  const handlePeriodoChange = (e) => {
-    setPeriodo(e.target.value);
+  const handleDetalhes = (tipo) => {
+    if (tipo === 'realizados') {
+      navigate('/Dashboard/Realizado');
+    } else if (tipo === 'cancelados') {
+      // Navegação para dashboard de cancelados quando estiver pronto
+      console.log('Navegando para dashboard de cancelados');
+    }
   };
 
   return (
@@ -24,18 +30,7 @@ export function DashboardMenu() {
       
       <div className="dashboard-content">
         <h1 className="dashboard-title">Detalhamento dos Procedimentos</h1>
-        
-        <div className="periodo-section">
-          <label className="periodo-label">Período:</label>
-          <select 
-            className="periodo-select" 
-            value={periodo} 
-            onChange={handlePeriodoChange}
-          >
-            <option value="Últimos 7 dias">Últimos 7 dias</option>
-            <option value="Últimos 30 dias">Últimos 30 dias</option>
-          </select>
-        </div>
+        <p className="periodo-fixo">Período: Últimos 30 dias</p>
 
         <div className="cards-container">
           <div className="card cancelados">

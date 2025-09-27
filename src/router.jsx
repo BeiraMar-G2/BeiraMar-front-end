@@ -25,6 +25,7 @@ import { MenuCliente } from "./Pages/Menu/MenuCliente.jsx";
 import { CadastroServico } from "./Pages/Cadastro/CadastroServico.jsx";
 import { EdicaoServico } from "./Pages/Edicao Servico/EdicaoServico.jsx";
 import { DashboardMenu } from "./Pages/Dashboards/DashboardMenu.jsx";
+import { DashboardRealizado } from "./Pages/Dashboards/DashboardRealizado.jsx";
 import { PrivateRoute } from "./Components/PrivateRoute.jsx";
 
 export const routes = createBrowserRouter([
@@ -175,6 +176,11 @@ export const routes = createBrowserRouter([
   {
     path: "/Dashboard/Menu",
     element: <DashboardMenu />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/Dashboard/Realizado",
+    element: <DashboardRealizado />,
     errorElement: <div>Erro ao carregar a página</div>
   },
 ]);

@@ -1,0 +1,271 @@
+.dashboard-realizado {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.dashboard-content {
+  padding: 120px 20px 20px 20px !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 0 !important;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Botão Voltar */
+.voltar-container {
+  margin: 20px 0;
+
+}
+
+.btn-voltar {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.btn-voltar:hover {
+  color: #90FCF9;
+}
+
+.btn-voltar i {
+  font-size: 14px;
+}
+
+/* Container dos Procedimentos */
+.procedimentos-container {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+  margin-top: -20px !important;
+}
+
+.procedimentos-section {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  margin-top: 0;
+  text-align: center;
+  display: block;
+}
+
+.procedimentos-list {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.procedimento-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.procedimento-item.favorito {
+  background: linear-gradient(135deg, #90FCF9 0%, #FFE7B7 100%);
+}
+
+.procedimento-item.queda {
+  background: linear-gradient(135deg, #FFB6C1 0%, #FFE7B7 100%);
+}
+
+.procedimento-item:last-child {
+  margin-bottom: 0;
+}
+
+.procedimento-posicao {
+  font-weight: bold;
+  width: 30px;
+  color: #333;
+}
+
+.procedimento-nome {
+  flex: 1;
+  color: #333;
+  font-weight: 500;
+}
+
+.procedimento-quantidade {
+  font-weight: bold;
+  color: #333;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 4px 8px;
+  border-radius: 12px;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Seção do Gráfico */
+.grafico-section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.periodo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.periodo-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.periodo-select {
+  background: white;
+  border: 2px solid #90FCF9;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  max-width: calc(100% - 4px);
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.periodo-select:focus {
+  border-color: #7BE3E0;
+}
+
+.grafico-container {
+  margin-bottom: 20px;
+}
+
+.grafico-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+.grafico-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 25px 0;
+  text-align: center;
+}
+
+/* Chart.js Wrapper */
+.chart-wrapper {
+  height: 300px;
+  width: 100%;
+  margin: 20px 0;
+  position: relative;
+}
+
+.chart-wrapper canvas {
+  border-radius: 8px;
+}
+
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 0 15px 15px 15px;
+  }
+  
+  .procedimentos-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .grafico-section {
+    padding: 20px;
+  }
+  
+  .dashboard-content {
+    padding: 0 15px 15px 15px;
+  }
+  
+  .periodo-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .periodo-select {
+    font-size: 12px;
+    padding: 6px 8px;
+    max-width: calc(100vw - 50px);
+  }
+  
+  .chart-wrapper {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 16px;
+  }
+  
+  .procedimentos-list {
+    padding: 15px;
+  }
+  
+  .dashboard-content {
+    padding: 0 10px 10px 10px;
+  }
+  
+  .procedimento-item {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  .periodo-select {
+    font-size: 11px;
+    padding: 5px 6px;
+    max-width: calc(100vw - 40px);
+  }
+  
+  .chart-wrapper {
+    height: 200px;
+  }
+}
+
+/* Estilos específicos para o header desta página */
+.dashboard-realizado .header .textoUsuario {
+  color: #000000 !important;
+}
+
+.dashboard-realizado .header i {
+  color: #000000 !important;
+}
