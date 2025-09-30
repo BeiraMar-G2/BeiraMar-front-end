@@ -40,7 +40,7 @@ export function MenuCliente() {
                 <div className="boas-vindas">
                     <h2>Boas vindas ao menu!</h2>
                 {localStorage.getItem('loginGoogle') == 'true' ? (
-                    <p style={{ color: '#282828' }}>Lembre-se de inserir seu telefone para receber notificações sobre suas consultas</p>
+                    <p style={{ color: '#282828' }}>Clique aqui para adicionar seu telefone! <a onClick={() => navigate('/Perfil')}>Adicionar telefone</a></p>
                 ) : null}
                 </div>
 
