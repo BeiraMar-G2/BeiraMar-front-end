@@ -54,8 +54,7 @@ export function DashboardMenu() {
     if (tipo === 'realizados') {
       navigate('/Dashboard/Realizado', {state: { rankingProcedimentos }});
     } else if (tipo === 'cancelados') {
-      // Navegação para dashboard de cancelados quando estiver pronto
-      console.log('Navegando para dashboard de cancelados');
+      navigate('/Dashboard/Cancelamento');
     }
   };
 
