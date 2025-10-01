@@ -87,7 +87,7 @@ export default function VisuClientePorDia() {
               <h3>
                 {formatarDataCompleta(handleDiaAgendamento(servico.dtHora))}
               </h3>
-              <div className="card-visu card">
+              <div className="card-visu card-pacotecard">
                 <div className="hora">{handleHorario(servico.dtHora)}</div>
                 <div className="info">
                   <div>

@@ -47,7 +47,7 @@ export function MenuCliente() {
 
                 <div className="botoes-menu">
                     <BotaoMenu
-                        texto="Próximos Agendamentos"
+                        texto="Meus Agendamentos"
                         imagem={<FaClock className="icone-menu" />}
                         onClick={handleProximosAgendamentos}
                         funcao="Cliente"

@@ -6,7 +6,7 @@ import "../Pages/Styles/Card.css";
 
 export function PacoteCard({ nome, preco, duracao, tipo, ...props}) {
   return (
-    <div className="card">
+    <div className="card-pacotecard">
           <Subtitulo texto={nome}/>
       <div className="card-section">
 

@@ -28,6 +28,8 @@ import { DashboardMenu } from "./Pages/Dashboards/DashboardMenu.jsx";
 import { DashboardRealizado } from "./Pages/Dashboards/DashboardRealizado.jsx";
 import { DashboardCancelamento } from "./Pages/Dashboards/DashboardCancelamento.jsx";
 import { PrivateRoute } from "./Components/PrivateRoute.jsx";
+import { IndisponibilidadeDia } from "./Pages/Indisponibilidade/IndisponibilidadeDia.jsx";
+import { IndisponibilidadeHora } from "./Pages/Indisponibilidade/IndisponibilidadeHora.jsx";
 
 export const routes = createBrowserRouter([
   {
@@ -187,6 +189,16 @@ export const routes = createBrowserRouter([
   {
     path: "/Dashboard/Cancelamento",
     element: <DashboardCancelamento />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/Indisponibilidade",
+    element: <IndisponibilidadeDia />,
+    errorElement: <div>Erro ao carregar a página</div>
+  },
+  {
+    path: "/Indisponibilidade/Hora",
+    element: <IndisponibilidadeHora />,
     errorElement: <div>Erro ao carregar a página</div>
   },
 ]);

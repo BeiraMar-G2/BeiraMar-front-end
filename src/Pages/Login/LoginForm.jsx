@@ -28,12 +28,13 @@ export function LoginForm() {
       senha: senha
     })
     .then((response) => {
-      const { token, cargo, nome, email, id } = response.data;
+      const { token, cargo, nome, email, id, telefone } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("cargo", cargo);
       localStorage.setItem("nome", nome);
       localStorage.setItem("email", email);
       localStorage.setItem("idUsuario", id);
+      localStorage.setItem("telefone", telefone);
       setShowAlert(true);
       console.log("Login realizado com sucesso:", response);
       if (response.status == "200") {
