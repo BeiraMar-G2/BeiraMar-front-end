@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Header } from '../../Components/Header';
-import '../Styles/DashboardRealizado.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Header } from "../../Components/Header";
+import "../Styles/DashboardRealizado.css";
+import { useNavigate } from "react-router-dom";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,8 +10,10 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import api from "../../Provider/api";
+import { useLocation } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -23,65 +25,90 @@ ChartJS.register(
 );
 
 export function DashboardRealizado() {
+
+  const {rankingProcedimentos = []} = useLocation().state || {};
+  const [rankingMenosAgendados, setRankingMenosAgendados] = useState([]);
+
   const navegador = useNavigate();
-  const [procedimentoAtualSelecionado, definirProcedimentoSelecionado] = useState('Massagem Modeladora');
+  const [procedimentoAtualSelecionado, definirProcedimentoSelecionado] =
+    useState("Massagem Modeladora");
 
   const voltarParaDashboardMenu = () => {
-    navegador('/Dashboard/Menu');
+    navegador("/Dashboard/Menu");
   };
 
   const alterarProcedimentoSelecionado = (evento) => {
     definirProcedimentoSelecionado(evento.target.value);
   };
 
+  function listarServicos() {
+    api
+      .get("/servicos")
+      .then((response) => {
+        console.log("Serviços encontrados:", response);
+          const nomesServicos = response.data.map((servico) => servico.nome);
+      definirListaDeTodosOsProcedimentos(nomesServicos);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar serviços:", error);
+      });
+  }
+
+  function servicosMenosAgendados() {
+    api
+      .get("/servicos/top3-menos-agendados")
+      .then((response) => {
+        console.log("Serviços encontrados:", response);
+        setRankingMenosAgendados(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar serviços:", error);
+      });
+  }
+
+  useEffect(() => {
+    listarServicos();
+    servicosMenosAgendados();
+  }, []);
+
   // Lista completa de todos os procedimentos disponíveis
-  const listaDeTodosOsProcedimentos = [
-    'Massagem Modeladora',
-    'Drenagem Linfática', 
-    'Hidrolipo NA',
-    'Massagem Relaxante',
-    'Aplicação de Enzimas',
-    'Limpeza de Pele',
-    'Design de Sobrancelhas com Henna',
-    'Design Simples de Sobrancelhas',
-    'Depilação Facial',
-    'Detox Corporal',
-    'Pump Up (Glúteos) + Eletroestimulação'
-  ];
+  const [listaDeTodosOsProcedimentos, definirListaDeTodosOsProcedimentos] = useState([]);
 
   // Ranking dos procedimentos mais realizados (favoritos)
-  const rankingProcedimentosMaisRealizados = [
-    { colocacao: '1°', nomeProcedimento: 'Massagem Modeladora', totalRealizacoes: 50 },
-    { colocacao: '2°', nomeProcedimento: 'Drenagem Linfática', totalRealizacoes: 37 },
-    { colocacao: '3°', nomeProcedimento: 'Design de Sobrancelha', totalRealizacoes: 20 }
-  ];
+  const rankingProcedimentosMaisRealizados = rankingProcedimentos.length > 0 ? rankingProcedimentos.map((item, index) => ({
+    colocacao: `${index + 1}°`,
+    nomeProcedimento: item[1],
+    totalRealizacoes: item[2],
+  })) : [];
 
   // Ranking dos procedimentos com menor demanda (em queda)
-  const rankingProcedimentosComMenorDemanda = [
-    { colocacao: '1°', nomeProcedimento: 'Hidrolipo NA', totalRealizacoes: 8 },
-    { colocacao: '2°', nomeProcedimento: 'Detox Corporal', totalRealizacoes: 5 },
-    { colocacao: '3°', nomeProcedimento: 'Aplicação de Enzimas', totalRealizacoes: 2 }
-  ];
+  const rankingProcedimentosComMenorDemanda = rankingMenosAgendados.length > 0 ? rankingMenosAgendados.map((item, index) => ({
+    colocacao: `${index + 1}°`,
+    nomeProcedimento: item[1], 
+    totalRealizacoes: item[2],  
+  })) : [];
 
   // Dados semanais do procedimento selecionado (simulados para demonstração)
   const dadosSemanaisDoProcedimento = [
-    { diaDaSemana: 'Segunda', quantidadeRealizacoes: 28 },
-    { diaDaSemana: 'Terça', quantidadeRealizacoes: 35 },
-    { diaDaSemana: 'Quarta', quantidadeRealizacoes: 18 },
-    { diaDaSemana: 'Quinta', quantidadeRealizacoes: 42 },
-    { diaDaSemana: 'Sexta', quantidadeRealizacoes: 38 },
-    { diaDaSemana: 'Sábado', quantidadeRealizacoes: 45 }
+    { diaDaSemana: "Segunda", quantidadeRealizacoes: 28 },
+    { diaDaSemana: "Terça", quantidadeRealizacoes: 35 },
+    { diaDaSemana: "Quarta", quantidadeRealizacoes: 18 },
+    { diaDaSemana: "Quinta", quantidadeRealizacoes: 42 },
+    { diaDaSemana: "Sexta", quantidadeRealizacoes: 38 },
+    { diaDaSemana: "Sábado", quantidadeRealizacoes: 45 },
   ];
 
   // Configuração dos dados para o gráfico de barras
   const dadosDoGrafico = {
-    labels: dadosSemanaisDoProcedimento.map(item => item.diaDaSemana),
+    labels: dadosSemanaisDoProcedimento.map((item) => item.diaDaSemana),
     datasets: [
       {
-        label: 'Número de Procedimentos Realizados',
-        data: dadosSemanaisDoProcedimento.map(item => item.quantidadeRealizacoes),
-        backgroundColor: '#90FCF9',
-        borderColor: '#7BE3E0',
+        label: "Número de Procedimentos Realizados",
+        data: dadosSemanaisDoProcedimento.map(
+          (item) => item.quantidadeRealizacoes
+        ),
+        backgroundColor: "#90FCF9",
+        borderColor: "#7BE3E0",
         borderWidth: 1,
         borderRadius: 4,
         borderSkipped: false,
@@ -95,7 +122,7 @@ export function DashboardRealizado() {
     maintainAspectRatio: false,
     animation: {
       duration: 1000,
-      easing: 'easeInOutQuart',
+      easing: "easeInOutQuart",
     },
     plugins: {
       legend: {
@@ -105,20 +132,20 @@ export function DashboardRealizado() {
         display: false,
       },
       tooltip: {
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        titleColor: '#fff',
-        bodyColor: '#fff',
-        borderColor: '#90FCF9',
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        titleColor: "#fff",
+        bodyColor: "#fff",
+        borderColor: "#90FCF9",
         borderWidth: 1,
         displayColors: false,
         cornerRadius: 8,
         padding: 12,
         callbacks: {
-          label: function(contexto) {
+          label: function (contexto) {
             return `${contexto.parsed.y} procedimentos realizados`;
-          }
-        }
-      }
+          },
+        },
+      },
     },
     scales: {
       y: {
@@ -126,25 +153,25 @@ export function DashboardRealizado() {
         max: 50,
         ticks: {
           stepSize: 10,
-          color: '#666',
+          color: "#666",
           font: {
             size: 12,
-            family: 'Arial, sans-serif'
-          }
+            family: "Arial, sans-serif",
+          },
         },
         grid: {
-          color: '#e0e0e0',
+          color: "#e0e0e0",
           drawBorder: false,
         },
       },
       x: {
         ticks: {
-          color: '#333',
+          color: "#333",
           font: {
             size: 12,
-            family: 'Arial, sans-serif',
-            weight: '500'
-          }
+            family: "Arial, sans-serif",
+            weight: "500",
+          },
         },
         grid: {
           display: false,
@@ -155,23 +182,23 @@ export function DashboardRealizado() {
       bar: {
         borderRadius: 4,
         borderSkipped: false,
-      }
+      },
     },
     interaction: {
       intersect: false,
-      mode: 'index',
+      mode: "index",
     },
     layout: {
       padding: {
         top: 20,
         bottom: 10,
-      }
+      },
     },
   };
 
   return (
     <div className="dashboard-realizado">
-      <Header 
+      <Header
         icone={<i className="fas fa-arrow-left"></i>}
         texto="Voltar"
         cor="#90FCF9"
@@ -179,32 +206,48 @@ export function DashboardRealizado() {
         padding="0 20px"
         customAction={voltarParaDashboardMenu}
       />
-      
+
       <div className="dashboard-content">
         <div className="procedimentos-container">
           <div className="procedimentos-section">
             <h2 className="section-title">Procedimentos Favoritos</h2>
             <div className="procedimentos-list">
-              {rankingProcedimentosMaisRealizados.map((procedimento, indice) => (
-                <div key={indice} className="procedimento-item favorito">
-                  <span className="procedimento-posicao">{procedimento.colocacao}</span>
-                  <span className="procedimento-nome">{procedimento.nomeProcedimento}</span>
-                  <span className="procedimento-quantidade">{procedimento.totalRealizacoes}</span>
-                </div>
-              ))}
+              {rankingProcedimentosMaisRealizados.map(
+                (procedimento, indice) => (
+                  <div key={indice} className="procedimento-item favorito">
+                    <span className="procedimento-posicao">
+                      {procedimento.colocacao}
+                    </span>
+                    <span className="procedimento-nome">
+                      {procedimento.nomeProcedimento}
+                    </span>
+                    <span className="procedimento-quantidade">
+                      {procedimento.totalRealizacoes}
+                    </span>
+                  </div>
+                )
+              )}
             </div>
           </div>
 
           <div className="procedimentos-section">
             <h2 className="section-title">Procedimentos Em Queda</h2>
             <div className="procedimentos-list">
-              {rankingProcedimentosComMenorDemanda.map((procedimento, indice) => (
-                <div key={indice} className="procedimento-item queda">
-                  <span className="procedimento-posicao">{procedimento.colocacao}</span>
-                  <span className="procedimento-nome">{procedimento.nomeProcedimento}</span>
-                  <span className="procedimento-quantidade">{procedimento.totalRealizacoes}</span>
-                </div>
-              ))}
+              {rankingProcedimentosComMenorDemanda.map(
+                (procedimento, indice) => (
+                  <div key={indice} className="procedimento-item queda">
+                    <span className="procedimento-posicao">
+                      {procedimento.colocacao}
+                    </span>
+                    <span className="procedimento-nome">
+                      {procedimento.nomeProcedimento}
+                    </span>
+                    <span className="procedimento-quantidade">
+                      {procedimento.totalRealizacoes}
+                    </span>
+                  </div>
+                )
+              )}
             </div>
           </div>
         </div>
@@ -212,13 +255,15 @@ export function DashboardRealizado() {
         <div className="grafico-section">
           <div className="periodo-container">
             <label className="periodo-label">Procedimento</label>
-            <select 
-              className="periodo-select" 
+            <select
+              className="periodo-select"
               value={procedimentoAtualSelecionado}
               onChange={alterarProcedimentoSelecionado}
             >
               {listaDeTodosOsProcedimentos.map((nomeDoProcedimento) => (
-                <option key={nomeDoProcedimento} value={nomeDoProcedimento}>{nomeDoProcedimento}</option>
+                <option key={nomeDoProcedimento} value={nomeDoProcedimento}>
+                  {nomeDoProcedimento}
+                </option>
               ))}
             </select>
           </div>
@@ -226,13 +271,11 @@ export function DashboardRealizado() {
           <div className="grafico-container">
             <h3 className="grafico-title">Procedimentos Por Dia</h3>
             <p className="grafico-subtitle">(Últimos 30 dias)</p>
-            
+
             <div className="chart-wrapper">
               <Bar data={dadosDoGrafico} options={opcoesDoGrafico} />
             </div>
           </div>
-
-
         </div>
       </div>
     </div>

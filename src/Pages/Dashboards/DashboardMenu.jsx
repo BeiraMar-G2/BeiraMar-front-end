@@ -1,15 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from '../../Components/Header';
 import { Botao } from '../../Components/Botao';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/DashboardMenu.css';
+import api from '../../Provider/api';
 
 export function DashboardMenu() {
+  const [procedimentosRealizados, setProcedimentosRealizados] = useState(0);
+  const [procedimentosCancelados, setProcedimentosCancelados] = useState(0);
+
+  const [rankingProcedimentos, setRankingProcedimentos] = useState([]);
+
+  function buscarProcedimentos() {
+    api.get('/agendamentos/contarCancelados?dias=30')
+      .then(response => {
+        console.log('Procedimentos encontrados:', response);
+        setProcedimentosCancelados(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar procedimentos:', error);
+      });
+
+      api.get('/agendamentos/contarAgendados?dias=30')
+      .then(response => {
+        console.log('Procedimentos encontrados:', response);
+        setProcedimentosRealizados(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar procedimentos:', error);
+      });
+  }
+
+  function buscarRanking() {
+    api.get('/servicos/top3-mais-agendados?dias=7')
+      .then(response => {
+        console.log('Ranking de procedimentos encontrados:', response);
+        setRankingProcedimentos(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar ranking de procedimentos:', error);
+      });
+  }
+
+  useEffect(() => {
+    buscarProcedimentos();
+    buscarRanking();
+  }, []);
+
+
   const navigate = useNavigate();
 
   const handleDetalhes = (tipo) => {
     if (tipo === 'realizados') {
-      navigate('/Dashboard/Realizado');
+      navigate('/Dashboard/Realizado', {state: { rankingProcedimentos }});
     } else if (tipo === 'cancelados') {
       // Navegação para dashboard de cancelados quando estiver pronto
       console.log('Navegando para dashboard de cancelados');
@@ -41,7 +84,7 @@ export function DashboardMenu() {
               <h3>Procedimentos Cancelados</h3>
             </div>
             <div className="card-content">
-              <div className="card-number">5</div>
+              <div className="card-number">{procedimentosCancelados}</div>
               <Botao 
                 texto="Detalhes" 
                 cor="#90FCF9" 
@@ -58,7 +101,7 @@ export function DashboardMenu() {
               <h3>Procedimentos Realizados</h3>
             </div>
             <div className="card-content">
-              <div className="card-number">178</div>
+              <div className="card-number">{procedimentosRealizados}</div>
               <Botao 
                 texto="Detalhes" 
                 cor="#90FCF9" 
@@ -71,21 +114,17 @@ export function DashboardMenu() {
         <div className="favoritos-section">
           <h2>Procedimentos Favoritos</h2>
           <div className="favoritos-list">
-            <div className="favorito-item">
-              <span className="favorito-numero">1°</span>
-              <span className="favorito-nome">Massagem Modeladora</span>
-              <span className="favorito-count">50</span>
-            </div>
-            <div className="favorito-item">
-              <span className="favorito-numero">2°</span>
-              <span className="favorito-nome">Drenagem Linfática</span>
-              <span className="favorito-count">37</span>
-            </div>
-            <div className="favorito-item">
-              <span className="favorito-numero">3°</span>
-              <span className="favorito-nome">Design de Sobrancelha</span>
-              <span className="favorito-count">20</span>
-            </div>
+            {rankingProcedimentos.length > 0 ? (
+              rankingProcedimentos.map((item, index) => (
+                <div key={index} className="favorito-item">
+                  <span className="favorito-numero">{item[0]}°</span>
+                  <span className="favorito-nome">{item[1]}</span>
+                  <span className="favorito-count">{item[2]}</span>
+                </div>
+              ))
+            ) : (
+              <div className="loading">Carregando ranking...</div>
+            )}
           </div>
         </div>
       </div>
