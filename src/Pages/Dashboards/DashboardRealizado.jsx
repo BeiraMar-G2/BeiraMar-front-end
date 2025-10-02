@@ -25,19 +25,62 @@ ChartJS.register(
 );
 
 export function DashboardRealizado() {
-
   const {rankingProcedimentos = []} = useLocation().state || {};
   const [rankingMenosAgendados, setRankingMenosAgendados] = useState([]);
 
+  // Lista completa de todos os procedimentos disponíveis
+  const [listaDeTodosOsProcedimentos, definirListaDeTodosOsProcedimentos] = useState([]);
+
+  // Ranking dos procedimentos mais realizados (favoritos)
+  const rankingProcedimentosMaisRealizados = rankingProcedimentos.length > 0 ? rankingProcedimentos.map((item, index) => ({
+    colocacao: `${index + 1}°`,
+    nomeProcedimento: item[1],
+    totalRealizacoes: item[2],
+  })) : [];
+
+  // Ranking dos procedimentos com menor demanda (em queda)
+  const rankingProcedimentosComMenorDemanda = rankingMenosAgendados.length > 0 ? rankingMenosAgendados.map((item, index) => ({
+    colocacao: `${index + 1}°`,
+    nomeProcedimento: item[1], 
+    totalRealizacoes: item[2],  
+  })) : [];
+
+  // Dados semanais do procedimento selecionado (simulados para demonstração)
+  const [dadosSemanaisDoProcedimento, setDadosSemanaisDoProcedimento] = useState([
+    { diaDaSemana: "Segunda", quantidadeRealizacoes: 28 }
+  ]);
+  
   const navegador = useNavigate();
   const [procedimentoAtualSelecionado, definirProcedimentoSelecionado] =
-    useState("Massagem Modeladora");
-
+  useState("Massagem Modeladora");
+  
   const voltarParaDashboardMenu = () => {
     navegador("/Dashboard/Menu");
   };
 
+  function buscarProcedimentosRealizados(){
+    const procedimentoParaBuscar = procedimentoAtualSelecionado || listaDeTodosOsProcedimentos[0];
+  
+  if (!procedimentoParaBuscar) return;
+
+    api.get(`/servicos/agendamentos-por-dia-semana?nomeServico=${procedimentoParaBuscar}`)
+    .then((response) => {
+      console.log('Agendamentos por dia da semana:', response.data);
+      const dadosMapeados = response.data.map((item) => ({
+        diaDaSemana: item[0],
+        quantidadeRealizacoes: item[1],
+      }));
+      
+      setDadosSemanaisDoProcedimento(dadosMapeados);
+    })
+    .catch((error) => {
+      console.error('Erro ao buscar agendamentos por dia da semana:', error);
+    });
+  }
+  
+
   const alterarProcedimentoSelecionado = (evento) => {
+    setDadosSemanaisDoProcedimento([]);
     definirProcedimentoSelecionado(evento.target.value);
   };
 
@@ -71,32 +114,17 @@ export function DashboardRealizado() {
     servicosMenosAgendados();
   }, []);
 
-  // Lista completa de todos os procedimentos disponíveis
-  const [listaDeTodosOsProcedimentos, definirListaDeTodosOsProcedimentos] = useState([]);
+  useEffect(() => {
+  if (listaDeTodosOsProcedimentos.length > 0) {
+    buscarProcedimentosRealizados();
+  }
+}, [listaDeTodosOsProcedimentos]);
 
-  // Ranking dos procedimentos mais realizados (favoritos)
-  const rankingProcedimentosMaisRealizados = rankingProcedimentos.length > 0 ? rankingProcedimentos.map((item, index) => ({
-    colocacao: `${index + 1}°`,
-    nomeProcedimento: item[1],
-    totalRealizacoes: item[2],
-  })) : [];
-
-  // Ranking dos procedimentos com menor demanda (em queda)
-  const rankingProcedimentosComMenorDemanda = rankingMenosAgendados.length > 0 ? rankingMenosAgendados.map((item, index) => ({
-    colocacao: `${index + 1}°`,
-    nomeProcedimento: item[1], 
-    totalRealizacoes: item[2],  
-  })) : [];
-
-  // Dados semanais do procedimento selecionado (simulados para demonstração)
-  const dadosSemanaisDoProcedimento = [
-    { diaDaSemana: "Segunda", quantidadeRealizacoes: 28 },
-    { diaDaSemana: "Terça", quantidadeRealizacoes: 35 },
-    { diaDaSemana: "Quarta", quantidadeRealizacoes: 18 },
-    { diaDaSemana: "Quinta", quantidadeRealizacoes: 42 },
-    { diaDaSemana: "Sexta", quantidadeRealizacoes: 38 },
-    { diaDaSemana: "Sábado", quantidadeRealizacoes: 45 },
-  ];
+useEffect(() => {
+  if (procedimentoAtualSelecionado) {
+    buscarProcedimentosRealizados();
+  }
+}, [procedimentoAtualSelecionado]);
 
   // Configuração dos dados para o gráfico de barras
   const dadosDoGrafico = {
@@ -150,7 +178,6 @@ export function DashboardRealizado() {
     scales: {
       y: {
         beginAtZero: true,
-        max: 50,
         ticks: {
           stepSize: 10,
           color: "#666",
@@ -260,8 +287,9 @@ export function DashboardRealizado() {
               value={procedimentoAtualSelecionado}
               onChange={alterarProcedimentoSelecionado}
             >
+              <option value="" disabled>Selecione um procedimento</option>
               {listaDeTodosOsProcedimentos.map((nomeDoProcedimento) => (
-                <option key={nomeDoProcedimento} value={nomeDoProcedimento}>
+                <option id={nomeDoProcedimento} key={nomeDoProcedimento} value={nomeDoProcedimento}>
                   {nomeDoProcedimento}
                 </option>
               ))}
