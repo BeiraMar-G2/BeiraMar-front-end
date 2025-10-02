@@ -260,21 +260,21 @@ useEffect(() => {
           <div className="procedimentos-section">
             <h2 className="section-title">Procedimentos Em Queda</h2>
             <div className="procedimentos-list">
-              {rankingProcedimentosComMenorDemanda.map(
-                (procedimento, indice) => (
-                  <div key={indice} className="procedimento-item queda">
-                    <span className="procedimento-posicao">
-                      {procedimento.colocacao}
-                    </span>
-                    <span className="procedimento-nome">
-                      {procedimento.nomeProcedimento}
-                    </span>
-                    <span className="procedimento-quantidade">
-                      {procedimento.totalRealizacoes}
-                    </span>
-                  </div>
-                )
-              )}
+              {rankingProcedimentosComMenorDemanda.slice().reverse().map(
+      (procedimento, indice) => (
+        <div key={indice} className="procedimento-item queda">
+          <span className="procedimento-posicao">
+            {procedimento.colocacao}
+          </span>
+          <span className="procedimento-nome">
+            {procedimento.nomeProcedimento}
+          </span>
+          <span className="procedimento-quantidade">
+            {procedimento.totalRealizacoes}
+          </span>
+        </div>
+      )
+    )}
             </div>
           </div>
         </div>
