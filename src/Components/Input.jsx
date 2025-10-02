@@ -16,13 +16,18 @@ export function Input(props) {
 
             mask = IMask(inputRef.current, maskOptions);
 
+            // Define o valor inicial da máscara se props.value existir
+            if (props.value) {
+                mask.value = props.value;
+            }
+
             mask.on("accept", () => {
                 props.onChange(mask.value);
             });
 
             return () => mask.destroy();
         }
-    }, [tipo, props]);
+    }, [tipo, props.value]); // Adiciona props.value como dependência
 
     return (
         <div>

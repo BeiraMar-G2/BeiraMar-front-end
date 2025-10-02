@@ -164,7 +164,7 @@ return (
                     <div className="servicos-img-wrapper">
                         <img src="../../Assets/Design com Henna.png" alt="" />
                         <br />
-                        <ConteudoHome texto="Design de Sobrancelha com Henna"/>
+                        <SubtituloHome texto="Design de Sobrancelha com Henna"/>
                     </div>
                 </div>
             </div>
