@@ -4,6 +4,7 @@ import { Botao } from '../../Components/Botao';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/DashboardMenu.css';
 import api from '../../Provider/api';
+import { HelpModal } from '../../Components/Modal';
 
 export function DashboardMenu() {
   const [procedimentosRealizados, setProcedimentosRealizados] = useState(0);
@@ -111,7 +112,7 @@ export function DashboardMenu() {
         </div>
 
         <div className="favoritos-section">
-          <h2>Procedimentos Favoritos</h2>
+          <h2>Procedimentos Favoritos <HelpModal local="Ranking de procedimentos em queda" explicacao="Esses são os procedimentos que estão com maior demanda no momento e o público está adorando!" /></h2>
           <div className="favoritos-list">
             {rankingProcedimentos.length > 0 ? (
               rankingProcedimentos.map((item, index) => (

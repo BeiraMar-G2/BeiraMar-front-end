@@ -1,4 +1,7 @@
 import "../Pages/Styles/Modal.css"
+import "../Pages/Styles/HelpModal.css";
+import React, { useState } from "react";
+
 
 function showAlert(id) {
   const alert = document.getElementById(id);
@@ -42,4 +45,39 @@ export function Erro(props) {
             </div>
         </div>
     )
+}
+
+export function HelpModal(props) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  return (
+    <>
+      {/* Ícone de dúvida */}
+      <i
+        className="fas fa-question-circle help-icon"
+        onClick={toggleModal}
+        title="Clique para mais informações"
+      ></i>
+
+      {/* Modal */}
+      {isOpen && (
+        <div className="modal-overlay" onClick={toggleModal}>
+          <div
+            className="modal-content-duvida"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="close-button" onClick={toggleModal}>
+              &times;
+            </button>
+            <h2>{props.local}</h2>
+            <p>{props.explicacao}</p>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }

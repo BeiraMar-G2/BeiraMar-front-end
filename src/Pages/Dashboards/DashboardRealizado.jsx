@@ -14,6 +14,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import api from "../../Provider/api";
 import { useLocation } from "react-router-dom";
+import { HelpModal } from "../../Components/Modal";
 
 ChartJS.register(
   CategoryScale,
@@ -27,9 +28,7 @@ ChartJS.register(
 export function DashboardRealizado() {
   const {rankingProcedimentos = []} = useLocation().state || {};
   const [rankingMenosAgendados, setRankingMenosAgendados] = useState([]);
-
-  // Lista completa de todos os procedimentos disponíveis
-  const [listaDeTodosOsProcedimentos, definirListaDeTodosOsProcedimentos] = useState([]);
+  const [mensagemErro, setMensagemErro] = useState("");
 
   // Ranking dos procedimentos mais realizados (favoritos)
   const rankingProcedimentosMaisRealizados = rankingProcedimentos.length > 0 ? rankingProcedimentos.map((item, index) => ({
@@ -51,46 +50,39 @@ export function DashboardRealizado() {
   ]);
   
   const navegador = useNavigate();
-  const [procedimentoAtualSelecionado, definirProcedimentoSelecionado] =
-  useState("Massagem Modeladora");
-  
+  const [procedimentoAtualSelecionado, definirProcedimentoSelecionado] = useState("");
+  const [listaDeTodosOsProcedimentos, definirListaDeTodosOsProcedimentos] = useState([]);
+
   const voltarParaDashboardMenu = () => {
     navegador("/Dashboard/Menu");
   };
 
-  function buscarProcedimentosRealizados(){
-    const procedimentoParaBuscar = procedimentoAtualSelecionado || listaDeTodosOsProcedimentos[0];
-  
-  if (!procedimentoParaBuscar) return;
+  function buscarProcedimentosRealizados() {
+    if (!procedimentoAtualSelecionado) return; // Não busca se nenhum procedimento estiver selecionado
 
-    api.get(`/servicos/agendamentos-por-dia-semana?nomeServico=${procedimentoParaBuscar}`)
-    .then((response) => {
-      console.log('Agendamentos por dia da semana:', response.data);
-      const dadosMapeados = response.data.map((item) => ({
-        diaDaSemana: item[0],
-        quantidadeRealizacoes: item[1],
-      }));
-      
-      setDadosSemanaisDoProcedimento(dadosMapeados);
-    })
-    .catch((error) => {
-      console.error('Erro ao buscar agendamentos por dia da semana:', error);
-    });
+    api
+      .get(`/servicos/agendamentos-por-dia-semana?nomeServico=${procedimentoAtualSelecionado}`)
+      .then((response) => {
+        console.log("Agendamentos por dia da semana:", response.data);
+        const dadosMapeados = response.data.map((item) => ({
+          diaDaSemana: item[0],
+          quantidadeRealizacoes: item[1],
+        }));
+        setDadosSemanaisDoProcedimento(dadosMapeados);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar agendamentos por dia da semana:", error);
+        setMensagemErro(error.response.data.message || "Erro ao buscar dados.");
+      });
   }
-  
-
-  const alterarProcedimentoSelecionado = (evento) => {
-    setDadosSemanaisDoProcedimento([]);
-    definirProcedimentoSelecionado(evento.target.value);
-  };
 
   function listarServicos() {
     api
       .get("/servicos")
       .then((response) => {
         console.log("Serviços encontrados:", response);
-          const nomesServicos = response.data.map((servico) => servico.nome);
-      definirListaDeTodosOsProcedimentos(nomesServicos);
+        const nomesServicos = response.data.map((servico) => servico.nome);
+        definirListaDeTodosOsProcedimentos(nomesServicos);
       })
       .catch((error) => {
         console.error("Erro ao buscar serviços:", error);
@@ -120,9 +112,10 @@ export function DashboardRealizado() {
   }
 }, [listaDeTodosOsProcedimentos]);
 
-useEffect(() => {
+  useEffect(() => {
   if (procedimentoAtualSelecionado) {
     buscarProcedimentosRealizados();
+    setMensagemErro("");
   }
 }, [procedimentoAtualSelecionado]);
 
@@ -237,7 +230,7 @@ useEffect(() => {
       <div className="dashboard-content">
         <div className="procedimentos-container">
           <div className="procedimentos-section">
-            <h2 className="section-title">Procedimentos Favoritos</h2>
+            <h2 className="section-title">Procedimentos Favoritos <HelpModal local="Ranking de procedimentos favoritos" explicacao="Esses são os procedimentos que estão com maior demanda no momento e o público está adorando!" /></h2>
             <div className="procedimentos-list">
               {rankingProcedimentosMaisRealizados.map(
                 (procedimento, indice) => (
@@ -258,9 +251,9 @@ useEffect(() => {
           </div>
 
           <div className="procedimentos-section">
-            <h2 className="section-title">Procedimentos Em Queda</h2>
+            <h2 className="section-title">Procedimentos Em Queda <HelpModal local="Ranking de procedimentos em queda" explicacao="Esses são os procedimentos que estão com menor demanda no momento e talvez precisem de mais atenção." /></h2>
             <div className="procedimentos-list">
-              {rankingProcedimentosComMenorDemanda.slice().reverse().map(
+              {rankingProcedimentosComMenorDemanda.map(
       (procedimento, indice) => (
         <div key={indice} className="procedimento-item queda">
           <span className="procedimento-posicao">
@@ -281,29 +274,41 @@ useEffect(() => {
 
         <div className="grafico-section">
           <div className="periodo-container">
-            <label className="periodo-label">Procedimento</label>
+            <label className="periodo-fixo">Período: Últimos 30 dias</label>
             <select
               className="periodo-select"
               value={procedimentoAtualSelecionado}
-              onChange={alterarProcedimentoSelecionado}
+              onChange={(evento) => definirProcedimentoSelecionado(evento.target.value)}
             >
               <option value="" disabled>Selecione um procedimento</option>
               {listaDeTodosOsProcedimentos.map((nomeDoProcedimento) => (
-                <option id={nomeDoProcedimento} key={nomeDoProcedimento} value={nomeDoProcedimento}>
+                <option key={nomeDoProcedimento} value={nomeDoProcedimento}>
                   {nomeDoProcedimento}
                 </option>
               ))}
             </select>
           </div>
 
-          <div className="grafico-container">
-            <h3 className="grafico-title">Procedimentos Por Dia</h3>
-            <p className="grafico-subtitle">(Últimos 30 dias)</p>
+          {!procedimentoAtualSelecionado ? (
+            <div className="grafico-container">
+              <p className="grafico-title">Selecione um dos procedimentos para visualizar mais informações</p>
+              
+          </div>
+          ) : (
+            mensagemErro ? (
+              <div className="grafico-container">
+                <p className="grafico-title">{mensagemErro}</p>
+              </div>
+            ) : (
+            <div className="grafico-container">
+              <h3 className="grafico-title">Procedimentos Por Dia <HelpModal local="Informações do gráfico" explicacao="O gráfico exibe os dias da semana em que cada procedimento tem mais demanda para que você possa prever sua agenda." /></h3>
+              <p className="grafico-subtitle">(Últimos 30 dias)</p>
 
             <div className="chart-wrapper">
               <Bar data={dadosDoGrafico} options={opcoesDoGrafico} />
             </div>
           </div>
+          ))}
         </div>
       </div>
     </div>
