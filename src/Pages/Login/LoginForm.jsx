@@ -119,7 +119,7 @@ export function LoginForm() {
             <Input valor="email" type="text" placeholder="Digite seu email" onChange={setEmail}/>
             <IoIosMail className='icon' size={30}/>
           </div>
-          <div className='conjuntoInput'>
+          <div onSubmit={validarLogin} className='conjuntoInput'>
             <Input valor="senha" type="password" placeholder="Digite sua senha" onChange={setSenha}/>
             <FaKey className="icon" size={24}/>
           </div>

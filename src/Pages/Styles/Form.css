@@ -100,6 +100,9 @@ span{
   border-radius: 50%;
   border: 1px solid #282828;
   background-color: #4d4d4d;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
 }
 
 .alterarSenha{
@@ -107,4 +110,17 @@ span{
   flex-direction: row;
   align-items: center;
   gap: 8px;
+}
+
+.input-file {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.icon-file{
+  position: absolute;
+  color: #f8f8f8;
+  z-index: 0;
+  cursor: pointer;
 }
