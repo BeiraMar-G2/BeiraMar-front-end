@@ -30,7 +30,7 @@ import { DashboardCancelamento } from "./Pages/Dashboards/DashboardCancelamento.
 import { PrivateRoute } from "./Components/PrivateRoute.jsx";
 import { IndisponibilidadeDia } from "./Pages/Indisponibilidade/IndisponibilidadeDia.jsx";
 import { IndisponibilidadeHora } from "./Pages/Indisponibilidade/IndisponibilidadeHora.jsx";
-
+import { DefinicaoNovaSenha} from "./Pages/RecuperacaoSenha/DefinicaoNovaSenha.jsx"
 export const routes = createBrowserRouter([
   {
     path: "/*",
@@ -201,4 +201,9 @@ export const routes = createBrowserRouter([
     element: <IndisponibilidadeHora />,
     errorElement: <div>Erro ao carregar a página</div>
   },
+  {
+    path: "/RecuperacaoSenha/DefinicaoNovaSenha",
+    element: <DefinicaoNovaSenha></>,
+    errorElement: <div>Erro ao carregar a página</div>
+  }
 ]);
