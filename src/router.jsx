@@ -201,9 +201,4 @@ export const routes = createBrowserRouter([
     element: <IndisponibilidadeHora />,
     errorElement: <div>Erro ao carregar a página</div>
   },
-  {
-    path: "/RecuperacaoSenha/DefinicaoNovaSenha",
-    element: <DefinicaoNovaSenha></>,
-    errorElement: <div>Erro ao carregar a página</div>
-  }
 ]);
