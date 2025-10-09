@@ -60,7 +60,7 @@ export function HorarioAgendamento() {
     const botaoContinuar = () => {
         console.log({
             fkServico: `${servicoDataEscolhido.servicoEscolhido.servicoId}`,
-            fkCliente: Number(localStorage.getItem("idUsuario")),
+            fkCliente: Number(sessionStorage.getItem("idUsuario")),
             fkFuncionario: 1,
             dtHora: `${servicoDataEscolhido.dataEscolhida.formato}T${horarioSelecionado}:00`,
             valorPago: servicoDataEscolhido.servicoEscolhido.servicoPreco,
@@ -71,7 +71,7 @@ export function HorarioAgendamento() {
         })
         api.post("/agendamentos", {
             fkServico: `${Number(servicoDataEscolhido.servicoEscolhido.servicoId)}`,
-            fkCliente: Number(localStorage.getItem("idUsuario")),
+            fkCliente: Number(sessionStorage.getItem("idUsuario")),
             fkFuncionario: 1,
             dtHora: `${servicoDataEscolhido.dataEscolhida.formato}T${horarioSelecionado}:00`,
             valorPago: servicoDataEscolhido.servicoEscolhido.servicoPreco,

@@ -6,6 +6,7 @@ import { FaHouse } from "react-icons/fa6";
 import "../Styles/Form.css";
 import "../Styles/Input.css";
 import "../Styles/IndisponibilidadeHora.css";
+import api from "../../Provider/api";
 
 export function IndisponibilidadeHora() {
     const navigate = useNavigate();
@@ -24,7 +25,17 @@ export function IndisponibilidadeHora() {
         // Aqui você pode implementar a lógica para continuar
         console.log("Início da Ausência:", inicioAusencia);
         console.log("Retorno da Ausência:", retornoAusencia);
-        // navigate para próxima página se necessário
+        api.post("/indisponibilidade", {
+            data: dataSelecionada,
+            inicio: inicioAusencia,
+            retorno: retornoAusencia
+        })
+        .then((response) => {
+            console.log("Indisponibilidade registrada com sucesso:", response.data);
+        })
+        .catch((error) => {
+            console.error("Erro ao registrar indisponibilidade:", error);
+        });
     };
 
     return (

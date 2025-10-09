@@ -15,18 +15,18 @@ export function Header(props) {
     };
 
     const handleLogout = () => {
-      localStorage.removeItem("token")
-      localStorage.removeItem("idUsuario")
-      localStorage.removeItem("nome")
-      localStorage.removeItem("email")
-      localStorage.removeItem("role")
-      localStorage.removeItem("cargo")
-      console.log(localStorage)
+      sessionStorage.removeItem("token")
+      sessionStorage.removeItem("idUsuario")
+      sessionStorage.removeItem("nome")
+      sessionStorage.removeItem("email")
+      sessionStorage.removeItem("role")
+      sessionStorage.removeItem("cargo")
+      console.log(sessionStorage)
       navigate("/Login");
     }
 
     const handleMenu = () => {
-      if(localStorage.getItem("cargo") === "Cliente"){
+      if(sessionStorage.getItem("cargo") === "Cliente"){
         navigate("/MenuCliente");
       }
       else{

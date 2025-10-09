@@ -28,7 +28,7 @@ export function MenuCliente() {
     return (
         <div className="menu-cliente">
             <Header 
-                texto={`Olá, ${localStorage.getItem('nome')}!`}
+                texto={`Olá, ${sessionStorage.getItem('nome')}!`}
                 cor="#CE2D4F"
                 icone={<RiLogoutBoxLine size={28}/>}
                 alinhamento="center"
@@ -39,7 +39,7 @@ export function MenuCliente() {
             <div className="container-menu">
                 <div className="boas-vindas">
                     <h2>Boas vindas ao menu!</h2>
-                {localStorage.getItem('loginGoogle') == 'true' ? (
+                {sessionStorage.getItem('loginGoogle') == 'true' ? (
                     <p style={{ color: '#282828' }}>Clique aqui para adicionar seu telefone! <a onClick={() => navigate('/Perfil')}>Adicionar telefone</a></p>
                 ) : null}
                 </div>

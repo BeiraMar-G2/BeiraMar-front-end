@@ -29,12 +29,12 @@ export function LoginForm() {
     })
     .then((response) => {
       const { token, cargo, nome, email, id, telefone } = response.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("cargo", cargo);
-      localStorage.setItem("nome", nome);
-      localStorage.setItem("email", email);
-      localStorage.setItem("idUsuario", id);
-      localStorage.setItem("telefone", telefone);
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("cargo", cargo);
+      sessionStorage.setItem("nome", nome);
+      sessionStorage.setItem("email", email);
+      sessionStorage.setItem("idUsuario", id);
+      sessionStorage.setItem("telefone", telefone);
       setShowAlert(true);
       console.log("Login realizado com sucesso:", response);
       if (response.status == "200") {
@@ -61,12 +61,12 @@ export function LoginForm() {
     })
       .then((response) => {
         const { token, cargo, nome, email, id } = response.data;
-        localStorage.setItem("token", token);
-        localStorage.setItem("cargo", cargo);
-        localStorage.setItem("nome", nome);
-        localStorage.setItem("email", email);
-        localStorage.setItem("idUsuario", id);
-        localStorage.setItem("loginGoogle", "true");
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("cargo", cargo);
+        sessionStorage.setItem("nome", nome);
+        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("idUsuario", id);
+        sessionStorage.setItem("loginGoogle", "true");
         setShowAlert(true);
         console.log("Login com Google realizado com sucesso:", response);
         if (response.status === 200) {

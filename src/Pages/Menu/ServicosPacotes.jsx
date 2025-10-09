@@ -13,7 +13,7 @@ export function ServicosPacotes() {
   const navigate = useNavigate();
   return (
     <div className="containerMenu">
-      <Header exibirPopup={true} texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<RiLogoutBoxLine size={28}/>} color="#282828"/>
+      <Header exibirPopup={true} texto={`Olá, ${sessionStorage.getItem('nome')}!`} alinhamento="center" icone={<RiLogoutBoxLine size={28}/>} color="#282828"/>
       <h2 style={{
         textAlign: "center",
         marginTop: "-100px",

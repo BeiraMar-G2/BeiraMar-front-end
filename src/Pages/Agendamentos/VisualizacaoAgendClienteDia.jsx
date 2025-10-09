@@ -10,7 +10,7 @@ export function VisualizacaoAgendClienteDia() {
   const navigate = useNavigate();
 
 return (
-    <div>
+    <div className="pagina-agendamentos">
       <br />
     <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Menu" isCliente="true" cor="#CE2D4F" color="#f8f8f8"/>
     <Titulo texto="Agendamentos"/>

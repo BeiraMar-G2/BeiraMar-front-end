@@ -19,9 +19,9 @@ export function EdicaoUsuarioForm() {
 
   ]);
 
-  const [nome, setNome] = useState(localStorage.getItem("nome") || "");
-  const [telefone, setTelefone] = useState(localStorage.getItem("telefone") || "");
-  const [email, setEmail] = useState(localStorage.getItem("email") || "");
+  const [nome, setNome] = useState(sessionStorage.getItem("nome") || "");
+  const [telefone, setTelefone] = useState(sessionStorage.getItem("telefone") || "");
+  const [email, setEmail] = useState(sessionStorage.getItem("email") || "");
   const [fotoPerfil, setFotoPerfil] = useState(null);
   const [fileURL, setFileURL] = useState(null);
 
@@ -37,7 +37,7 @@ export function EdicaoUsuarioForm() {
     })
       .then((response) => {
         console.log("Foto de perfil enviada com sucesso:", response.data);
-        localStorage.setItem("fotoId", response.data.id);
+        sessionStorage.setItem("fotoId", response.data.id);
         setAtualizados([...atualizados, "Foto de Perfil"]);
       })
       .catch((error) => {
@@ -45,7 +45,7 @@ export function EdicaoUsuarioForm() {
       });
     }
 
-    api.put(`clientes/${localStorage.getItem('idUsuario')}/foto?fotoId=${localStorage.getItem('fotoId')}`)
+    api.put(`clientes/${sessionStorage.getItem('idUsuario')}/foto?fotoId=${sessionStorage.getItem('fotoId')}`)
     .then((response) => {
       console.log("Foto de perfil associada com sucesso:", response.data);
       setAtualizados([...atualizados, "Foto de Perfil Associada"]);
@@ -53,16 +53,16 @@ export function EdicaoUsuarioForm() {
     .catch((error) => {
       console.error("Erro ao associar a foto de perfil:", error);
     });
-    api.put(`/clientes/${localStorage.getItem('idUsuario')}`, {
+    api.put(`/clientes/${sessionStorage.getItem('idUsuario')}`, {
       nome,
       telefone,
       email,
     })
       .then((response) => {
         console.log("Dados atualizados com sucesso:", response.data);
-        localStorage.setItem("nome", nome);
-        localStorage.setItem("telefone", telefone);
-        localStorage.setItem("email", email);
+        sessionStorage.setItem("nome", nome);
+        sessionStorage.setItem("telefone", telefone);
+        sessionStorage.setItem("email", email);
         setAtualizados([...atualizados, "Dados Pessoais"]);
       })
       .catch((error) => {

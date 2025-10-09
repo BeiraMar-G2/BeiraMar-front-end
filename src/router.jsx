@@ -38,10 +38,7 @@ export const routes = createBrowserRouter([
   },
   { 
     path: "/Login", 
-    element: (() => {
-    localStorage.clear();
-    return <LoginForm />;
-    })(),
+    element: <LoginForm />,
     errorElement: <div>Erro ao carregar a página</div> 
   },
   { 

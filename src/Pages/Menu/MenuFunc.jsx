@@ -33,7 +33,7 @@ export function Menu() {
     };
 
     const direcionarDisponibilidade = () => {
-      navigate("/Indisponibilidade/Dia"); 
+      navigate("/Indisponibilidade"); 
     };
 
     const direcionarDashboards = () => {
@@ -42,7 +42,7 @@ export function Menu() {
 
   return (
     <div className="containerMenu">
-      <Header exibirPopup={true} onClick={deslogar} texto={`Olá, ${localStorage.getItem('nome')}!`} alinhamento="center" icone={<RiLogoutBoxLine size={28}/>} color="#282828"/>
+      <Header exibirPopup={true} onClick={deslogar} texto={`Olá, ${sessionStorage.getItem('nome')}!`} alinhamento="center" icone={<RiLogoutBoxLine size={28}/>} color="#282828"/>
       <Titulo texto="Boas Vindas ao Menu!"/>
 
       <div className="botoesMenu">
@@ -53,7 +53,7 @@ export function Menu() {
         <BotaoMenu onClick={direcionarDisponibilidade} texto="Disponibilidade" imagem={<LuAlarmClock className="icone-menu"/>}/>
         <BotaoMenu onClick={direcionarServPacotes} texto="Serviços e Pacotes" imagem={<BiSolidShoppingBags className="icone-menu"/>}/>
       </div>
-      {localStorage.getItem('cargo')=="Administrador" ? <div className="botoesMenu">
+      {sessionStorage.getItem('cargo')=="Administrador" ? <div className="botoesMenu">
         <BotaoMenu onClick={direcionarDashboards} texto="Dashboards" imagem={<FaChartLine className="icone-menu"/>}/> 
         <BotaoMenu onClick={direcionarCadAtendente} texto="Cadastro de Atendentes" imagem={<LuUserPlus className="icone-menu"/>}  />
       </div> : ""}

@@ -132,6 +132,7 @@
 }
 
 .botoes-acao .botao {
+    margin-top: 25px;
     flex: 1;
 }
 
