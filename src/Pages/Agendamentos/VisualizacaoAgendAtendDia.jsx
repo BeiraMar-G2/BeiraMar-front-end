@@ -5,7 +5,6 @@ import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from "../../Components/Fontes";
 import { Botao } from "../../Components/Botao";
-// import { useNavigate } from "react-router-dom";
 import VisuAtendPorDia from "../../Components/VisuAtendPorDia";
 import "../Styles/VisuAtendPorDia.css";
 
