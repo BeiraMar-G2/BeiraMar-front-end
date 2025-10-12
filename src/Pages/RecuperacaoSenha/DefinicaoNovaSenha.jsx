@@ -5,9 +5,9 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { Botao } from '../../Components/Botao';
 import { Titulo, Label } from '../../Components/Fontes';
-import '../Styles/Form.css';
+import '../Styles/DefinicaoNovaSenha.css';
 
-export function EdicaoSenha() {
+export function DefinicaoNovaSenha() {
     const navigate = useNavigate();
 
     const [senhaNova, setSenhaNova] = useState('');
@@ -16,7 +16,7 @@ export function EdicaoSenha() {
 
     function atualizarSenha() {
         if (senhaNova !== confSenhaNova) {
-            alert('As senhas novas não coincidem!');
+            alert('A senha deve ser a mesma nos campos!');
             return;
         }
         console.log('Senhas:', senhaAtual, senhaNova, confSenhaNova);
@@ -52,16 +52,7 @@ export function EdicaoSenha() {
                     <FaKey className='icon' size={24} />
                 </div>
 
-                <Label texto="Confirme a Senha Atual"/>
-                <div className='conjuntoInput'>
-                    <Input
-                    type="password"
-                    valor="senha"
-                    placeholder="confirme a senha atual"
-                    onChange={setSenhaAtual}
-                    />
-                    <FaKey className='icon' size={24} />
-                </div>
+                
                 <Botao cor="#f8c7ccbb" texto="Salvar Alterações" onClick={atualizarSenha}/>
             </div>
         </div>
