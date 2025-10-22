@@ -116,7 +116,7 @@ export function PacotesCadastradosCliente() {
                 nome={item.nome}
                 preco={item.preco}
                 duracao={item.duracao}
-                onClick={() => navigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { servicoId: item.idServico, servicoNome: item.nome, servicoPreco: item.preco, tipo: tipo, pacote: {pacoteId: null} } } })}
+                onClick={() => navigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { servicoId: item.idServico, servicoNome: item.nome, servicoPreco: item.preco, tipo: tipo, pacoteId: null } } })}
               />
             )
           )}

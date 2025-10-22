@@ -67,7 +67,7 @@ export function HorarioAgendamento() {
             statusAgendamento: "Agendado",
             status: "Agendado",
             dataValidade: null,
-            fkPacote: servicoDataEscolhido.servicoEscolhido.pacote.pacoteId
+            fkPacote: servicoDataEscolhido.servicoEscolhido.pacoteId
         })
         api.post("/agendamentos", {
             fkServico: `${Number(servicoDataEscolhido.servicoEscolhido.servicoId)}`,
@@ -78,16 +78,16 @@ export function HorarioAgendamento() {
             statusAgendamento: "Agendado",
             status: "Agendado",
             dataValidade: null,
-            fkPacote: servicoDataEscolhido.servicoEscolhido.pacote.pacoteId
+            fkPacote: servicoDataEscolhido.servicoEscolhido.pacoteId
         })
         .then((response) => {
             console.log("Agendamento criado:", response);
             if(response.status == "201") {
                 setShowAlert(true);
-                setTimeout(() => setShowAlert(false), 6000);
+                setTimeout(() => setShowAlert(false), 5000);
     
                 setTimeout(() => 
-                    navigate("/Agendamentos/VisualizarConsultas"), 6000);
+                    navigate("/Agendamentos/VisualizarConsultas"), 4000);
             }
         })
     };

@@ -50,12 +50,20 @@ export function AgendamentoServicoPacote() {
         tipo === "Pacotes" ? 
         api.get(`/sessoes/buscar/${servicoEscolhido.pacoteId}`)
             .then((response) => {
+                console.log(response.data.map(sessao => ({
+                    idServico: sessao.idServico,
+                    nome: sessao.nome,
+                    duracao: sessao.duracao,
+                    preco: sessao.preco
+                })));
                 setServicos(response.data.map(sessao => ({
                     idServico: sessao.idServico,
                     nome: sessao.nome,
                     duracao: sessao.duracao,
                     preco: sessao.preco
-                })))}) 
+                })))
+        }) 
+
                 : console.log(servicoEscolhido);
     }
 
