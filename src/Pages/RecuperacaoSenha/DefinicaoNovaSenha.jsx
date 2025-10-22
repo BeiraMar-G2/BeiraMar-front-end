@@ -5,7 +5,6 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { Botao } from '../../Components/Botao';
 import { Titulo, Label } from '../../Components/Fontes';
-import '../Styles/DefinicaoNovaSenha.css';
 
 export function DefinicaoNovaSenha() {
     const navigate = useNavigate();
@@ -24,8 +23,8 @@ export function DefinicaoNovaSenha() {
 
     return (
         <div className="content cliente">
-            <div onClick={() => navigate("/Perfil")} className='voltar-wrapper'>
-                <FaArrowLeft size={28} color="#000" className='voltar'/>
+            <div onClick={() => navigate("/RecuperacaoCodigo")} className='voltar-wrapper'>
+                <FaArrowLeft size={28} className='voltar'/>
               </div>
             <div className="formulariocentrado">
                 <Titulo texto="Alteração de Senha"/>
