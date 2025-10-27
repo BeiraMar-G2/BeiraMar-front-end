@@ -34,7 +34,7 @@ export function RecuperacaoCodigo() {
             
             const response = await api.post('/recuperacao/validar-codigo', {
                 codigo: codigoCompleto,
-                email: email  // Inclui o email se necessário
+                email: email
             });
 
             console.log('Código validado com sucesso:', response.data);
@@ -45,7 +45,6 @@ export function RecuperacaoCodigo() {
                 navigate('/recuperacao/nova-senha', { 
                     state: { 
                         codigo: codigoCompleto,
-                        // Pode passar outros dados necessários do response
                         token: response.data.token || null
                     }
                 });

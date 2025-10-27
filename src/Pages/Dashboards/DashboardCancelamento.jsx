@@ -14,6 +14,7 @@ import {
 import { Pie, Bar } from "react-chartjs-2";
 import "../Styles/DashboardCancelamento.css";
 import api from "../../Provider/api";
+import { HelpModal } from "../../Components/Modal";
 
 ChartJS.register(
   CategoryScale,
@@ -31,6 +32,9 @@ export function DashboardCancelamento() {
   const [listaDeTodosOsProcedimentos, definirListaDeTodosOsProcedimentos] = useState([]);
   const [legendaPersonalizada, setLegendaPersonalizada] = useState(null);
   const [servicosMaisCanceladosData, setServicosMaisCanceladosData] = useState([]);
+  const [dadosSemanaisDoProcedimento, setDadosSemanaisDoProcedimento] = useState([]);
+  const [mensagemErro, setMensagemErro] = useState("");
+  const [mensagemErroTorta, setMensagemErroTorta] = useState("");
 
   function listarServicos() {
     api
@@ -45,22 +49,42 @@ export function DashboardCancelamento() {
       });
   }
 
+  function buscarProcedimentosCancelados() {
+      if (!procedimentoSelecionado) return;
+  
+      api
+        .get(`/servicos/cancelamentos-por-dia-semana?nomeServico=${procedimentoSelecionado}`)
+        .then((response) => {
+          const dadosMapeados = response.data.map((item) => ({
+            diaDaSemana: item[0],
+            quantidadeRealizacoes: item[1],
+          }));
+          setDadosSemanaisDoProcedimento(dadosMapeados);
+        })
+        .catch((error) => {
+          setMensagemErro(error.response.data.message);
+        });
+    }
+
   function servicosMaisCancelados() {
     api
       .get("/servicos/mais-cancelados")
       .then((response) => {
         console.log("Dados recebidos:", response.data);
-        console.log("Tipo dos dados:", typeof response.data);
-        console.log("É array?", Array.isArray(response.data));
         
         if (response.data && Array.isArray(response.data)) {
-          setServicosMaisCanceladosData(response.data);
+          if(response.data[0][1] == 0){
+            setMensagemErroTorta("Nenhum cancelamento registrado nos últimos 30 dias");
+          } else {
+            setServicosMaisCanceladosData(response.data);
+          }
         } else {
-          console.error("Dados não são um array:", response.data);
+          console.error("Dados não são um array");
         }
       })
       .catch((error) => {
         console.error("Erro ao buscar serviços (Mais cancelados):", error);
+        setMensagemErroTorta(error.response?.data?.message || "Erro ao buscar dados.");
       });
   }
 
@@ -71,6 +95,19 @@ export function DashboardCancelamento() {
     servicosMaisCancelados();
   }, []);
 
+  useEffect(() => {
+    if (listaDeTodosOsProcedimentos.length > 0) {
+      buscarProcedimentosCancelados();
+    }
+  }, [listaDeTodosOsProcedimentos]);
+  
+    useEffect(() => {
+    if (procedimentoSelecionado) {
+      buscarProcedimentosCancelados();
+      setMensagemErro("");
+    }
+  }, [procedimentoSelecionado]);
+
   const handleVoltar = () => {
     navigate("/Dashboard/Menu");
   };
@@ -79,24 +116,17 @@ export function DashboardCancelamento() {
   const pieData = {
     labels: servicosMaisCanceladosData.length > 0 
       ? servicosMaisCanceladosData.map(item => {
-          console.log("Item no map:", item);
-          return item[0]; // Primeiro elemento é o nome do serviço
+          return item[0]; 
         })
       : [
-          "Massagem Modeladora",
-          "Design de Sobrancelhas com Henna",
-          "Detox Corporal",
-          "Drenagem Linfática",
-          "Limpeza de Pele",
         ],
     datasets: [
       {
         data: servicosMaisCanceladosData.length > 0
           ? servicosMaisCanceladosData.map(item => {
-              console.log("Valor no map:", item[1]);
               return item[1]; // Segundo elemento é a quantidade de cancelamentos
             })
-          : [25, 18, 12, 8, 5],
+          : "Sem cancelamentos",
         backgroundColor: [
           "#FF6384",
           "#36A2EB",
@@ -126,7 +156,6 @@ export function DashboardCancelamento() {
   };
 
   // Debug do pieData
-  console.log("pieData completo:", pieData);
   console.log("Labels:", pieData.labels);
   console.log("Data:", pieData.datasets[0].data);
 
@@ -186,61 +215,97 @@ export function DashboardCancelamento() {
   };
 
   // Dados do gráfico de barras - Cancelamento Por Dia
-  const barData = {
-    labels: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+  const dadosDoGrafico = {
+    labels: dadosSemanaisDoProcedimento.map((item) => item.diaDaSemana),
     datasets: [
       {
-        label: "Cancelamentos",
-        data: [8, 5, 12, 3, 9, 6],
+        label: "Número de Procedimentos Realizados",
+        data: dadosSemanaisDoProcedimento.map(
+          (item) => item.quantidadeRealizacoes
+        ),
         backgroundColor: "#FF6B6B",
         borderColor: "#FF6B6B",
         borderWidth: 1,
         borderRadius: 4,
+        borderSkipped: false,
       },
     ],
   };
 
-  const barOptions = {
+const opcoesDoGrafico = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 1000,
+      easing: "easeInOutQuart",
+    },
     plugins: {
       legend: {
         display: false,
       },
+      title: {
+        display: false,
+      },
       tooltip: {
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        titleColor: "#fff",
+        bodyColor: "#fff",
+        borderColor: "#90FCF9",
+        borderWidth: 1,
+        displayColors: false,
+        cornerRadius: 8,
+        padding: 12,
         callbacks: {
-          title: function (context) {
-            return `Dia ${context[0].label}`;
-          },
-          label: function (context) {
-            return `${context.parsed.y} cancelamentos`;
+          label: function (contexto) {
+            return `${contexto.parsed.y} procedimentos realizados`;
           },
         },
       },
     },
     scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 10,
+          color: "#666",
+          font: {
+            size: 12,
+            family: "Arial, sans-serif",
+          },
+        },
+        grid: {
+          color: "#e0e0e0",
+          drawBorder: false,
+        },
+      },
       x: {
+        ticks: {
+          color: "#333",
+          font: {
+            size: 12,
+            family: "Arial, sans-serif",
+            weight: "500",
+          },
+        },
         grid: {
           display: false,
         },
-        ticks: {
-          font: {
-            size: 12,
-          },
-        },
       },
-      y: {
-        beginAtZero: true,
-        max: 15,
-        ticks: {
-          stepSize: 3,
-          font: {
-            size: 12,
-          },
-        },
-        grid: {
-          color: "#E5E5E5",
-        },
+    },
+    elements: {
+      bar: {
+        borderRadius: 4,
+        borderSkipped: false,
+      },
+    },
+    interaction: {
+      intersect: false,
+      mode: "index",
+    },
+    layout: {
+      padding: {
+        top: 20,
+        bottom: 10,
       },
     },
   };
@@ -260,27 +325,34 @@ export function DashboardCancelamento() {
 
       <div className="dashboard-content">
         <div className="pie-chart-container">
-          <h1 className="dashboard-title">
-            5 procedimentos com mais cancelamentos
-          </h1>
-          <p className="dashboard-subtitle">Clique para mais detalhes</p>
-          <div className="chart-wrapper">
-            <Pie data={pieData} options={pieOptions} />
-          </div>
+          {mensagemErroTorta ? <h1 className="dashboard-title">
+            {mensagemErroTorta}</h1> 
+                : (
+                  <div>
+                    <h1 className="dashboard-title">
+                      5 procedimentos com mais cancelamentos
+                    </h1>
+                    <p className="dashboard-subtitle">(Últimos 30 dias)</p>
+                    <div className="chart-wrapper">
+                      <Pie data={pieData} options={pieOptions} />
+                    </div>
 
-          <div className="legenda-customizada">
-            {pieData.labels.map((label, index) => (
-              <div key={index} className="legenda-item">
-                <div
-                  className="legenda-bolinha"
-                  style={{
-                    backgroundColor: pieData.datasets[0].backgroundColor[index],
-                  }}
-                ></div>
-                <span className="legenda-texto">{label}</span>
-              </div>
-            ))}
-          </div>
+                    <div className="legenda-customizada">
+                      {pieData.labels.map((label, index) => (
+                        <div key={index} className="legenda-item">
+                          <div
+                            className="legenda-bolinha"
+                            style={{
+                              backgroundColor: pieData.datasets[0].backgroundColor[index],
+                            }}
+                          ></div>
+                          <span className="legenda-texto">{label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) }
+          
 
           {legendaPersonalizada && (
             <div className="legenda-personalizada">
@@ -308,6 +380,7 @@ export function DashboardCancelamento() {
             </div>
           )}
         </div>
+        
 
         <div className="procedimento-section">
           <label htmlFor="procedimento-select" className="procedimento-label">
@@ -327,16 +400,25 @@ export function DashboardCancelamento() {
           </select>
         </div>
 
-        <div className="bar-chart-section">
-          <h2 className="chart-title">Cancelamento Por Dia</h2>
-          <p className="chart-subtitle">(Últimos 30 dias)</p>
+        {!procedimentoSelecionado ? (
+          <div className="bar-chart-section">
+            <p className="chart-title">Selecione um dos procedimentos para visualizar mais informações</p>  
+          </div>
+          ) : (
+          mensagemErro ? (
+            <div className="bar-chart-section">
+              <p className="chart-title">{mensagemErro}</p>
+            </div>
+          ) : (
+          <div className="bar-chart-section">
+            <h3 className="chart-title">Procedimentos Por Dia <HelpModal local="Informações do gráfico" explicacao="O gráfico exibe os dias da semana em que cada procedimento tem mais demanda para que você possa prever sua agenda." /></h3>
+            <p className="chart-subtitle">(Últimos 30 dias)</p>
 
-          <div className="bar-chart-container">
             <div className="chart-wrapper-bar">
-              <Bar data={barData} options={barOptions} />
+              <Bar data={dadosDoGrafico} options={opcoesDoGrafico} />
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

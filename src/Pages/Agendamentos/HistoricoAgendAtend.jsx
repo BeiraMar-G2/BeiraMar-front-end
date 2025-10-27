@@ -1,14 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from "../../Components/Fontes";
 import { Botao } from "../../Components/Botao";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import VisuAtendPorDia from "../../Components/HistoricoAgendamento.jsx";
 import "../Styles/HistoricoAgendamento.css";
+import api from "../../Provider/api";
 
 export function HistoricoAgendAtend() {
-  const [cliente, setCliente] = useState("Roberta");
+  const [clientes, setClientes] = useState([]);
+  const [clienteSelecionado, setClienteSelecionado] = useState(""); 
+  const navigate = useNavigate();
+
+  function buscarClientes() {
+    api
+      .get("/clientes")
+      .then((response) => {
+        console.log(response);
+        const clientesFormatados = response.data.map((cliente) => ({
+          idCliente: cliente.idUsuario,
+          nome: cliente.nome,
+        }));
+        setClientes(clientesFormatados);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar clientes", error);
+      });
+  }
+
+  useEffect(() => {
+    buscarClientes();
+  }, []);
 
   return (
     <div>
@@ -34,8 +57,8 @@ export function HistoricoAgendAtend() {
       >
         {/* Select de clientes */}
         <select
-          value={cliente}
-          onChange={(e) => setCliente(e.target.value)}
+          value={clienteSelecionado}
+          onChange={(e) => setClienteSelecionado(e.target.value)}
           style={{
             width: "300px",
             padding: "10px",
@@ -45,15 +68,15 @@ export function HistoricoAgendAtend() {
             marginBottom: "20px",
           }}
         >
-          <option>Roberta</option>
-          <option>Ana</option>
-          <option>Juliana</option>
-          <option>Patrícia</option>
-          <option>Fernanda</option>
+          <option disabled value="">Selecione um cliente</option>
+          {clientes.map((cliente) => (
+            <option key={cliente.idCliente} value={cliente.idCliente}>
+              {cliente.nome}
+            </option>
+          ))}
         </select>
 
-        {/* Componente que você já fez */}
-        <VisuAtendPorDia cliente={cliente} />
+          {clienteSelecionado && <VisuAtendPorDia cliente={clienteSelecionado} />}
       </div>
 
       <div className="botoes-acao">

@@ -21,7 +21,7 @@ export function Menu() {
     };
 
     const direcionarHistAgendamentos = () => {
-      navigate("/HistoricoAgendamentos"); 
+      navigate("/Agendamentos/HistoricoAgendAtend"); 
     };
     
     const direcionarServPacotes = () => {
@@ -37,7 +37,7 @@ export function Menu() {
     };
 
     const direcionarDashboards = () => {
-      navigate("/Dashboards"); 
+      navigate("/Dashboard/Menu"); 
     };
 
   return (
