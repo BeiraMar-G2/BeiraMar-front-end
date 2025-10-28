@@ -110,10 +110,14 @@ export default function VisuClientePorDia() {
     return `${horas}:${minutos}`;
   }
 
-  function cancelarAgendamento(idAgendamento) {
+  function cancelarAgendamento(idAgendamento, servicoNome, dtHora, preco) {
     api
       .put(`/agendamentos/${idAgendamento}`, {
         status: "Cancelado",
+        statusAgendamento: "Cancelado",
+        servicoNome: servicoNome,
+        dtHora: dtHora,
+        valorPago: preco
       })
       .then(() => {
         console.log("Agendamento cancelado com sucesso");
@@ -219,7 +223,7 @@ export default function VisuClientePorDia() {
                       {agendamento.status !== "Cancelado" && agendamento.status !== "Concluido" && (
                         <button 
                           className="cancelar"
-                          onClick={() => cancelarAgendamento(agendamento.idAgendamento)}
+                          onClick={() => cancelarAgendamento(agendamento.idAgendamento, agendamento.servicoNome, agendamento.dtHora, agendamento.preco)}
                         >
                           ⚠ Cancelar
                         </button>
