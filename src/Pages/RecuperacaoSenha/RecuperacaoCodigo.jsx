@@ -40,10 +40,10 @@ export function RecuperacaoCodigo() {
             console.log('Código validado com sucesso:', response.data);
             setMensagem('Código validado com sucesso!');
             
-            // Redirecionar para página de nova senha após validação
             setTimeout(() => {
                 navigate('/recuperacao/nova-senha', { 
                     state: { 
+                        email: email,
                         codigo: codigoCompleto,
                         token: response.data.token || null
                     }
@@ -63,7 +63,6 @@ export function RecuperacaoCodigo() {
                 setMensagem('Erro ao validar código. Tente novamente');
             }
             
-            // Limpar campos em caso de erro
             setCodigo(['', '', '', '', '', '']);
             const firstInput = document.getElementById('codigo-0');
             if (firstInput) firstInput.focus();

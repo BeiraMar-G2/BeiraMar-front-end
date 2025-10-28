@@ -3,20 +3,20 @@ import { useEffect, useState } from "react";
 
 export default function HistoricoAgendamento(props) {
   const [historico, setHistorico] = useState([]);
-  const [dataSelecionada, setDataSelecionada] = useState(new Date("2025-10-25T00:00:00"));
-  const [paginaAtual, setPaginaAtual] = useState(0); // Estado para a página atual
-  const [totalPaginas, setTotalPaginas] = useState(0); // Estado para o total de páginas
+  const [dataSelecionada, setDataSelecionada] = useState(() => new Date());
+  const [paginaAtual, setPaginaAtual] = useState(0);
+  const [totalPaginas, setTotalPaginas] = useState(0);
 
   function buscarHistorico(pagina = 0) {
     const dataISO = dataSelecionada.toISOString();
     const dataFormatada = dataISO.replace("Z", "");
 
     api
-      .get(`/agendamentos/historico/paginado?idCliente=${props.cliente}&data=${dataFormatada}&page=${pagina}&size=3`)
+      .get(`/agendamentos/historico/paginado?idCliente=${props.cliente || sessionStorage.getItem("idUsuario")}&data=${dataFormatada}&page=${pagina}&size=3`)
       .then((response) => {
         console.log(response.data);
         setHistorico(response.data.content);
-        setTotalPaginas(response.data.totalPages); // Atualiza o total de páginas
+        setTotalPaginas(response.data.totalPages);
       })
       .catch((error) => {
         console.error("Erro ao buscar histórico de agendamentos", error);

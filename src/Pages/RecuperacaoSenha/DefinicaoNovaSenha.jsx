@@ -5,6 +5,8 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { Botao } from '../../Components/Botao';
 import { Titulo, Label } from '../../Components/Fontes';
+import { Erro } from '../../Components/Modal';
+import api from '../../Provider/api';
 
 export function DefinicaoNovaSenha() {
     const navigate = useNavigate();
@@ -12,14 +14,41 @@ export function DefinicaoNovaSenha() {
     const [senhaNova, setSenhaNova] = useState('');
     const [confSenhaNova, setConfSenhaNova] = useState('');
     const [senhaAtual, setSenhaAtual] = useState('');
+    const [email, setEmail] = useState(location.state?.email || 'fernanda@gmail.com');
+    const [idUsuario, setIdUsuario] = useState("");
+    const [nome, setNome] = useState("");
+    const [telefone, setTelefone] = useState("");
 
-    function atualizarSenha() {
+    async function atualizarSenha() {
         if (senhaNova !== confSenhaNova) {
             alert('A senha deve ser a mesma nos campos!');
             return;
+        } else {
+            console.log('Senhas:', senhaAtual, senhaNova, confSenhaNova);
+            try {
+                const response = await api.get(`/clientes/buscarPorEmail/${email}`);
+                setIdUsuario(response.data.idUsuario);
+                setNome(response.data.nome);
+                setTelefone(response.data.telefone);
+                console.log(response.data);
+            } catch (error) {
+                console.error("Erro ao encontrar usuário por email:", error);
+            }
+            await api.put(`/clientes/${idUsuario}`, {
+                nome: nome,
+                telefone: telefone,
+                email: email,
+            })
+            .then((response) => {
+                console.log("Dados atualizados com sucesso:", response.data);
+            })
+            .catch((error) => {
+                console.error("Erro ao atualizar dados do usuário:", error);
+            });
         }
-        console.log('Senhas:', senhaAtual, senhaNova, confSenhaNova);
-    }
+        }
+        
+        
 
     return (
         <div className="content cliente">
