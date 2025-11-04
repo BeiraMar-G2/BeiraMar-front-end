@@ -24,6 +24,7 @@ jobs:
       # 3️⃣ Instalar dependências e gerar build
       - name: FE - Instalar Dependências e Fazer Build
         run: |
+          cd beiramar-front-end
           echo "🧩 Criando arquivo .env..."
           echo "VITE_API_URL=${{ secrets.REMOTE_HOST_PRIVADO }}" > .env
           echo "📋 Conteúdo do .env:"
@@ -36,10 +37,9 @@ jobs:
           echo "🏗️ Iniciando build..."
           npm run build
 
-          echo "📁 Estrutura após build:"
+          echo "📁 Estrutura do diretório após build:"
           ls -la
-          
-          echo "📁 Conteúdo do diretório build (se existir):"
+          echo "📁 Conteúdo do diretório build:"
           ls -la build || echo "⚠️ Diretório build não encontrado!"
 
       # 4️⃣ Copiar arquivos para a EC2 via rsync
@@ -49,7 +49,8 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          SOURCE: "./build/"  # 👉 Se o build estiver em uma subpasta, altere para ./beiramar-front-end/build/
+          # 🔥 Caminho corrigido (build está dentro de beiramar-front-end)
+          SOURCE: "./beiramar-front-end/build/"
           TARGET: "/home/${{ secrets.REMOTE_USER }}/frontend"
           ARGS: "-rltgoDzvO --delete"
 
