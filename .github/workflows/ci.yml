@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout do código
+      # 1️⃣ Checkout do repositório
       - name: Checkout do Repositório
         uses: actions/checkout@v4
 
@@ -24,12 +24,11 @@ jobs:
       # 3️⃣ Instalar dependências e gerar build
       - name: FE - Instalar Dependências e Fazer Build
         run: |
-          cd beiramar-front-end
           echo "🧩 Criando arquivo .env..."
           echo "VITE_API_URL=${{ secrets.REMOTE_HOST_PRIVADO }}" > .env
           echo "📋 Conteúdo do .env:"
           cat .env
-          
+
           echo "📦 Instalando dependências..."
           npm install
           npm install axios
@@ -37,24 +36,23 @@ jobs:
           echo "🏗️ Iniciando build..."
           npm run build
 
-          echo "📁 Estrutura do diretório após build:"
+          echo "📁 Estrutura de diretórios após o build:"
           ls -la
-          echo "📁 Conteúdo do diretório build:"
+          echo "📁 Conteúdo da pasta build:"
           ls -la build || echo "⚠️ Diretório build não encontrado!"
 
-      # 4️⃣ Copiar arquivos para a EC2 via rsync
+      # 4️⃣ Copiar build para EC2 com rsync
       - name: FE - Copiar arquivos e Deploy (Usando SSH com rsync)
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          # 🔥 Caminho corrigido (build está dentro de beiramar-front-end)
-          SOURCE: "./beiramar-front-end/build/"
+          SOURCE: "./build/"
           TARGET: "/home/${{ secrets.REMOTE_USER }}/frontend"
           ARGS: "-rltgoDzvO --delete"
 
-      # 5️⃣ Configurar Nginx e reiniciar o container
+      # 5️⃣ Configurar e reiniciar Nginx no container
       - name: FE - Executar Comando Shell na EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -64,10 +62,10 @@ jobs:
           script: |
             set -e
 
-            echo "⚙️ Criando diretório de configuração Nginx..."
+            echo "⚙️ Criando diretório de configuração do Nginx..."
             mkdir -p /home/${{ secrets.REMOTE_USER }}/nginx-config
 
-            echo "📄 Gerando configuração do Nginx..."
+            echo "📄 Criando arquivo default.conf..."
             cat > /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf << 'EOF'
             server {
                 listen 80;
@@ -88,14 +86,14 @@ jobs:
             }
             EOF
 
-            echo "✅ Arquivo default.conf criado/atualizado:"
+            echo "✅ Arquivo default.conf criado/atualizado"
             cat /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf
 
-            echo "🧾 Corrigindo permissões do diretório frontend..."
+            echo "🧾 Ajustando permissões do diretório frontend..."
             sudo chmod -R 755 /home/${{ secrets.REMOTE_USER }}/frontend
             sudo find /home/${{ secrets.REMOTE_USER }}/frontend -type f -exec chmod 644 {} \;
 
-            echo "🧹 Removendo container antigo (se existir)..."
+            echo "🧹 Limpando containers antigos..."
             docker stop frontend_nginx 2>/dev/null || true
             docker rm frontend_nginx 2>/dev/null || true
 
