@@ -21,9 +21,8 @@ jobs:
         with:
           node-version: '20'
 
-      # 3. Build da aplicação (corrigido)
+      # 3. Build da aplicação
       - name: FE - Instalar Dependências e Fazer Build
-        working-directory: ./beiramar-front-end   # ✅ entra na pasta do projeto React
         run: |
           echo "VITE_API_URL=${{ secrets.REMOTE_HOST_PRIVADO }}" > .env
           echo "📋 Conteúdo do arquivo .env:"
@@ -42,7 +41,7 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: /home/${{ secrets.REMOTE_USER }}/frontend
           ARGS: "-rltgoDzvO --delete"
-          SOURCE: "./beiramar-front-end/build/"   # ✅ caminho real do build
+          SOURCE: "./build/"
 
       # 5. Configurar Nginx e Reiniciar
       - name: FE - Executar Comando Shell na EC2
@@ -54,10 +53,8 @@ jobs:
           script: |
             set -e
 
-            # Criar diretório de configuração se não existir
             mkdir -p /home/${{ secrets.REMOTE_USER }}/nginx-config
 
-            # Criar arquivo de configuração do Nginx com IP correto
             cat > /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf << 'EOF'
             server {
                 listen 80;
@@ -81,22 +78,16 @@ jobs:
             echo "Arquivo default.conf do Nginx criado/atualizado"
             cat /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf
 
-            # Corrigir permissões
             sudo chmod -R 755 /home/${{ secrets.REMOTE_USER }}/frontend
             sudo find /home/${{ secrets.REMOTE_USER }}/frontend -type f -exec chmod 644 {} \;
 
-            # Parar e remover container antigo
             docker stop frontend_nginx 2>/dev/null || true
             docker rm frontend_nginx 2>/dev/null || true
 
-            # Subir Nginx com nova configuração
             cd /home/${{ secrets.REMOTE_USER }}
             docker compose -f compose.yaml up -d
 
             echo "Aguardando Nginx iniciar..."
             sleep 3
-
-            # Verificar se está rodando
             docker ps | grep frontend_nginx
-
             echo "Nginx configurado e reiniciado com sucesso!"
