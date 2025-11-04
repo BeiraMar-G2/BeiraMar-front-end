@@ -11,39 +11,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout do código
+      # 1️⃣ Checkout do código
       - name: Checkout do Repositório
         uses: actions/checkout@v4
 
-      # 2. Configuração do ambiente Node
+      # 2️⃣ Configurar Node.js
       - name: FE - Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 3. Build da aplicação
+      # 3️⃣ Instalar dependências e gerar build
       - name: FE - Instalar Dependências e Fazer Build
         run: |
+          echo "🧩 Criando arquivo .env..."
           echo "VITE_API_URL=${{ secrets.REMOTE_HOST_PRIVADO }}" > .env
-          echo "📋 Conteúdo do arquivo .env:"
+          echo "📋 Conteúdo do .env:"
           cat .env
+          
+          echo "📦 Instalando dependências..."
           npm install
           npm install axios
-          echo "Iniciando build..."
+
+          echo "🏗️ Iniciando build..."
           npm run build
 
-      # 4. Deploy (Transferência de arquivos e execução de comandos remotos)
+          echo "📁 Estrutura após build:"
+          ls -la
+          
+          echo "📁 Conteúdo do diretório build (se existir):"
+          ls -la build || echo "⚠️ Diretório build não encontrado!"
+
+      # 4️⃣ Copiar arquivos para a EC2 via rsync
       - name: FE - Copiar arquivos e Deploy (Usando SSH com rsync)
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: /home/${{ secrets.REMOTE_USER }}/frontend
+          SOURCE: "./build/"  # 👉 Se o build estiver em uma subpasta, altere para ./beiramar-front-end/build/
+          TARGET: "/home/${{ secrets.REMOTE_USER }}/frontend"
           ARGS: "-rltgoDzvO --delete"
-          SOURCE: "./build/"
 
-      # 5. Configurar Nginx e Reiniciar
+      # 5️⃣ Configurar Nginx e reiniciar o container
       - name: FE - Executar Comando Shell na EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -53,8 +63,10 @@ jobs:
           script: |
             set -e
 
+            echo "⚙️ Criando diretório de configuração Nginx..."
             mkdir -p /home/${{ secrets.REMOTE_USER }}/nginx-config
 
+            echo "📄 Gerando configuração do Nginx..."
             cat > /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf << 'EOF'
             server {
                 listen 80;
@@ -75,19 +87,25 @@ jobs:
             }
             EOF
 
-            echo "Arquivo default.conf do Nginx criado/atualizado"
+            echo "✅ Arquivo default.conf criado/atualizado:"
             cat /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf
 
+            echo "🧾 Corrigindo permissões do diretório frontend..."
             sudo chmod -R 755 /home/${{ secrets.REMOTE_USER }}/frontend
             sudo find /home/${{ secrets.REMOTE_USER }}/frontend -type f -exec chmod 644 {} \;
 
+            echo "🧹 Removendo container antigo (se existir)..."
             docker stop frontend_nginx 2>/dev/null || true
             docker rm frontend_nginx 2>/dev/null || true
 
+            echo "🚀 Subindo novo container com docker compose..."
             cd /home/${{ secrets.REMOTE_USER }}
             docker compose -f compose.yaml up -d
 
-            echo "Aguardando Nginx iniciar..."
+            echo "⏳ Aguardando Nginx iniciar..."
             sleep 3
-            docker ps | grep frontend_nginx
-            echo "Nginx configurado e reiniciado com sucesso!"
+
+            echo "🔍 Containers ativos:"
+            docker ps | grep frontend_nginx || echo "⚠️ Container frontend_nginx não encontrado!"
+
+            echo "✅ Nginx configurado e reiniciado com sucesso!"
