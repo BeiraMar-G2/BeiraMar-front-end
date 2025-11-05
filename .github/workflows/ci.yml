@@ -90,8 +90,8 @@ jobs:
             cat /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf
 
             echo "🧾 Ajustando permissões do diretório frontend..."
-            sudo chmod -R 755 /home/${{ secrets.REMOTE_USER }}/frontend
-            sudo find /home/${{ secrets.REMOTE_USER }}/frontend -type f -exec chmod 644 {} \;
+            sudo chmod -R 755 /home/${{ secrets.REMOTE_USER }}/
+            sudo find /home/${{ secrets.REMOTE_USER }}/ -type f -exec chmod 644 {} \;
 
             echo "🧹 Limpando containers antigos..."
             docker stop frontend_nginx 2>/dev/null || true
