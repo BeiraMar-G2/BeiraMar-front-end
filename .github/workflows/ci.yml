@@ -48,8 +48,8 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          SOURCE: "./home/${{ secrets.REMOTE_USER }}/"
-          TARGET: "/home/${{ secrets.REMOTE_USER }}/"
+          SOURCE: "./build/"
+          TARGET: "/home/${{ secrets.REMOTE_USER }}/frontend/"
           ARGS: "-rltgoDzvO --delete"
 
       # 5️⃣ Configurar e reiniciar Nginx no container
@@ -98,7 +98,7 @@ jobs:
             docker rm frontend_nginx 2>/dev/null || true
 
             echo "🚀 Subindo novo container com docker compose..."
-            cd /home/${{ secrets.REMOTE_USER }}
+            cd /home/${{ secrets.REMOTE_USER }}/
             docker compose -f compose.yaml up -d
 
             echo "⏳ Aguardando Nginx iniciar..."
