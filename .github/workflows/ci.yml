@@ -62,6 +62,15 @@ jobs:
           script: |
             set -e
 
+            echo "🔧 Ajustando PATH para encontrar o Docker..."
+            export PATH=$PATH:/usr/bin
+
+            echo "🐳 Verificando docker instalado..."
+            which docker || ls -la /usr/bin/docker || echo "Docker não está em /usr/bin"
+
+            echo "🐳 Testando docker..."
+            sudo docker ps || echo "Falha ao executar sudo docker ps"
+
             echo "⚙️ Criando diretório de configuração do Nginx..."
             mkdir -p /home/${{ secrets.REMOTE_USER }}/nginx-config
 
