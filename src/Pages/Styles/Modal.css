@@ -1,5 +1,5 @@
 .alert-wrapper {
-  position: absolute;
+  position: fixed; /* MUDA: de absolute para fixed */
   top: 10px;
   right: 10px;
   z-index: 9999;
@@ -16,17 +16,15 @@
   justify-content: space-between;
   background: #66cc33;
   color: white;
-  padding: 16px 18px;
   padding: 16px 18px 16px 60px;
   width: 70%;
   max-width: 360px;
-  margin: 20px auto;
   position: relative;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
   overflow: hidden;
-  position: relative;
   border-radius: 10px;
   pointer-events: auto;
+  margin: 0; /* REMOVE: margin: 20px auto */
 }
 
 .alert-error {
@@ -35,23 +33,21 @@
   justify-content: space-between;
   background: #cc3333;
   color: white;
-  padding: 16px 18px;
   padding: 16px 18px 16px 60px;
   width: 70%;
   max-width: 360px;
-  margin: 20px auto;
   position: relative;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
   overflow: hidden;
-  position: relative;
   border-radius: 10px;
   pointer-events: auto;
+  margin: 0; /* REMOVE: margin: 20px auto */
 }
 
 .modal-icon {
   position: absolute;
-  left: 30px;
-  top: 20px;
+  left: 0px;
+  top: 25%;
   transform: translateY(-50%);
   border-radius: 50%;
   width: 50px;
@@ -125,7 +121,6 @@
   opacity: 0.7;
   z-index: 0;
 }
-
 
 .alert-wrapper.show {
   opacity: 1;

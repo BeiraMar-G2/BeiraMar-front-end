@@ -212,6 +212,7 @@ footer {
 .footer-links{
     display: flex;
     flex-direction: row;
+    align-items: self-start;
     gap: 10px;
 }
 
@@ -221,5 +222,10 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-decoration: underline  ;
+}
+
+.footer-links-column a {
+    color: #282828;
+    text-decoration: none !important;
+    font-size: 14px;
 }

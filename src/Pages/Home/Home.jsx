@@ -153,7 +153,7 @@ return (
                         <TituloHome texto="?"/>
                     </div>
                     <div className="section-subtitle">
-                        <ConteudoHome texto="Conheça abaixo nosso portifólio de serviços especialmente pensados para sua "/>
+                        <ConteudoHome texto="Conheça abaixo nosso portifólio base de serviços especialmente pensados para sua "/>
                         <ConteudoHome texto="beleza" cor="#CE2D4F"/>
                         <ConteudoHome texto=","/>
                         <ConteudoHome texto=" saúde" cor="#CE2D4F"/>
@@ -208,7 +208,7 @@ return (
                     </div>
                     <div className="footer-links-column">
                         <SubtituloHome texto="Contato"/>
-                        <Link style={{display: "flex", alignItems: "center"}} to={"https://www.instagram.com/estetik_ac/"}><FaInstagram style={{height:"25px", width:"25px"}}/>Ana Carla</Link>
+                        <Link style={{display: "flex", alignItems: "center"}} to={"https://www.instagram.com/estetik_ac/"}><FaInstagram style={{height:"20px", width:"20px"}}/>Ana Carla</Link>
                     </div>
                 </div>
             </div>
