@@ -76,7 +76,7 @@ jobs:
 
             echo "🚀 Subindo container com docker compose..."
             cd /home/${{ secrets.REMOTE_USER }}/
-            docker compose -f compose.yaml up -d --force-recreate
+            docker compose -f /home/${{ secrets.REMOTE_USER }}/frontend/docker-compose.yml up -d --force-recreate
 
             echo "🔍 Containers ativos:"
             docker ps
