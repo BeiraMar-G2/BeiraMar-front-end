@@ -52,6 +52,26 @@ jobs:
             echo "🐳 Testando Docker..."
             sudo docker ps || true
 
+            echo "📄 Criando docker-compose.yml se não existir..."
+            if [ ! -f /home/${{ secrets.REMOTE_USER }}/docker-compose.yml ]; then
+              echo "⚠️  Arquivo docker-compose.yml não encontrado, criando..."
+              cat > /home/${{ secrets.REMOTE_USER }}/docker-compose.yml << 'EOFCOMPOSE'
+            version: "3.9"
+            services:
+              web_server:
+                image: nginx:latest
+                container_name: frontend_nginx
+                ports:
+                  - "80:80"
+                volumes:
+                  - /home/${{ secrets.REMOTE_USER }}/frontend:/usr/share/nginx/html
+                  - /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf:/etc/nginx/conf.d/default.conf
+                restart: unless-stopped
+            EOFCOMPOSE
+            else
+              echo "✅ Arquivo docker-compose.yml já existe"
+            fi
+
             echo "📄 Atualizando arquivo default.conf..."
             mkdir -p /home/${{ secrets.REMOTE_USER }}/nginx-config
 
@@ -75,6 +95,10 @@ jobs:
             }
             EOF
 
+            echo "📄 Verificando arquivos criados..."
+            ls -la /home/${{ secrets.REMOTE_USER }}/docker-compose.yml
+            cat /home/${{ secrets.REMOTE_USER }}/docker-compose.yml
+
             echo "🧹 Limpando containers antigos..."
             docker stop frontend_nginx 2>/dev/null || true
             docker rm frontend_nginx 2>/dev/null || true
@@ -84,3 +108,5 @@ jobs:
 
             echo "🔍 Containers ativos:"
             docker ps
+
+            echo "✅ Deploy concluído com sucesso!"
