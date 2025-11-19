@@ -11,20 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout do repositório
       - name: Checkout do Repositório
         uses: actions/checkout@v4
 
+      # 2️⃣ Configurar Node.js
       - name: FE - Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      # 3️⃣ Instalar dependências e gerar build
       - name: FE - Instalar Dependências e Fazer Build
         run: |
           echo "VITE_API_URL=${{ secrets.REMOTE_HOST_PRIVADO }}" > .env
           npm install
           npm run build
 
+      # 4️⃣ Enviar arquivos do build para EC2
       - name: FE - Copiar arquivos e Deploy (Usando SSH com rsync)
         uses: easingthemes/ssh-deploy@main
         with:
@@ -35,7 +39,8 @@ jobs:
           TARGET: "/home/${{ secrets.REMOTE_USER }}/frontend/"
           ARGS: "-rltgoDzvO --delete"
 
-      - name: FE - Executar Comando Shell na EC2
+      # 5️⃣ Executar comandos remotos na EC2
+      - name: FE - Configurar NGINX e Subir Container
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_HOST }}
@@ -75,7 +80,6 @@ jobs:
             docker rm frontend_nginx 2>/dev/null || true
 
             echo "🚀 Subindo container com docker compose..."
-            cd /home/${{ secrets.REMOTE_USER }}/
             docker compose -f /home/${{ secrets.REMOTE_USER }}/docker-compose.yml up -d --force-recreate
 
             echo "🔍 Containers ativos:"
