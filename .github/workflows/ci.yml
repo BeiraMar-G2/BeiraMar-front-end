@@ -38,8 +38,8 @@ jobs:
 
           echo "📁 Estrutura de diretórios após o build:"
           ls -la
-          echo "📁 Conteúdo da pasta build:"
-          ls -la build || echo "⚠️ Diretório build não encontrado!"
+          echo "📁 Conteúdo da pasta dist:"
+          ls -la dist || echo "⚠️ Diretório dist não encontrado!"
 
       # 4️⃣ Copiar build para EC2 com rsync
       - name: FE - Copiar arquivos e Deploy (Usando SSH com rsync)
@@ -71,11 +71,6 @@ jobs:
             echo "🐳 Testando docker..."
             sudo docker ps || echo "Falha ao executar sudo docker ps"
 
-            echo "⚙️ Criando diretório de configuração do Nginx..."
-            mkdir -p /home/${{ secrets.REMOTE_USER }}/nginx-config
-
-            echo "📄 Criando arquivo default.conf..."
-            cat > /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf << 'EOF'
             server {
                 listen 80;
                 server_name _;
@@ -95,12 +90,8 @@ jobs:
             }
             EOF
 
-            echo "✅ Arquivo default.conf criado/atualizado"
-            cat /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf
-
             echo "🧾 Ajustando permissões do diretório frontend..."
             sudo chmod -R 755 /home/${{ secrets.REMOTE_USER }}/
-            sudo find /home/${{ secrets.REMOTE_USER }}/ -type f -exec chmod 644 {} \;
 
             echo "🧹 Limpando containers antigos..."
             docker stop frontend_nginx 2>/dev/null || true
@@ -108,7 +99,7 @@ jobs:
 
             echo "🚀 Subindo novo container com docker compose..."
             cd /home/${{ secrets.REMOTE_USER }}/
-            docker compose -f compose.yaml up -d
+            docker compose -f /home/${{ secrets.REMOTE_USER }}/compose.yaml up -d --force-recreate
 
             echo "⏳ Aguardando Nginx iniciar..."
             sleep 3
