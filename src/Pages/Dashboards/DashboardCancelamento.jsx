@@ -35,6 +35,11 @@ export function DashboardCancelamento() {
   const [dadosSemanaisDoProcedimento, setDadosSemanaisDoProcedimento] = useState([]);
   const [mensagemErro, setMensagemErro] = useState("");
   const [mensagemErroTorta, setMensagemErroTorta] = useState("");
+  
+  // Estados para o filtro de data
+  const [dataInicio, setDataInicio] = useState('');
+  const [dataFim, setDataFim] = useState('');
+  const [mostrarFiltro, setMostrarFiltro] = useState(false);
 
   function listarServicos() {
     api
@@ -49,11 +54,16 @@ export function DashboardCancelamento() {
       });
   }
 
-  function buscarProcedimentosCancelados() {
+  function buscarProcedimentosCancelados(inicio = null, fim = null) {
       if (!procedimentoSelecionado) return;
+      
+      let queryParams = `?nomeServico=${procedimentoSelecionado}`;
+      if (inicio && fim) {
+        queryParams += `&dataInicio=${inicio}&dataFim=${fim}`;
+      }
   
       api
-        .get(`/servicos/cancelamentos-por-dia-semana?nomeServico=${procedimentoSelecionado}`)
+        .get(`/servicos/cancelamentos-por-dia-semana${queryParams}`)
         .then((response) => {
           const dadosMapeados = response.data.map((item) => ({
             diaDaSemana: item[0],
@@ -87,6 +97,20 @@ export function DashboardCancelamento() {
         setMensagemErroTorta(error.response?.data?.message || "Erro ao buscar dados.");
       });
   }
+
+  const handleFiltrar = () => {
+    if (dataInicio && dataFim) {
+      buscarProcedimentosCancelados(dataInicio, dataFim);
+    } else {
+      alert('Por favor, selecione ambas as datas');
+    }
+  };
+
+  const handleLimparFiltro = () => {
+    setDataInicio('');
+    setDataFim('');
+    buscarProcedimentosCancelados();
+  };
 
 
 
@@ -324,6 +348,62 @@ const opcoesDoGrafico = {
       </div>
 
       <div className="dashboard-content">
+        {/* Filtro de Data */}
+        <div className="header-com-filtro">
+          <h1 className="dashboard-title-main">Cancelamentos</h1>
+          <button 
+            className="btn-toggle-filtro" 
+            onClick={() => setMostrarFiltro(!mostrarFiltro)}
+            title={mostrarFiltro ? "Fechar filtro" : "Abrir filtro"}
+          >
+            <i className={`fas fa-filter ${mostrarFiltro ? 'ativo' : ''}`}></i>
+          </button>
+        </div>
+
+        {mostrarFiltro && (
+          <div className="filtro-container">
+            <div className="filtro-datas">
+              <div className="filtro-campo">
+                <label htmlFor="dataInicio">
+                  <i className="fas fa-calendar-alt"></i> Data Início
+                </label>
+                <input 
+                  type="date" 
+                  id="dataInicio"
+                  value={dataInicio}
+                  onChange={(e) => setDataInicio(e.target.value)}
+                  max={dataFim || undefined}
+                />
+              </div>
+              
+              <div className="filtro-campo">
+                <label htmlFor="dataFim">
+                  <i className="fas fa-calendar-alt"></i> Data Fim
+                </label>
+                <input 
+                  type="date" 
+                  id="dataFim"
+                  value={dataFim}
+                  onChange={(e) => setDataFim(e.target.value)}
+                  min={dataInicio || undefined}
+                />
+              </div>
+              
+              <div className="filtro-acoes">
+                <button className="btn-filtrar" onClick={handleFiltrar}>Filtrar</button>
+                <button className="btn-limpar" onClick={handleLimparFiltro}>Limpar</button>
+              </div>
+            </div>
+            
+            <p className="periodo-selecionado">
+              {dataInicio && dataFim 
+                ? `Período: ${new Date(dataInicio + 'T00:00:00').toLocaleDateString('pt-BR')} - ${new Date(dataFim + 'T00:00:00').toLocaleDateString('pt-BR')}`
+                : 'Selecione um período para filtrar'
+              }
+            </p>
+          </div>
+        )}
+        
         <div className="pie-chart-container">
           {mensagemErroTorta ? <h1 className="dashboard-title">
             {mensagemErroTorta}</h1> 

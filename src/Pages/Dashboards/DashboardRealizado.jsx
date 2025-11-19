@@ -29,6 +29,11 @@ export function DashboardRealizado() {
   const {rankingProcedimentos = []} = useLocation().state || {};
   const [rankingMenosAgendados, setRankingMenosAgendados] = useState([]);
   const [mensagemErro, setMensagemErro] = useState("");
+  
+  // Estados para o filtro de data
+  const [dataInicio, setDataInicio] = useState('');
+  const [dataFim, setDataFim] = useState('');
+  const [mostrarFiltro, setMostrarFiltro] = useState(false);
 
   // Ranking dos procedimentos mais realizados (favoritos)
   const rankingProcedimentosMaisRealizados = rankingProcedimentos.length > 0 ? rankingProcedimentos.map((item, index) => ({
@@ -57,11 +62,16 @@ export function DashboardRealizado() {
     navegador("/Dashboard/Menu");
   };
 
-  function buscarProcedimentosRealizados() {
-    if (!procedimentoAtualSelecionado) return; // Não busca se nenhum procedimento estiver selecionado
+  function buscarProcedimentosRealizados(inicio = null, fim = null) {
+    if (!procedimentoAtualSelecionado) return;
+
+    let queryParams = `?nomeServico=${procedimentoAtualSelecionado}`;
+    if (inicio && fim) {
+      queryParams += `&dataInicio=${inicio}&dataFim=${fim}`;
+    }
 
     api
-      .get(`/servicos/agendamentos-por-dia-semana?nomeServico=${procedimentoAtualSelecionado}`)
+      .get(`/servicos/agendamentos-por-dia-semana${queryParams}`)
       .then((response) => {
         console.log("Agendamentos por dia da semana:", response.data);
         const dadosMapeados = response.data.map((item) => ({
@@ -100,6 +110,20 @@ export function DashboardRealizado() {
         console.error("Erro ao buscar serviços:", error);
       });
   }
+
+  const handleFiltrar = () => {
+    if (dataInicio && dataFim) {
+      buscarProcedimentosRealizados(dataInicio, dataFim);
+    } else {
+      alert('Por favor, selecione ambas as datas');
+    }
+  };
+
+  const handleLimparFiltro = () => {
+    setDataInicio('');
+    setDataFim('');
+    buscarProcedimentosRealizados();
+  };
 
   useEffect(() => {
     listarServicos();
@@ -228,6 +252,62 @@ export function DashboardRealizado() {
       />
 
       <div className="dashboard-content">
+        {/* Filtro de Data */}
+        <div className="header-com-filtro">
+          <h1 className="dashboard-title-main">Procedimentos Realizados</h1>
+          <button 
+            className="btn-toggle-filtro" 
+            onClick={() => setMostrarFiltro(!mostrarFiltro)}
+            title={mostrarFiltro ? "Fechar filtro" : "Abrir filtro"}
+          >
+            <i className={`fas fa-filter ${mostrarFiltro ? 'ativo' : ''}`}></i>
+          </button>
+        </div>
+
+        {mostrarFiltro && (
+          <div className="filtro-container">
+            <div className="filtro-datas">
+              <div className="filtro-campo">
+                <label htmlFor="dataInicio">
+                  <i className="fas fa-calendar-alt"></i> Data Início
+                </label>
+                <input 
+                  type="date" 
+                  id="dataInicio"
+                  value={dataInicio}
+                  onChange={(e) => setDataInicio(e.target.value)}
+                  max={dataFim || undefined}
+                />
+              </div>
+              
+              <div className="filtro-campo">
+                <label htmlFor="dataFim">
+                  <i className="fas fa-calendar-alt"></i> Data Fim
+                </label>
+                <input 
+                  type="date" 
+                  id="dataFim"
+                  value={dataFim}
+                  onChange={(e) => setDataFim(e.target.value)}
+                  min={dataInicio || undefined}
+                />
+              </div>
+              
+              <div className="filtro-acoes">
+                <button className="btn-filtrar" onClick={handleFiltrar}>Filtrar</button>
+                <button className="btn-limpar" onClick={handleLimparFiltro}>Limpar</button>
+              </div>
+            </div>
+            
+            <p className="periodo-selecionado">
+              {dataInicio && dataFim 
+                ? `Período: ${new Date(dataInicio + 'T00:00:00').toLocaleDateString('pt-BR')} - ${new Date(dataFim + 'T00:00:00').toLocaleDateString('pt-BR')}`
+                : 'Selecione um período para filtrar'
+              }
+            </p>
+          </div>
+        )}
+        
         <div className="procedimentos-container">
           <div className="procedimentos-section">
             <h2 className="section-title">Procedimentos Favoritos <HelpModal local="Ranking de procedimentos favoritos" explicacao="Esses são os procedimentos que estão com maior demanda no momento e o público está adorando!" /></h2>
