@@ -65,24 +65,37 @@ export function DashboardRealizado() {
   function buscarProcedimentosRealizados(inicio = null, fim = null) {
     if (!procedimentoAtualSelecionado) return;
 
-    let queryParams = `?nomeServico=${procedimentoAtualSelecionado}`;
+    let dataInicio, dataFim;
     if (inicio && fim) {
-      queryParams += `&dataInicio=${inicio}&dataFim=${fim}`;
+      dataInicio = `${inicio}T00:00:00`;
+      dataFim = `${fim}T23:59:59`;
+    } else {
+      const hoje = new Date();
+      dataFim = hoje.toISOString().split('T')[0] + 'T23:59:59';
+      const trinta_dias_atras = new Date(hoje.getTime() - 30 * 24 * 60 * 60 * 1000);
+      dataInicio = trinta_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
     }
+
+    const queryParams = `?nomeServico=${encodeURIComponent(procedimentoAtualSelecionado)}&dataInicio=${encodeURIComponent(dataInicio)}&dataFim=${encodeURIComponent(dataFim)}`;
 
     api
       .get(`/servicos/agendamentos-por-dia-semana${queryParams}`)
       .then((response) => {
-        console.log("Agendamentos por dia da semana:", response.data);
-        const dadosMapeados = response.data.map((item) => ({
-          diaDaSemana: item[0],
-          quantidadeRealizacoes: item[1],
-        }));
-        setDadosSemanaisDoProcedimento(dadosMapeados);
+        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+          const dadosMapeados = response.data.map((item) => ({
+            diaDaSemana: item[0],
+            quantidadeRealizacoes: item[1],
+          }));
+          setDadosSemanaisDoProcedimento(dadosMapeados);
+          setMensagemErro("");
+        } else {
+          setDadosSemanaisDoProcedimento([]);
+          setMensagemErro("Nenhum agendamento registrado para este procedimento no período selecionado");
+        }
       })
       .catch((error) => {
-        console.error("Erro ao buscar agendamentos por dia da semana:", error);
-        setMensagemErro(error.response.data.message || "Erro ao buscar dados.");
+        setDadosSemanaisDoProcedimento([]);
+        setMensagemErro("Nenhum agendamento registrado para este procedimento no período selecionado");
       });
   }
 
@@ -90,24 +103,39 @@ export function DashboardRealizado() {
     api
       .get("/servicos")
       .then((response) => {
-        console.log("Serviços encontrados:", response);
         const nomesServicos = response.data.map((servico) => servico.nome);
         definirListaDeTodosOsProcedimentos(nomesServicos);
       })
       .catch((error) => {
-        console.error("Erro ao buscar serviços:", error);
+        // Erro ao buscar serviços
       });
   }
 
-  function servicosMenosAgendados() {
+  function servicosMenosAgendados(inicio = null, fim = null) {
+    let dataInicio, dataFim;
+    if (inicio && fim) {
+      dataInicio = `${inicio}T00:00:00`;
+      dataFim = `${fim}T23:59:59`;
+    } else {
+      const hoje = new Date();
+      dataFim = hoje.toISOString().split('T')[0] + 'T23:59:59';
+      const sete_dias_atras = new Date(hoje.getTime() - 7 * 24 * 60 * 60 * 1000);
+      dataInicio = sete_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
+    }
+
+    const queryParams = `?dataInicio=${encodeURIComponent(dataInicio)}&dataFim=${encodeURIComponent(dataFim)}`;
+
     api
-      .get("/servicos/top3-menos-agendados")
+      .get(`/servicos/top3-menos-agendados${queryParams}`)
       .then((response) => {
-        console.log("Serviços encontrados:", response);
-        setRankingMenosAgendados(response.data);
+        if (Array.isArray(response.data)) {
+          setRankingMenosAgendados(response.data);
+        } else {
+          setRankingMenosAgendados([]);
+        }
       })
       .catch((error) => {
-        console.error("Erro ao buscar serviços:", error);
+        setRankingMenosAgendados([]);
       });
   }
 
@@ -131,17 +159,24 @@ export function DashboardRealizado() {
   }, []);
 
   useEffect(() => {
-  if (listaDeTodosOsProcedimentos.length > 0) {
-    buscarProcedimentosRealizados();
-  }
-}, [listaDeTodosOsProcedimentos]);
+    if (listaDeTodosOsProcedimentos.length > 0) {
+      buscarProcedimentosRealizados();
+    }
+  }, [listaDeTodosOsProcedimentos]);
 
   useEffect(() => {
-  if (procedimentoAtualSelecionado) {
-    buscarProcedimentosRealizados();
-    setMensagemErro("");
-  }
-}, [procedimentoAtualSelecionado]);
+    if (procedimentoAtualSelecionado) {
+      buscarProcedimentosRealizados();
+      setMensagemErro("");
+    }
+  }, [procedimentoAtualSelecionado]);
+
+  useEffect(() => {
+    if (dataInicio && dataFim) {
+      buscarProcedimentosRealizados(dataInicio, dataFim);
+      servicosMenosAgendados(dataInicio, dataFim);
+    }
+  }, [dataInicio, dataFim]);
 
   // Configuração dos dados para o gráfico de barras
   const dadosDoGrafico = {
@@ -163,6 +198,7 @@ export function DashboardRealizado() {
 
   // Opções de configuração visual do gráfico
   const opcoesDoGrafico = {
+    indexAxis: 'y',
     responsive: true,
     maintainAspectRatio: false,
     animation: {
@@ -187,13 +223,13 @@ export function DashboardRealizado() {
         padding: 12,
         callbacks: {
           label: function (contexto) {
-            return `${contexto.parsed.y} procedimentos realizados`;
+            return `${contexto.parsed.x} procedimentos realizados`;
           },
         },
       },
     },
     scales: {
-      y: {
+      x: {
         beginAtZero: true,
         ticks: {
           stepSize: 10,
@@ -208,7 +244,7 @@ export function DashboardRealizado() {
           drawBorder: false,
         },
       },
-      x: {
+      y: {
         ticks: {
           color: "#333",
           font: {

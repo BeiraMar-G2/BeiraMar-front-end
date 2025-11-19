@@ -17,56 +17,71 @@ export function DashboardMenu() {
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
 
   function buscarProcedimentos(inicio = null, fim = null) {
-    // Monta a query string com as datas se fornecidas
-    let queryParams = '';
+    let dataInicio, dataFim;
+    
     if (inicio && fim) {
-      queryParams = `?dataInicio=${inicio}&dataFim=${fim}`;
+      // Formatar datas com horário (fim do dia para dataFim)
+      dataInicio = `${inicio}T00:00:00`;
+      dataFim = `${fim}T23:59:59`;
     } else {
-      queryParams = '?dias=30';
+      // Calcular últimos 30 dias
+      const hoje = new Date();
+      dataFim = hoje.toISOString().split('T')[0] + 'T23:59:59';
+      const trinta_dias_atras = new Date(hoje.getTime() - 30 * 24 * 60 * 60 * 1000);
+      dataInicio = trinta_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
     }
 
-    api.get(`/agendamentos/contarCancelados${queryParams}`)
+    const params = new URLSearchParams({
+      inicio: dataInicio,
+      fim: dataFim
+    });
+
+    api.get(`/agendamentos/contarCancelados?${params}`)
       .then(response => {
-        console.log('Procedimentos cancelados:', response);
         setProcedimentosCancelados(response.data);
       })
       .catch(error => {
-        console.error('Erro ao buscar procedimentos cancelados:', error);
+        // Erro ao buscar procedimentos cancelados
       });
 
-      api.get(`/agendamentos/contarAgendados${queryParams}`)
+    api.get(`/agendamentos/contarAgendados?${params}`)
       .then(response => {
-        console.log('Procedimentos realizados:', response);
         setProcedimentosRealizados(response.data);
       })
       .catch(error => {
-        console.error('Erro ao buscar procedimentos realizados:', error);
+        // Erro ao buscar procedimentos realizados
       });
   }
 
   function buscarRanking(inicio = null, fim = null) {
-    let queryParams = '';
+    let dataInicio, dataFim;
+    
     if (inicio && fim) {
-      queryParams = `?dataInicio=${inicio}&dataFim=${fim}`;
+      // Formatar datas com horário (fim do dia para dataFim)
+      dataInicio = `${inicio}T00:00:00`;
+      dataFim = `${fim}T23:59:59`;
     } else {
-      queryParams = '?dias=7';
+      // Calcular últimos 7 dias
+      const hoje = new Date();
+      dataFim = hoje.toISOString().split('T')[0] + 'T23:59:59';
+      const sete_dias_atras = new Date(hoje.getTime() - 7 * 24 * 60 * 60 * 1000);
+      dataInicio = sete_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
     }
 
-    api.get(`/servicos/top3-mais-agendados${queryParams}`)
+    const params = new URLSearchParams({
+      dataInicio: dataInicio,
+      dataFim: dataFim
+    });
+
+    api.get(`/servicos/top3-mais-agendados?${params}`)
       .then(response => {
-        console.log('Ranking de procedimentos encontrados:', response);
-        console.log('Tipo de dado:', typeof response.data);
-        console.log('É array?', Array.isArray(response.data));
-        
         if (Array.isArray(response.data)) {
           setRankingProcedimentos(response.data);
         } else {
-          console.error('Dados recebidos não são um array:', response.data);
           setRankingProcedimentos([]);
         }
       })
       .catch(error => {
-        console.error('Erro ao buscar ranking de procedimentos:', error);
         setRankingProcedimentos([]);
       });
   }

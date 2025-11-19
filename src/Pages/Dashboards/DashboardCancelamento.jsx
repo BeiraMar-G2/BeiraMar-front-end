@@ -45,22 +45,29 @@ export function DashboardCancelamento() {
     api
       .get("/servicos")
       .then((response) => {
-        console.log("Serviços encontrados:", response);
         const nomesServicos = response.data.map((servico) => servico.nome);
         definirListaDeTodosOsProcedimentos(nomesServicos);
       })
       .catch((error) => {
-        console.error("Erro ao buscar serviços:", error);
+        // Erro ao buscar serviços
       });
   }
 
   function buscarProcedimentosCancelados(inicio = null, fim = null) {
       if (!procedimentoSelecionado) return;
       
-      let queryParams = `?nomeServico=${procedimentoSelecionado}`;
+      let dataInicio, dataFim;
       if (inicio && fim) {
-        queryParams += `&dataInicio=${inicio}&dataFim=${fim}`;
+        dataInicio = `${inicio}T00:00:00`;
+        dataFim = `${fim}T23:59:59`;
+      } else {
+        const hoje = new Date();
+        dataFim = hoje.toISOString().split('T')[0] + 'T23:59:59';
+        const trinta_dias_atras = new Date(hoje.getTime() - 30 * 24 * 60 * 60 * 1000);
+        dataInicio = trinta_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
       }
+      
+      const queryParams = `?nomeServico=${encodeURIComponent(procedimentoSelecionado)}&dataInicio=${encodeURIComponent(dataInicio)}&dataFim=${encodeURIComponent(dataFim)}`;
   
       api
         .get(`/servicos/cancelamentos-por-dia-semana${queryParams}`)
@@ -72,28 +79,38 @@ export function DashboardCancelamento() {
           setDadosSemanaisDoProcedimento(dadosMapeados);
         })
         .catch((error) => {
-          setMensagemErro(error.response.data.message);
+          setMensagemErro(error.response?.data?.message || 'Erro ao buscar dados');
         });
     }
 
-  function servicosMaisCancelados() {
+  function servicosMaisCancelados(inicio = null, fim = null) {
+    let dataInicio, dataFim;
+    if (inicio && fim) {
+      dataInicio = `${inicio}T00:00:00`;
+      dataFim = `${fim}T23:59:59`;
+    } else {
+      const hoje = new Date();
+      dataFim = hoje.toISOString().split('T')[0] + 'T23:59:59';
+      const trinta_dias_atras = new Date(hoje.getTime() - 30 * 24 * 60 * 60 * 1000);
+      dataInicio = trinta_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
+    }
+    
+    const queryParams = `?dataInicio=${encodeURIComponent(dataInicio)}&dataFim=${encodeURIComponent(dataFim)}`;
+    
     api
-      .get("/servicos/mais-cancelados")
+      .get(`/servicos/mais-cancelados${queryParams}`)
       .then((response) => {
-        console.log("Dados recebidos:", response.data);
-        
         if (response.data && Array.isArray(response.data)) {
-          if(response.data[0][1] == 0){
+          if(response.data.length === 0 || response.data[0][1] == 0){
             setMensagemErroTorta("Nenhum cancelamento registrado nos últimos 30 dias");
           } else {
             setServicosMaisCanceladosData(response.data);
           }
         } else {
-          console.error("Dados não são um array");
+          setMensagemErroTorta("Nenhum cancelamento registrado nos últimos 30 dias");
         }
       })
       .catch((error) => {
-        console.error("Erro ao buscar serviços (Mais cancelados):", error);
         setMensagemErroTorta(error.response?.data?.message || "Erro ao buscar dados.");
       });
   }
@@ -101,6 +118,7 @@ export function DashboardCancelamento() {
   const handleFiltrar = () => {
     if (dataInicio && dataFim) {
       buscarProcedimentosCancelados(dataInicio, dataFim);
+      servicosMaisCancelados(dataInicio, dataFim);
     } else {
       alert('Por favor, selecione ambas as datas');
     }
@@ -110,6 +128,7 @@ export function DashboardCancelamento() {
     setDataInicio('');
     setDataFim('');
     buscarProcedimentosCancelados();
+    servicosMaisCancelados();
   };
 
 
@@ -125,12 +144,19 @@ export function DashboardCancelamento() {
     }
   }, [listaDeTodosOsProcedimentos]);
   
-    useEffect(() => {
+  useEffect(() => {
     if (procedimentoSelecionado) {
       buscarProcedimentosCancelados();
       setMensagemErro("");
     }
   }, [procedimentoSelecionado]);
+
+  useEffect(() => {
+    if (dataInicio && dataFim) {
+      buscarProcedimentosCancelados(dataInicio, dataFim);
+      servicosMaisCancelados(dataInicio, dataFim);
+    }
+  }, [dataInicio, dataFim]);
 
   const handleVoltar = () => {
     navigate("/Dashboard/Menu");
@@ -150,7 +176,7 @@ export function DashboardCancelamento() {
           ? servicosMaisCanceladosData.map(item => {
               return item[1]; // Segundo elemento é a quantidade de cancelamentos
             })
-          : "Sem cancelamentos",
+          : [],
         backgroundColor: [
           "#FF6384",
           "#36A2EB",
@@ -178,10 +204,6 @@ export function DashboardCancelamento() {
       },
     ],
   };
-
-  // Debug do pieData
-  console.log("Labels:", pieData.labels);
-  console.log("Data:", pieData.datasets[0].data);
 
   const pieOptions = {
     responsive: true,
