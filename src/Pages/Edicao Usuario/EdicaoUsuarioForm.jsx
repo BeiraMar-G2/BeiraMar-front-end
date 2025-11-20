@@ -94,7 +94,6 @@ export function EdicaoUsuarioForm() {
         <div className="inputs">
           <Label texto="Foto de Perfil" />
           <div className="fotoPerfil" style={{ backgroundImage: `url(${fileURL})` }} onClick={handleIconClick}>
-            {console.log(fotoPerfil)}
             <input
               ref={inputFileRef}
               className="input-file"
@@ -142,18 +141,19 @@ export function EdicaoUsuarioForm() {
           onClick={() => {
             handleAtualizar();
           }}
-          texto="Salvar"
+          texto="Atualizar cadastro"
           cor="#f8c7ccbb"
         />
         <div className="alterarSenha">
           <Botao
-            texto="Alterar Senha"
             cor="#f8c7ccbb"
             onClick={() => {
               navigate("/Perfil/Senha");
             }}
-          />
-          <FaArrowRight size={18} color="#282828" />
+          >
+          Alterar Senha  <FaArrowRight size={18} color="#282828" />
+          </Botao>
+          
         </div>
       </div>
     </div>

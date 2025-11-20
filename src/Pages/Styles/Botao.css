@@ -21,6 +21,9 @@
   font-weight: 500;
   border: 0px solid transparent;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .iconeBotao {

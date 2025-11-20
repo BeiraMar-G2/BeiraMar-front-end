@@ -10,7 +10,7 @@ export function BotaoMenu(props) {
 export function Botao(props) {
   return (
     <div onClick={(e) => props.onClick(e.target.value)} className="botao">
-      <button style={{backgroundColor: props.cor}} className="textoBotao">{props.texto}</button>
+      <button style={{backgroundColor: props.cor}} className="textoBotao">{props.children ?? props.texto}</button>
     </div>
   )
 }

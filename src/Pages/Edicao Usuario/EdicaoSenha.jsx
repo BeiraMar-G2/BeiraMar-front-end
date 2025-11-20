@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Botao } from '../../Components/Botao';
 import { Titulo, Label } from '../../Components/Fontes';
 import '../Styles/Form.css';
+import api from '../../Provider/api';
 
 export function EdicaoSenha() {
     const navigate = useNavigate();
@@ -20,6 +21,20 @@ export function EdicaoSenha() {
             return;
         }
         console.log('Senhas:', senhaAtual, senhaNova, confSenhaNova);
+        api.put(`/clientes/${sessionStorage.getItem('idUsuario')}/trocar-senha`, {
+            senhaAtual: senhaAtual,
+            novaSenha: senhaNova,
+            confirmarNovaSenha: confSenhaNova
+        })
+        .then((response) => {
+            console.log('Senha atualizada com sucesso:', response.data);
+            alert('Senha atualizada com sucesso!');
+            navigate('/Perfil');
+        })
+        .catch((error) => {
+            console.error('Erro ao atualizar a senha:', error);
+            alert('Erro ao atualizar a senha.');
+        });
     }
 
     return (

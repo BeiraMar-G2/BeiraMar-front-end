@@ -28,7 +28,7 @@ ChartJS.register(
 
 export function DashboardCancelamento() {
   const navigate = useNavigate();
-  const [procedimentoSelecionado, setProcedimentoSelecionado] = useState("Massagem Modeladora");
+  const [procedimentoSelecionado, setProcedimentoSelecionado] = useState("");
   const [listaDeTodosOsProcedimentos, definirListaDeTodosOsProcedimentos] = useState([]);
   const [legendaPersonalizada, setLegendaPersonalizada] = useState(null);
   const [servicosMaisCanceladosData, setServicosMaisCanceladosData] = useState([]);
@@ -130,8 +130,6 @@ export function DashboardCancelamento() {
     buscarProcedimentosCancelados();
     servicosMaisCancelados();
   };
-
-
 
   useEffect(() => {
     listarServicos();
@@ -265,7 +263,7 @@ export function DashboardCancelamento() {
     labels: dadosSemanaisDoProcedimento.map((item) => item.diaDaSemana),
     datasets: [
       {
-        label: "Número de Procedimentos Realizados",
+        label: "Número de Cancelamentos",
         data: dadosSemanaisDoProcedimento.map(
           (item) => item.quantidadeRealizacoes
         ),
@@ -303,7 +301,7 @@ const opcoesDoGrafico = {
         padding: 12,
         callbacks: {
           label: function (contexto) {
-            return `${contexto.parsed.y} procedimentos realizados`;
+            return `${contexto.parsed.y} procedimentos cancelados`;
           },
         },
       },
@@ -513,7 +511,7 @@ const opcoesDoGrafico = {
             </div>
           ) : (
           <div className="bar-chart-section">
-            <h3 className="chart-title">Procedimentos Por Dia <HelpModal local="Informações do gráfico" explicacao="O gráfico exibe os dias da semana em que cada procedimento tem mais demanda para que você possa prever sua agenda." /></h3>
+            <h3 className="chart-title">Cancelamentos Por Dia <HelpModal local="Informações do gráfico" explicacao="O gráfico exibe os dias da semana em que cada procedimento tem mais demanda para que você possa prever sua agenda." /></h3>
             <p className="chart-subtitle">(Últimos 30 dias)</p>
 
             <div className="chart-wrapper-bar">

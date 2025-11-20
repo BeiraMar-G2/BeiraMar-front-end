@@ -28,7 +28,7 @@ export function LoginForm() {
       senha: senha
     })
     .then((response) => {
-      const { token, cargo, nome, email, id, telefone } = response.data;
+      const { token, cargo, nome, email, id, telefone } = response.data.body;
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("cargo", cargo);
       sessionStorage.setItem("nome", nome);
@@ -40,7 +40,7 @@ export function LoginForm() {
       if (response.status == "200") {
         setTimeout(() => setShowAlert(false), 6000);
         setTimeout(() => {  
-          if (cargo === "Cliente") {
+          if (cargo == "Cliente") {
             navigate("/MenuCliente");
           } else {
             navigate("/Menu");

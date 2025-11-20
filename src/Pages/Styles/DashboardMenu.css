@@ -33,6 +33,7 @@
   justify-content: center;
   gap: 15px;
   position: relative;
+  margin-bottom: 30px;
 }
 
 .btn-toggle-filtro {
@@ -47,7 +48,6 @@
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(144, 252, 249, 0.4);
   transition: all 0.3s ease;
-  position: absolute;
   right: 0;
 }
 
@@ -88,9 +88,11 @@
 .filtro-container {
   background: linear-gradient(135deg, #90FCF9 0%, #A0E7FF 100%);
   border-radius: 15px;
-  padding: 20px;
+  padding: 10px 15px;
   margin-bottom: 25px;
   box-shadow: 0 4px 15px rgba(144, 252, 249, 0.3);
+  display: flex;
+  flex-direction: column;
   animation: slideDown 0.3s ease-out;
 }
 
@@ -115,6 +117,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 10px;
 }
 
 .filtro-campo label {
@@ -203,7 +206,8 @@
   padding: 8px 15px;
   border-radius: 20px;
   display: inline-block;
-  width: 100%;
+  width: 80%;
+  align-self: center;
 }
 
 .loading {
