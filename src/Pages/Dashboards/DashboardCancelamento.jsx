@@ -144,17 +144,10 @@ export function DashboardCancelamento() {
   
   useEffect(() => {
     if (procedimentoSelecionado) {
-      buscarProcedimentosCancelados();
+      buscarProcedimentosCancelados(dataInicio || null, dataFim || null);
       setMensagemErro("");
     }
   }, [procedimentoSelecionado]);
-
-  useEffect(() => {
-    if (dataInicio && dataFim) {
-      buscarProcedimentosCancelados(dataInicio, dataFim);
-      servicosMaisCancelados(dataInicio, dataFim);
-    }
-  }, [dataInicio, dataFim]);
 
   const handleVoltar = () => {
     navigate("/Dashboard/Menu");

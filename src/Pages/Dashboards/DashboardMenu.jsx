@@ -17,23 +17,23 @@ export function DashboardMenu() {
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
 
   function buscarProcedimentos(inicio = null, fim = null) {
-    let dataInicio, dataFim;
+    let dataInicioFormatada, dataFimFormatada;
     
     if (inicio && fim) {
       // Formatar datas com horário (fim do dia para dataFim)
-      dataInicio = `${inicio}T00:00:00`;
-      dataFim = `${fim}T23:59:59`;
+      dataInicioFormatada = `${inicio}T00:00:00`;
+      dataFimFormatada = `${fim}T23:59:59`;
     } else {
       // Calcular últimos 30 dias
       const hoje = new Date();
-      dataFim = hoje.toISOString().split('T')[0] + 'T23:59:59';
+      dataFimFormatada = hoje.toISOString().split('T')[0] + 'T23:59:59';
       const trinta_dias_atras = new Date(hoje.getTime() - 30 * 24 * 60 * 60 * 1000);
-      dataInicio = trinta_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
+      dataInicioFormatada = trinta_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
     }
 
     const params = new URLSearchParams({
-      inicio: dataInicio,
-      fim: dataFim
+      inicio: dataInicioFormatada,
+      fim: dataFimFormatada
     });
 
     api.get(`/agendamentos/contarCancelados?${params}`)
@@ -54,23 +54,23 @@ export function DashboardMenu() {
   }
 
   function buscarRanking(inicio = null, fim = null) {
-    let dataInicio, dataFim;
+    let dataInicioFormatada, dataFimFormatada;
     
     if (inicio && fim) {
       // Formatar datas com horário (fim do dia para dataFim)
-      dataInicio = `${inicio}T00:00:00`;
-      dataFim = `${fim}T23:59:59`;
+      dataInicioFormatada = `${inicio}T00:00:00`;
+      dataFimFormatada = `${fim}T23:59:59`;
     } else {
       // Calcular últimos 7 dias
       const hoje = new Date();
-      dataFim = hoje.toISOString().split('T')[0] + 'T23:59:59';
+      dataFimFormatada = hoje.toISOString().split('T')[0] + 'T23:59:59';
       const sete_dias_atras = new Date(hoje.getTime() - 7 * 24 * 60 * 60 * 1000);
-      dataInicio = sete_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
+      dataInicioFormatada = sete_dias_atras.toISOString().split('T')[0] + 'T00:00:00';
     }
 
     const params = new URLSearchParams({
-      dataInicio: dataInicio,
-      dataFim: dataFim
+      dataInicio: dataInicioFormatada,
+      dataFim: dataFimFormatada
     });
 
     api.get(`/servicos/top3-mais-agendados?${params}`)
