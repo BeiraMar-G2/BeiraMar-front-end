@@ -35,6 +35,7 @@ export function LoginForm() {
       sessionStorage.setItem("email", email);
       sessionStorage.setItem("idUsuario", id);
       sessionStorage.setItem("telefone", telefone);
+        sessionStorage.setItem("loginGoogle", "false");
       setShowAlert(true);
       console.log("Login realizado com sucesso:", response);
       if (response.status == "200") {

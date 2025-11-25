@@ -21,6 +21,7 @@ export function AgendamentoServicoPacote() {
     const { servicoEscolhido: inicial } = location.state || {};
     const [servicoEscolhido, setServicoEscolhido] = useState(inicial || {});
     const [tipo, setTipo] = useState(servicoEscolhido.tipo);
+    const [horarioOcupado, setHorarioOcupado] = useState([]);
     const [servicos, setServicos] = useState([
         {
             id: 1,
@@ -41,9 +42,15 @@ export function AgendamentoServicoPacote() {
     function buscarAgendamentos() {
         api.get("/agendamentos")
             .then((response) => {
-                const agendamentos = response.data.map(dataAgendamento =>
-                    dataAgendamento.dtHora.split("T")[0]
-                );
+                const agendamentos = response.data.map(dataAgendamento => {
+                    if (dataAgendamento.dtHora) {
+                        if (dataAgendamento.status === "Agendado") {
+                            horarioOcupado.push(dataAgendamento.dtHora);
+                        }
+                        return dataAgendamento.dtHora.split("T")[0];
+                    }
+                    return null;
+                });
                 setDiasAgendados(agendamentos);
             }
             )
@@ -126,7 +133,6 @@ export function AgendamentoServicoPacote() {
                         if (view === "month") {
                             const mes = activeStartDate.getMonth();
                             setMesAtual(mes);
-                            console.log("Mês exibido:", mes + 1) // Exibe o mês atual (0 = Janeiro, 1 = Fevereiro, etc.)
                         }
                     }}
                     onClickDay={handleDiaSelecionado}
@@ -142,8 +148,6 @@ export function AgendamentoServicoPacote() {
                         }
                     }}
                     className={"calendario"} />
-
-                {servicoEscolhido.tipo === "Pacotes" ? <p>Essa será sua {servicoEscolhido.pacoteQtdSessoes}ª sessão</p> : null}
 
                 <div className="legenda-agendamentos">
                     <div className="legenda-wrapper">
@@ -169,7 +173,7 @@ export function AgendamentoServicoPacote() {
 
             <div className="botoes-acao">
                 <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate(-1)} />
-                <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => navigate("/Agendamentos/Horario", { state: { servicoDataEscolhido: { servicoEscolhido, dataEscolhida } } })} />
+                <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => navigate("/Agendamentos/Horario", { state: { servicoDataEscolhido: { servicoEscolhido, dataEscolhida, horarioOcupado } } })} />
             </div>
         </div>
     );

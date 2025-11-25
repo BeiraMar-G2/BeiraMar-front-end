@@ -9,6 +9,8 @@ export default function VisuClientePorDia() {
   const [paginaAtual, setPaginaAtual] = useState(0);
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
+  const [filtrarPassados, setFiltrarPassados] = useState(true);
+  const [mostrarFiltro, setMostrarFiltro] = useState(false);
   const tamanhoPagina = 4;
 
   function buscarAgendamentos(pagina = 0) {
@@ -148,6 +150,19 @@ export default function VisuClientePorDia() {
     return grupos;
   }
 
+  function filtrarAgendamentos(lista) {
+    if (!filtrarPassados) return lista;
+
+    const agora = new Date();
+    agora.setHours(0, 0, 0, 0);
+
+    return lista.filter((agendamento) => {
+      const dataAgendamento = new Date(agendamento.dtHora);
+      dataAgendamento.setHours(0, 0, 0, 0);
+      return dataAgendamento >= agora;
+    });
+  }
+
   function irParaPagina(novaPagina) {
     if (novaPagina >= 0 && novaPagina < totalPaginas) {
       buscarAgendamentos(novaPagina);
@@ -166,11 +181,34 @@ export default function VisuClientePorDia() {
     buscarAgendamentos();
   }, []);
 
-  const agendamentosAgrupados = agruparPorDia(agendamentos);
+  const agendamentosFiltrados = filtrarAgendamentos(agendamentos);
+  const agendamentosAgrupados = agruparPorDia(agendamentosFiltrados);
   
   return (
     <div>
       <div className="agendamentos">
+
+        <button 
+            className="btn-toggle-filtro-agendamento" 
+            onClick={() => setMostrarFiltro(!mostrarFiltro)}
+            title={mostrarFiltro ? "Fechar filtro" : "Abrir filtro"}
+          >
+            <i className={`fas fa-filter ${mostrarFiltro ? 'ativo' : ''}`}></i>
+          </button>
+        
+        <div className={`filtro-container ${!mostrarFiltro ? 'hidden' : ''}`}>
+          <label className="filtro-toggle">
+            <input 
+              type="checkbox" 
+              checked={filtrarPassados}
+              onChange={(e) => setFiltrarPassados(e.target.checked)}
+              className="checkbox-input"
+            />
+            <span className="toggle-label">
+              {filtrarPassados ? "Apenas próximos agendamentos" : "Mostrando todos os agendamentos"}
+            </span>
+          </label>
+        </div>
 
         {/* Controles de paginação superiores */}
         {totalPaginas > 1 && (
@@ -234,16 +272,23 @@ export default function VisuClientePorDia() {
               </div>
             ))
           ) : (
-            <p>Sem agendamentos...</p>
+            <p>
+              {filtrarPassados 
+                ? "Sem agendamentos próximos..." 
+                : "Sem agendamentos..."}
+            </p>
           )}
         </div>
 
       </div>
 
-      {agendamentos.length === 0 && (
+      {agendamentosFiltrados.length === 0 && (
         <p className="mensagem-final">
           <em>
-            Sem mais agendamentos... <br /> Faça sua reserva hoje!
+            {filtrarPassados 
+              ? "Sem agendamentos próximos... " 
+              : "Sem agendamentos... "}
+            <br /> Faça sua reserva hoje!
           </em>
         </p>
       )}

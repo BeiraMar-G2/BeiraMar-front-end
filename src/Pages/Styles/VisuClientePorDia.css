@@ -1,5 +1,9 @@
 .pagina-agendamentos {
-  width: 90%;
+  max-width: 90%;
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+  padding-top: 50px;
+  padding-bottom: 30px;
 }
 
 .agendamentos {
@@ -125,4 +129,91 @@
   font-size: 14px;
   color: #666;
   margin: 0 10px;
+}
+
+/* Estilos do Filtro */
+.filtro-container {
+  display: flex;
+  justify-content: center;
+  width: 75%;
+  justify-self: center;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+  border-radius: 10px;
+  border: 2px solid #59b9c0;
+  max-height: 500px;
+  overflow: hidden;
+  opacity: 1;
+  padding: 15px;
+  transition: all 0.4s ease;
+}
+
+.filtro-container.hidden {
+  max-height: 0;
+  margin-bottom: 0;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.filtro-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #e2758d;
+}
+
+.toggle-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filtro-toggle:hover .toggle-label {
+  color: #4b141f;
+}
+
+@media (max-width: 600px) {
+  .filtro-container {
+    margin-bottom: 15px;
+    padding: 12px;
+  }
+
+  .toggle-label {
+    font-size: 13px;
+  }
+}
+
+.btn-toggle-filtro-agendamento {
+  background: linear-gradient(135deg, #90FCF9 0%, #A0E7FF 100%);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: flex-end;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(144, 252, 249, 0.4);
+  border: 2px solid #59b9c0;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+}
+
+.btn-toggle-filtro-agendamento i {
+  transition: transform 0.3s ease;
 }

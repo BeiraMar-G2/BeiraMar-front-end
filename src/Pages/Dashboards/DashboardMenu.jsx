@@ -39,6 +39,7 @@ export function DashboardMenu() {
     api.get(`/agendamentos/contarCancelados?${params}`)
       .then(response => {
         setProcedimentosCancelados(response.data);
+        console.log("Procedimentos cancelados:", response, params.toString());
       })
       .catch(error => {
         // Erro ao buscar procedimentos cancelados
@@ -47,6 +48,7 @@ export function DashboardMenu() {
     api.get(`/agendamentos/contarAgendados?${params}`)
       .then(response => {
         setProcedimentosRealizados(response.data);
+        console.log("Procedimentos realizados:", response, params.toString());
       })
       .catch(error => {
         // Erro ao buscar procedimentos realizados
@@ -75,6 +77,7 @@ export function DashboardMenu() {
 
     api.get(`/servicos/top3-mais-agendados?${params}`)
       .then(response => {
+        console.log("Ranking de procedimentos:", response.data, params.toString());
         if (Array.isArray(response.data)) {
           setRankingProcedimentos(response.data);
         } else {

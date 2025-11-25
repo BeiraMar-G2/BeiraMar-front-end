@@ -1,7 +1,7 @@
 .alert-wrapper {
-  position: fixed; /* MUDA: de absolute para fixed */
+  position: fixed;
   top: 10px;
-  right: 10px;
+  left: 15px;
   z-index: 9999;
   width: auto;
   pointer-events: none;
@@ -24,7 +24,7 @@
   overflow: hidden;
   border-radius: 10px;
   pointer-events: auto;
-  margin: 0; /* REMOVE: margin: 20px auto */
+  margin: 0;
 }
 
 .alert-error {
@@ -41,7 +41,7 @@
   overflow: hidden;
   border-radius: 10px;
   pointer-events: auto;
-  margin: 0; /* REMOVE: margin: 20px auto */
+  margin: 0;
 }
 
 .modal-icon {

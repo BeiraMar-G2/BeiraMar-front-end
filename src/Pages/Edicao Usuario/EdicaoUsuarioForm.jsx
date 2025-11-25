@@ -88,7 +88,7 @@ export function EdicaoUsuarioForm() {
   return (
     <div className="content cliente">
       <div onClick={() => navigate("/MenuCliente")} className="voltar-wrapper">
-        <FaArrowLeft size={28} color="#000" className="voltar" />
+        <FaArrowLeft size={28} color="#282828" className="voltar" />
       </div>
       <div className="formulario">
         <div className="inputs">
@@ -141,7 +141,7 @@ export function EdicaoUsuarioForm() {
           onClick={() => {
             handleAtualizar();
           }}
-          texto="Atualizar cadastro"
+          texto="Atualizar Cadastro"
           cor="#f8c7ccbb"
         />
         <div className="alterarSenha">
