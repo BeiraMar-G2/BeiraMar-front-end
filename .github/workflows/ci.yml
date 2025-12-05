@@ -130,8 +130,8 @@ jobs:
             envsubst '${IP_PORTA_API}' < /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf > /home/${{ secrets.REMOTE_USER }}/nginx-config/default.conf
             echo "Arquivo default.conf do ngnix criado"
 
-            docker compose -f /home/${{ secrets.REMOTE_USER }}/docker-compose.yaml down
+            docker compose -f /home/${{ secrets.REMOTE_USER }}/docker-compose.yml down
             echo "Docker compose do Ngnix parado"
             
-            docker compose -f /home/${{ secrets.REMOTE_USER }}/docker-compose.yaml up -d --build
+            docker compose -f /home/${{ secrets.REMOTE_USER }}/docker-compose.yml up -d --build
             echo "Docker compose do Ngnix reiniciado"
