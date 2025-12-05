@@ -124,6 +124,8 @@ jobs:
           script: |
             set -e
 
+            mkdir -p /home/ec2-user/frontend/nginx/templates
+
             export IP_PORTA_API=${{ secrets.REMOTE_HOST_PRIVADO }}:8080
             echo "Variável de IP e porta da API criada: $IP_PORTA_API"
             
