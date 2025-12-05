@@ -37,7 +37,7 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           SOURCE: "./dist/"
           TARGET: "/home/${{ secrets.REMOTE_USER }}/frontend/"
-          ARGS: "-rltgoDzvO --delete"
+          ARGS: "-rltgoDzvO --delete --exclude=nginx --exclude=nginx-config"
 
       # 5️⃣ Executar comandos remotos na EC2
       - name: FE - Configurar NGINX e Subir Container
