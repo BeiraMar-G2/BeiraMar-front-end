@@ -124,7 +124,10 @@ jobs:
           script: |
             set -e
 
-            mkdir -p /home/ec2-user/frontend/nginx/templates
+            # Cria diretórios com permissão correta
+            sudo mkdir -p /home/${{ secrets.REMOTE_USER }}/frontend/nginx/templates
+            sudo mkdir -p /home/${{ secrets.REMOTE_USER }}/frontend/nginx-config
+            sudo chown -R ec2-user:ec2-user /home/${{ secrets.REMOTE_USER }}/frontend
 
             export IP_PORTA_API=${{ secrets.REMOTE_HOST_PRIVADO }}:8080
             echo "Variável de IP e porta da API criada: $IP_PORTA_API"
