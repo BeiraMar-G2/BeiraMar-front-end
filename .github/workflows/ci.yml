@@ -131,8 +131,32 @@ jobs:
 
             export IP_PORTA_API=${{ secrets.REMOTE_HOST_PRIVADO }}:8080
             echo "Variável de IP e porta da API criada: $IP_PORTA_API"
-            
-            envsubst '${IP_PORTA_API}' < /home/${{ secrets.REMOTE_USER }}/frontend/nginx/templates/default.conf.template > /home/${{ secrets.REMOTE_USER }}/frontend/nginx-config/default.conf
+            if [ ! -f /home/***/frontend/nginx/templates/default.conf.template ]; then
+              echo "Criando default.conf.template..."
+              cat << 'EOF' | sudo tee /home/***/frontend/nginx/templates/default.conf.template > /dev/null
+            server {
+                listen 80;
+                server_name _;
+
+                location / {
+                    root /usr/share/nginx/html;
+                    try_files $uri $uri/ /index.html;
+                }
+
+                location /api/ {
+                    proxy_pass http://$IP_PORTA_API/;
+                    proxy_set_header Host $host;
+                    proxy_set_header X-Real-IP $remote_addr;
+                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto $scheme;
+                }
+            }
+            EOF
+            fi
+
+            # Gerar o default.conf final
+            envsubst '${IP_PORTA_API}' < /home/***/frontend/nginx/templates/default.conf.template \
+              > /home/***/frontend/nginx-config/default.conf
             echo "Arquivo default.conf do ngnix criado"
 
             docker compose -f /home/${{ secrets.REMOTE_USER }}/compose.yaml down
