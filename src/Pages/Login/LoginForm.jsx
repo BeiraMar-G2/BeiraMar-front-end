@@ -23,7 +23,7 @@ export function LoginForm() {
   const navigate = useNavigate();
 
   function validarLogin() {
-    api.post("/api/autenticacoes/login", {
+    api.post("/autenticacoes/login", {
       email: email,
       senha: senha
     })

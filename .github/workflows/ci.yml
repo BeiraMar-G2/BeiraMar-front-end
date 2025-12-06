@@ -103,6 +103,13 @@ jobs:
             docker stop frontend_nginx 2>/dev/null || true
             docker rm frontend_nginx 2>/dev/null || true
 
+            echo "📄 Criando arquivo .env para variáveis dinâmicas..."
+            cat << 'EOF' > /home/${{ secrets.REMOTE_USER }}/frontend/.env
+            VITE_API_URL="http://localhost:8080"
+            VITE_REMOTE_HOST_PRIVADO="10.0.0.40"
+            VITE_GOOGLE_CLIENT_ID=886246006385-ffdv6tsbajsjvfodl0o2t6dkk919i85c.apps.googleusercontent.com
+            EOF
+
             echo "🚀 Subindo container com docker compose..."
             docker compose -f /home/${{ secrets.REMOTE_USER }}/docker-compose.yml up -d --force-recreate
 
