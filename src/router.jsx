@@ -108,7 +108,7 @@ export const routes = createBrowserRouter([
   { 
     path: "/Servicos&Pacotes",
     element: (
-    <PrivateRoute allowedRoles={["Administrador", "Atendente"]}>
+    <PrivateRoute allowedRoles={["Administrador", "Recepcionista", "Massagista", "Fisioterapeuta", "Esteticista"]}>
       <ServicosPacotes />
     </PrivateRoute>
     ),
