@@ -24,7 +24,13 @@ jobs:
       # 3️⃣ Instalar dependências e gerar build
       - name: FE - Instalar Dependências e Fazer Build
         run: |
-          VITE_API_URL=http://${{ secrets.REMOTE_HOST_PRIVADO }}:8080 npm run build
+          npm install
+          
+          # 1. Exporta a variável de ambiente para o shell da Action
+          export VITE_API_URL=http://${{ secrets.REMOTE_HOST_PRIVADO }}:8080
+          
+          # 2. Executa o build. O npm run build encontrará a variável exportada.
+          npm run build
 
       # 4️⃣ Enviar arquivos do build para EC2
       - name: FE - Copiar arquivos e Deploy (Usando SSH com rsync)
