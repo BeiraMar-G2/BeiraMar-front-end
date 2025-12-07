@@ -28,6 +28,7 @@ jobs:
           
           # 1. Exporta a variável de ambiente para o shell da Action
           export VITE_API_URL=http://${{ secrets.REMOTE_HOST_PRIVADO }}:8080
+          export VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}
           
           # 2. Executa o build. O npm run build encontrará a variável exportada.
           npm run build
