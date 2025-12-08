@@ -9,7 +9,7 @@ export default function VisuClientePorDia() {
   const [paginaAtual, setPaginaAtual] = useState(0);
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
-  const [filtrarPassados, setFiltrarPassados] = useState(true);
+  const [filtrarPassados, setFiltrarPassados] = useState(false);
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
   const tamanhoPagina = 4;
 
