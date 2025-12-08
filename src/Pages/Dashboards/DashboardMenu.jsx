@@ -42,10 +42,9 @@ export function DashboardMenu() {
         console.log("Procedimentos cancelados:", response, params.toString());
       })
       .catch(error => {
-        // Erro ao buscar procedimentos cancelados
       });
 
-    api.get(`/agendamentos/contarAgendados?${params}`)
+    api.get(`/agendamentos/contarConcluidos?${params}`)
       .then(response => {
         setProcedimentosRealizados(response.data);
         console.log("Procedimentos realizados:", response, params.toString());
