@@ -141,6 +141,15 @@ This repository reflects an **iterative development process**. Refactors and imp
 
 This mirrors how production applications evolve in real-world teams.
 
+---
+
+## Possible Improvement
+
+Some enhancements could further improve this project:
+
+- Refactoring complex business logic into dedicated utility or service files to improve maintainability
+- Expanding visual feedback and user experience in specific flows (core components already implemented)
+- Enhancing the CI/CD pipeline and infrastructure setup for a long-term, production-grade environment
 
 ---
 
