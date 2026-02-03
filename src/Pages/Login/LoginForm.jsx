@@ -20,7 +20,7 @@ export function LoginForm() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const { handleNavigation } = useNavigation();
+  const { handleNavigate } = useNavigation();
 
   function validarLogin() {
     api.post("/autenticacoes/login", {
