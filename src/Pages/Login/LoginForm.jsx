@@ -4,7 +4,7 @@ import { Titulo } from '../../Components/Fontes.jsx';
 import { IoIosMail } from "react-icons/io";
 import { FaKey } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Sucesso } from '../../Components/Modal.jsx';
@@ -20,7 +20,7 @@ export function LoginForm() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const navigate = useNavigate();
+  const { handleNavigation } = useNavigation();
 
   function validarLogin() {
     api.post("/autenticacoes/login", {
@@ -42,9 +42,9 @@ export function LoginForm() {
         setTimeout(() => setShowAlert(false), 6000);
         setTimeout(() => {  
           if (cargo == "Cliente") {
-            navigate("/MenuCliente");
+            handleNavigate("/MenuCliente");
           } else {
-            navigate("/Menu");
+            handleNavigate("/Menu");
           }
         }, 4000);
       }
@@ -74,9 +74,9 @@ export function LoginForm() {
           setTimeout(() => setShowAlert(false), 6000);
           setTimeout(() => {
             if (cargo === "Cliente") {
-              navigate("/MenuCliente");
+              handleNavigate("/MenuCliente");
             } else {
-              navigate("/Menu");
+              handleNavigate("/Menu");
             }
           }, 4000);
         }
@@ -101,7 +101,7 @@ export function LoginForm() {
         onClose={() => setShowAlert(false)}
         texto="Login realizado com sucesso, boas vindas!  Redirecionando..."
       />
-      <div onClick={() => navigate("/")} className='voltar-wrapper'>
+      <div onClick={() => handleNavigate("/")} className='voltar-wrapper'>
         <FaArrowLeft size={28} color="#000" className='voltar'/>
       </div>
       <div className='formulariocentrado'>

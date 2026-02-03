@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { IoIosBrush, IoIosMail } from "react-icons/io";
 import { FaPhone, FaUser } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Botao } from "../../Components/Botao.jsx";
 import { Input } from "../../Components/Input.jsx";
 import { Label } from "../../Components/Fontes.jsx";
@@ -13,7 +13,7 @@ import "../Styles/Fontes.css";
 import "../Styles/Botao.css";
 
 export function EdicaoUsuarioForm() {
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
   const inputFileRef = useRef(null);
   const [atualizados, setAtualizados] = useState([
 
@@ -87,7 +87,7 @@ export function EdicaoUsuarioForm() {
 
   return (
     <div className="content cliente">
-      <div onClick={() => navigate("/MenuCliente")} className="voltar-wrapper">
+      <div onClick={() => handleNavigate("/MenuCliente")} className="voltar-wrapper">
         <FaArrowLeft size={28} color="#282828" className="voltar" />
       </div>
       <div className="formulario">
@@ -148,7 +148,7 @@ export function EdicaoUsuarioForm() {
           <Botao
             cor="#f8c7ccbb"
             onClick={() => {
-              navigate("/Perfil/Senha");
+              handleNavigate("/Perfil/Senha");
             }}
           >
           Alterar Senha  <FaArrowRight size={18} color="#282828" />

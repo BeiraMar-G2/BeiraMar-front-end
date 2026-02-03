@@ -2,12 +2,12 @@ import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from "../../Components/Fontes";
 import { Botao } from "../../Components/Botao";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import VisuAtendPorDia from "../../Components/VisuAtendPorDia";
 import "../Styles/VisuAtendPorDia.css";
 
 export function VisualizacaoAgendAtendDia() {
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
 return (
     <div className="pagina-agendamentos">
     <Header alinhamento="flex-start" padding="0 10px" icone={<FaHouse size={28}/>} texto="Menu" color="#282828"/>
@@ -19,7 +19,7 @@ return (
       <VisuAtendPorDia />
     </div>
      <div className="botoes-acao">
-        <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate("/Menu")} />
+        <Botao texto="Voltar" cor="#C8C5C5" onClick={() => handleNavigate(-1)}/>
     </div>
     </div>
 

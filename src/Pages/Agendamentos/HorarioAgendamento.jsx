@@ -3,14 +3,14 @@ import { Header } from '../../Components/Header';
 import { Titulo, Subtitulo } from '../../Components/Fontes';
 import { useLocation } from 'react-router-dom';
 import { Botao } from '../../Components/Botao';
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import { FaHouse } from "react-icons/fa6";
 import { Sucesso } from '../../Components/Modal';
 import api from '../../Provider/api';
 import "../Styles/HorarioAgendamento.css";
 
 export function HorarioAgendamento() {
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
     const [horarioSelecionado, setHorarioSelecionado] = useState('');
     const location = useLocation();
     const { servicoDataEscolhido } = location.state || {};
@@ -134,9 +134,6 @@ export function HorarioAgendamento() {
         setHorarioSelecionado(horario);
     };
 
-    const botaoVoltar = () => {
-        navigate(-1);
-    };
 
     const botaoContinuar = () => {
         const duracao = servicoDataEscolhido.servicoEscolhido.servicoDuracao;
@@ -172,7 +169,7 @@ export function HorarioAgendamento() {
                 setTimeout(() => setShowAlert(false), 5000);
     
                 setTimeout(() => 
-                    navigate("/Agendamentos/VisualizarConsultas"), 4000);
+                    handleNavigate("/Agendamentos/VisualizarConsultas"), 4000);
             }
         })
         .catch((error) => {
@@ -287,7 +284,7 @@ export function HorarioAgendamento() {
                     <Botao 
                         texto="Voltar"
                         cor="#cccccc"
-                        onClick={botaoVoltar}
+                        onClick={() => handleNavigate(-1)}
                     />
                     <Botao 
                         texto="Continuar" 

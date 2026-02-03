@@ -1,4 +1,5 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import { useEffect, useState } from "react";
 import { Botao } from "../../Components/Botao.jsx";
 import { Header } from "../../Components/Header.jsx";
@@ -9,7 +10,7 @@ import "../Styles/ResumoPacote.css";
 import api from "../../Provider/api.js";
 
 export function ResumoPacote() {
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
   const location = useLocation();
   const [showAlert, setShowAlert] = useState(false);  
   const [precoSugerido, setPrecoSugerido] = useState(0);
@@ -48,7 +49,7 @@ export function ResumoPacote() {
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 6000);
             setTimeout(() => {  
-              navigate("/Servicos&Pacotes");
+              handleNavigate("/Servicos&Pacotes");
             }, 4000);
           })
         )
@@ -144,7 +145,7 @@ export function ResumoPacote() {
             texto="Voltar"
             cor="#C8C5C5"
             onClick={() =>
-              navigate("/DefinirSessoes", { state: { servicosSelecionados } })
+              handleNavigate("/DefinirSessoes", { state: { servicosSelecionados } })
             }
           />
           <Botao 

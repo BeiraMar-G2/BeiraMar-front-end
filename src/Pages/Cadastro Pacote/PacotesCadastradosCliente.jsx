@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Header } from "../../Components/Header";
 import { PacoteCard } from "../../Components/PacoteCard";
 import { FaHouse } from "react-icons/fa6";
@@ -12,7 +12,7 @@ import api from "../../Provider/api";
 export function PacotesCadastradosCliente() {
   const [search, setSearch] = useState("");
   const [tipo, setTipo] = useState("Pacotes");
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
 
   const [pacotes, setPacotes] = useState([
     {
@@ -109,21 +109,21 @@ export function PacotesCadastradosCliente() {
         <div className="lista flex flex-col gap-3 w-72 overflow-y-auto max-h-96">
           {filtrados.map((item) =>
             tipo === "Pacotes" ? (
-              <PacoteCard key={item.idPacote} nome={item.nome} preco={item.precoTotalSemDesconto} onClick={() => navigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { pacoteId: item.idPacote, pacoteNome: item.nome, pacoteQtdSessoes: item.qtdSessoesTotal, tipo: tipo } } } )}/>
+              <PacoteCard key={item.idPacote} nome={item.nome} preco={item.precoTotalSemDesconto} onClick={() => handleNavigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { pacoteId: item.idPacote, pacoteNome: item.nome, pacoteQtdSessoes: item.qtdSessoesTotal, tipo: tipo } } } )}/>
             ) : (
               <PacoteCard
                 key={item.idServico}
                 nome={item.nome}
                 preco={item.preco}
                 duracao={item.duracao}
-                onClick={() => navigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { servicoId: item.idServico, servicoNome: item.nome, servicoPreco: item.preco, tipo: tipo, pacoteId: null } } })}
+                onClick={() => handleNavigate("/Agendamentos/${tipo}", { state: { servicoEscolhido: { servicoId: item.idServico, servicoNome: item.nome, servicoPreco: item.preco, tipo: tipo, pacoteId: null } } })}
               />
             )
           )}
         </div>
 
         <div style={{ display:"flex", justifyContent:"center", width: "90%", marginTop: "18px" }}>
-          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {navigate(-1)}}/>
+          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => handleNavigate(-1)}/>
         </div>
       </div>
     </div>

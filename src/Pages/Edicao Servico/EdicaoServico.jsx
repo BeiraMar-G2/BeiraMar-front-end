@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Botao } from "../../Components/Botao.jsx";
 import { Titulo, Label } from "../../Components/Fontes.jsx";
 import { FaHouse } from "react-icons/fa6";
@@ -8,7 +9,7 @@ import "../Styles/CadastroServico.css";
 import api from '../../Provider/api.js';
 
 export function EdicaoServico() {
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
   const [formData, setFormData] = useState({
     nomeProcedimento: '',
     duracao: '',
@@ -115,7 +116,7 @@ export function EdicaoServico() {
           <Botao
             texto="Voltar"
             cor="#C8C5C5"
-            onClick={() => navigate(-1)}
+            onClick={() => handleNavigate(-1)}
           />
           <Botao
             texto="Continuar"

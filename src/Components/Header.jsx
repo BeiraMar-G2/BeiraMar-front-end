@@ -1,9 +1,9 @@
 import "../Pages/Styles/Header.css"
-import { useNavigate } from "react-router-dom"
+import { useNavigation } from "../Hooks/useNavigation";
 import { useState } from "react"
 
 export function Header(props) {
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
     const [popupVisivel, setPopupVisivel] = useState(false);
 
     const exibirPopUp = () => {
@@ -22,15 +22,15 @@ export function Header(props) {
       sessionStorage.removeItem("role")
       sessionStorage.removeItem("cargo")
       console.log(sessionStorage)
-      navigate("/Login");
+      handleNavigate("/Login");
     }
 
     const handleMenu = () => {
       if(sessionStorage.getItem("cargo") === "Cliente"){
-        navigate("/MenuCliente");
+        handleNavigate("/MenuCliente");
       }
       else{
-        navigate("/Menu");
+        handleNavigate("/Menu");
       }
     }
 

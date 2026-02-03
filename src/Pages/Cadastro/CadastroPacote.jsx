@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Botao } from '../../Components/Botao.jsx';
 import { InputPesquisa } from '../../Components/Input.jsx';
 import { Header } from '../../Components/Header.jsx';
@@ -10,7 +10,7 @@ import '../Styles/CadastroPacote.css';
 import api from '../../Provider/api.js'; 
 
 export function CadastroPacote() {
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
     const [filtro, setFiltro] = useState('');
     const [formData, setFormData] = useState([]);
     const [servicos, setServicos] = useState([]);
@@ -106,7 +106,7 @@ export function CadastroPacote() {
                     <Botao 
                         texto="Continuar" 
                         cor="#f8c7ccbb" 
-                        onClick={() => navigate("/DefinirSessoes", { state: { servicosSelecionados: formData.filter(servico => servico.selecionado) } })} 
+                        onClick={() => handleNavigate("/DefinirSessoes", { state: { servicosSelecionados: formData.filter(servico => servico.selecionado) } })} 
                     />
                 </div>
             </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Header } from "../../Components/Header";
 import { PacoteCard } from "../../Components/PacoteCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import { FaHouse } from "react-icons/fa6";
 import "../../Pages/Styles/PacotesCadastrados.css";
 import { Titulo } from "../../Components/Fontes";
@@ -16,7 +16,7 @@ export function PacotesCadastrados() {
   const [showAlert, setShowAlert] = useState(false);
   const [search, setSearch] = useState("");
   const [tipo, setTipo] = useState("Pacotes");
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
 
   const [pacotes, setPacotes] = useState([
     {
@@ -46,7 +46,7 @@ export function PacotesCadastrados() {
   function handleAcao(acao, id) {
     if (acao === "editar") {
         if(tipo === "Serviços") {
-          navigate("/Servico/Edicao", {state: { servicoEditado: {id: id} }})
+          handleNavigate("/Servico/Edicao", {state: { servicoEditado: {id: id} }})
         }
     } else if (acao === "excluir") {
       if(tipo === "Pacotes"){

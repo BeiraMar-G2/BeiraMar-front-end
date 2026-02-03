@@ -8,11 +8,11 @@ import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from "../../Components/Fontes";
 import { Botao } from "../../Components/Botao";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import { useLocation } from "react-router-dom";
 
 export function AgendamentoServicoPacote() {
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
     const [mesAtual, setMesAtual] = useState(null);
     const [diasAgendados, setDiasAgendados] = useState([]);
     const [diaSelecionado, setDiaSelecionado] = useState(null);
@@ -172,8 +172,8 @@ export function AgendamentoServicoPacote() {
             <hr />
 
             <div className="botoes-acao">
-                <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate(-1)} />
-                <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => navigate("/Agendamentos/Horario", { state: { servicoDataEscolhido: { servicoEscolhido, dataEscolhida, horarioOcupado } } })} />
+                <Botao texto="Voltar" cor="#C8C5C5" onClick={() => handleNavigate(-1)} />
+                <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => handleNavigate("/Agendamentos/Horario", { state: { servicoDataEscolhido: { servicoEscolhido, dataEscolhida, horarioOcupado } } })} />
             </div>
         </div>
     );

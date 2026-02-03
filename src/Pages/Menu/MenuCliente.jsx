@@ -1,29 +1,13 @@
 import { Header } from '../../Components/Header';
 import { BotaoMenu } from '../../Components/Botao';
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import { FaClock, FaShoppingBag, FaCalendarAlt, FaUser } from 'react-icons/fa';
 import { RiLogoutBoxLine } from "react-icons/ri";
 import '../Styles/MenuCliente.css';
 import { useEffect } from 'react';
 
 export function MenuCliente() {
-    const navigate = useNavigate();
-
-    const handleProximosAgendamentos = () => {
-        navigate('/Agendamentos/VisualizarConsultas');
-    };
-    
-    const handleServicosEPacotes = () => {
-        navigate('/PacotesCliente');
-    };
-    
-    const handleHistoricoAgendamentos = () => {
-        navigate('/Agendamentos/HistoricoAgendCliente');
-    };
-
-    const handlePerfil = () => {
-        navigate('/Perfil');
-    };
+    const { handleNavigate } = useNavigation();
 
     return (
         <div className="menu-cliente">
@@ -49,28 +33,28 @@ export function MenuCliente() {
                     <BotaoMenu
                         texto="Meus Agendamentos"
                         imagem={<FaClock className="icone-menu" />}
-                        onClick={handleProximosAgendamentos}
+                        onClick={() => handleNavigate('/Agendamentos/VisualizarConsultas')}
                         funcao="Cliente"
                     />
                     
                     <BotaoMenu
                         texto="Agendar Sessão"
                         imagem={<FaShoppingBag className="icone-menu" />}
-                        onClick={handleServicosEPacotes}
+                        onClick={() => handleNavigate('/PacotesCliente')}
                         funcao="Cliente"
                     />
                     
                     <BotaoMenu
                         texto="Histórico de Agendamentos"
                         imagem={<FaCalendarAlt className="icone-menu" />}
-                        onClick={handleHistoricoAgendamentos}
+                        onClick={() => handleNavigate('/Agendamentos/HistoricoAgendCliente')}
                         funcao="Cliente"
                     />
                     
                     <BotaoMenu
                         texto="Perfil"
                         imagem={<FaUser className="icone-menu" />}
-                        onClick={handlePerfil}
+                        onClick={() => handleNavigate('/Perfil')}
                         funcao="Cliente"
                     />
                 </div>

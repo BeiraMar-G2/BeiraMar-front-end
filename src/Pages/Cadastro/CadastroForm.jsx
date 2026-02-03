@@ -4,7 +4,7 @@ import { Titulo } from '../../Components/Fontes.jsx'
 import { IoIosMail } from "react-icons/io";
 import { FaKey, FaPhone, FaUser } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Sucesso, Erro } from '../../Components/Modal.jsx';
@@ -23,7 +23,7 @@ export function CadastroForm(){
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [showAlertError, setShowAlertError] = useState(false);
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
 
 
   function cadastrarUsuario() {
@@ -54,7 +54,7 @@ export function CadastroForm(){
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 6000);
         setTimeout(() => {  
-          navigate("/Login");
+          handleNavigate("/Login");
         }, 4000);
       }
     })

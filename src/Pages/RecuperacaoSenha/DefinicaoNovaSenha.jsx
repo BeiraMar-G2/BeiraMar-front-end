@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Input } from '../../Components/Input';
 import { FaKey, FaUser } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Botao } from '../../Components/Botao';
 import { Titulo, Label } from '../../Components/Fontes';
 import { Erro } from '../../Components/Modal';
 import api from '../../Provider/api';
 
 export function DefinicaoNovaSenha() {
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
 
     const [senhaNova, setSenhaNova] = useState('');
     const [confSenhaNova, setConfSenhaNova] = useState('');
@@ -52,7 +52,7 @@ export function DefinicaoNovaSenha() {
 
     return (
         <div className="content cliente">
-            <div onClick={() => navigate("/RecuperacaoCodigo")} className='voltar-wrapper'>
+            <div onClick={() => handleNavigate("/RecuperacaoCodigo")} className='voltar-wrapper'>
                 <FaArrowLeft size={28} className='voltar'/>
               </div>
             <div className="formulariocentrado">

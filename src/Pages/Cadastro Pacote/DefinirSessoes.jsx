@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Botao } from "../../Components/Botao.jsx";
 import { Titulo, Label } from "../../Components/Fontes.jsx";
 import { FaHouse } from "react-icons/fa6";
@@ -8,7 +9,7 @@ import "../Styles/DefinirSessoes.css";
 import { useEffect } from "react";
 
 export function DefinirSessoes() {
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
   const location = useLocation();
 
   const { servicosSelecionados = [] } = location.state || {};
@@ -25,7 +26,7 @@ export function DefinirSessoes() {
     console.log("Serviços selecionados:", servicosSelecionados);
     console.log("Quantidades:", quantidades);
 
-    navigate("/ResumoPacote", {
+    handleNavigate("/ResumoPacote", {
       state: { servicosSelecionados, quantidades }
     });
 
@@ -80,7 +81,7 @@ export function DefinirSessoes() {
           <Botao
             texto="Voltar"
             cor="#C8C5C5"
-            onClick={() => navigate("/Pacote/Cadastro")}
+            onClick={() => handleNavigate("/Pacote/Cadastro")}
           />
           <Botao
             texto="Continuar"

@@ -8,10 +8,10 @@ import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from "../../Components/Fontes";
 import { Botao } from "../../Components/Botao";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 
 export function IndisponibilidadeDia() {
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
     const [mesAtual, setMesAtual] = useState(null);
     const [diasAgendados, setDiasAgendados] = useState([]);
     const [diaSelecionado, setDiaSelecionado] = useState(null);
@@ -98,8 +98,8 @@ export function IndisponibilidadeDia() {
             <hr />
 
             <div className="botoes">
-                <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate("/Menu")} />
-                <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => navigate("/Indisponibilidade/Hora")} />
+                <Botao texto="Voltar" cor="#C8C5C5" onClick={() => handleNavigate("/Menu")} />
+                <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => handleNavigate("/Indisponibilidade/Hora")} />
             </div>
         </div>
     );

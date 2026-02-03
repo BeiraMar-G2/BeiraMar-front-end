@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Header } from "../../Components/Header";
 import { Botao } from "../../Components/Botao";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import { FaHouse } from "react-icons/fa6";
 import "../Styles/Form.css";
 import "../Styles/Input.css";
@@ -9,20 +10,14 @@ import "../Styles/IndisponibilidadeHora.css";
 import api from "../../Provider/api";
 
 export function IndisponibilidadeHora() {
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
     const location = useLocation();
     const [inicioAusencia, setInicioAusencia] = useState("");
     const [retornoAusencia, setRetornoAusencia] = useState("");
 
-    // Obtém a data selecionada passada pela página anterior
     const dataSelecionada = location.state?.dataSelecionada || "21/05/25 - Quarta-Feira";
 
-    const handleVoltar = () => {
-        navigate(-1);
-    };
-
     const handleContinuar = () => {
-        // Aqui você pode implementar a lógica para continuar
         console.log("Início da Ausência:", inicioAusencia);
         console.log("Retorno da Ausência:", retornoAusencia);
         api.post("/indisponibilidade", {
@@ -89,7 +84,7 @@ export function IndisponibilidadeHora() {
                     <Botao
                         texto="Voltar"
                         cor="#D3D3D3"
-                        onClick={handleVoltar}
+                        onClick={() => handleNavigate(-1)}
                     />
                     <Botao
                         texto="Continuar"

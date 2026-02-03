@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../Provider/api";
 import "../Pages/Styles/VisuClientePorDia.css";
 
 export default function VisuClientePorDia() {
-  const navigate = useNavigate();
   const [agendamentos, setAgendamentos] = useState([]);
   const [paginaAtual, setPaginaAtual] = useState(0);
   const [totalPaginas, setTotalPaginas] = useState(0);

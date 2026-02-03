@@ -3,7 +3,7 @@ import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from "../../Components/Fontes";
 import { Botao } from "../../Components/Botao";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import VisuAtendPorDia from "../../Components/HistoricoAgendamento.jsx";
 import "../Styles/HistoricoAgendamento.css";
 import api from "../../Provider/api";
@@ -11,7 +11,7 @@ import api from "../../Provider/api";
 export function HistoricoAgendAtend() {
   const [clientes, setClientes] = useState([]);
   const [clienteSelecionado, setClienteSelecionado] = useState(""); 
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
 
   function buscarClientes() {
     api
@@ -80,7 +80,7 @@ export function HistoricoAgendAtend() {
       </div>
 
       <div className="botoes-acao">
-        <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate("/Menu")} />
+        <Botao texto="Voltar" cor="#C8C5C5" onClick={() => handleNavigate("/Menu")} />
       </div>
     </div>
   );

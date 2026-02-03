@@ -1,16 +1,13 @@
-// import { useState } from "react";
-import api from "../../Provider/api";
-// import { useEffect } from "react";
 import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from "../../Components/Fontes";
 import { Botao } from "../../Components/Botao";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import VisuAtendPorDia from "../../Components/HistoricoAgendamento.jsx";
 import "../Styles/HistoricoAgendamento.css";
 
 export function HistoricoAgendCliente() {
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
 return (
     <div>
       <br />
@@ -23,7 +20,7 @@ return (
       <VisuAtendPorDia />
     </div>
      <div className="botoes-acao">
-        <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate(-1)} />
+        <Botao texto="Voltar" cor="#C8C5C5" onClick={() => handleNavigate(-1)} />
     </div>
     </div>
 

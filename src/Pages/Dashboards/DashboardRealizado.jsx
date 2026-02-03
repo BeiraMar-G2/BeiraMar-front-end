@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../../Components/Header";
 import "../Styles/DashboardRealizado.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -54,12 +54,12 @@ export function DashboardRealizado() {
     { diaDaSemana: "Segunda", quantidadeRealizacoes: 28 }
   ]);
   
-  const navegador = useNavigate();
+  const { handleNavigate } = useNavigation();
   const [procedimentoAtualSelecionado, definirProcedimentoSelecionado] = useState("");
   const [listaDeTodosOsProcedimentos, definirListaDeTodosOsProcedimentos] = useState([]);
 
   const voltarParaDashboardMenu = () => {
-    navegador("/Dashboard/Menu");
+    handleNavigate("/Dashboard/Menu");
   };
 
   function buscarProcedimentosRealizados(inicio = null, fim = null) {

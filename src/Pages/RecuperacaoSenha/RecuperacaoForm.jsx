@@ -3,7 +3,7 @@ import { Input } from '../../Components/Input.jsx'
 import { Titulo } from '../../Components/Fontes.jsx'
 import { IoIosMail } from "react-icons/io";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import '../Styles/Form.css'
 import '../Styles/Input.css'
 import '../Styles/Fontes.css'
@@ -12,8 +12,7 @@ import { useState } from 'react';
 import api from '../../Provider/api';
 
 export function RecuperacaoForm(){
-
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [mensagem, setMensagem] = useState('');
@@ -47,7 +46,7 @@ export function RecuperacaoForm(){
       
       // Redirecionar para a página de inserir código após alguns segundos
       setTimeout(() => {
-        navigate('/RecuperacaoCodigo', { 
+        handleNavigate('/RecuperacaoCodigo', { 
           state: { email: email } // Passa o email para a próxima página
         });
       }, 2000);
@@ -78,7 +77,7 @@ export function RecuperacaoForm(){
 
   return (
   <div className='content atendente'>
-    <div onClick={() => navigate(-1)} className='voltar-wrapper'>
+    <div onClick={() => handleNavigate(-1)} className='voltar-wrapper'>
       <FaArrowLeft size={28} color="#000" className='voltar'/>
     </div>
       <div className='formulariocentrado'>

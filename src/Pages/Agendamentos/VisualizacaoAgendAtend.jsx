@@ -8,14 +8,13 @@ import { Header } from "../../Components/Header";
 import { FaHouse } from "react-icons/fa6";
 import { Titulo, Subtitulo } from "../../Components/Fontes";
 import { Botao } from "../../Components/Botao";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 
 export function VisualizacaoAgendAtend() {
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
     const [mesAtual, setMesAtual] = useState(null);
     const [diasAgendados, setDiasAgendados] = useState([]);
     const [diaSelecionado, setDiaSelecionado] = useState(null);
-
 
     function handleDiaSelecionado(date) {
         const dia = date.getDate().toString().padStart(2, '0');
@@ -98,8 +97,8 @@ export function VisualizacaoAgendAtend() {
             <hr />
 
             <div className="botoes-acao">
-                <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate("/Menu")} />
-                <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => navigate("/")} />
+                <Botao texto="Voltar" cor="#C8C5C5" onClick={() => handleNavigate("/Menu")} />
+                <Botao texto="Continuar" cor="#f8c7ccbb" onClick={() => handleNavigate("/Agendamentos/VisualizarPorDia")} />
             </div>
         </div>
     );

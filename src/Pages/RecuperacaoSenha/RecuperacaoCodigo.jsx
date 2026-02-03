@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Botao } from '../../Components/Botao';
 import { FaArrowLeft } from 'react-icons/fa';
 import api from '../../Provider/api';
@@ -7,16 +7,12 @@ import '../Styles/RecuperacaoCodigo.css';
 import { useLocation } from 'react-router-dom';
 
 export function RecuperacaoCodigo() {
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
     const location = useLocation();
     const email = location.state?.email || '';
     const [codigo, setCodigo] = useState(['', '', '', '', '', '']);
     const [loading, setLoading] = useState(false);
     const [mensagem, setMensagem] = useState('');
-
-    const handleVoltar = () => {
-        navigate(-1);
-    };
 
     const handleEntrar = async () => {
         const codigoCompleto = codigo.join('');
@@ -41,7 +37,7 @@ export function RecuperacaoCodigo() {
             setMensagem('Código validado com sucesso!');
             
             setTimeout(() => {
-                navigate('/recuperacao/nova-senha', { 
+                handleNavigate('/recuperacao/nova-senha', { 
                     state: { 
                         email: email,
                         codigo: codigoCompleto,
@@ -97,7 +93,7 @@ export function RecuperacaoCodigo() {
 
     return (
         <div className="content atendente">
-            <div onClick={() => navigate("/Login")} className='voltar-wrapper'>
+            <div onClick={() => handleNavigate("/Login")} className='voltar-wrapper'>
                 <FaArrowLeft size={28} color="#000" className='voltar'/>
             </div>
 

@@ -4,7 +4,7 @@ import { Titulo } from '../../Components/Fontes.jsx'
 import { IoIosMail } from "react-icons/io";
 import { FaKey, FaPhone, FaUser } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import { useState } from 'react';
 import api from '../../Provider/api.js';
 import '../Styles/Form.css'
@@ -19,7 +19,7 @@ export function CadastroFuncForm(){
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
-    const navigate = useNavigate();
+    const { handleNavigate } = useNavigation();
 
     function cadastrarUsuario() {
     console.log("Cadastrando funcionário:", {
@@ -41,7 +41,7 @@ export function CadastroFuncForm(){
   
     return (
     <div className='content atendente'>
-    <div onClick={() => navigate("/Menu")} className='voltar-wrapper'>
+    <div onClick={() => handleNavigate("/Menu")} className='voltar-wrapper'>
       <FaArrowLeft size={28} color="#000" className='voltar'/>
     </div>
       <div className='formulariocentrado'>

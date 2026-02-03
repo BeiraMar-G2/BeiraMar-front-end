@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../../Components/Header";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../Hooks/useNavigation";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,7 +27,7 @@ ChartJS.register(
 );
 
 export function DashboardCancelamento() {
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
   const [procedimentoSelecionado, setProcedimentoSelecionado] = useState("");
   const [listaDeTodosOsProcedimentos, definirListaDeTodosOsProcedimentos] = useState([]);
   const [legendaPersonalizada, setLegendaPersonalizada] = useState(null);
@@ -150,7 +150,7 @@ export function DashboardCancelamento() {
   }, [procedimentoSelecionado]);
 
   const handleVoltar = () => {
-    navigate("/Dashboard/Menu");
+    handleNavigate("/Dashboard/Menu");
   };
 
   // Dados do gráfico de pizza - 5 Procedimentos Mais Cancelados

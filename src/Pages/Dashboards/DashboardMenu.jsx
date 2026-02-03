@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Header } from '../../Components/Header';
 import { Botao } from '../../Components/Botao';
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import '../Styles/DashboardMenu.css';
 import api from '../../Provider/api';
 import { HelpModal } from '../../Components/Modal';
@@ -110,13 +110,13 @@ export function DashboardMenu() {
   }, []);
 
 
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
 
   const handleDetalhes = (tipo) => {
     if (tipo === 'realizados') {
-      navigate('/Dashboard/Realizado', {state: { rankingProcedimentos }});
+      handleNavigate('/Dashboard/Realizado', {state: { rankingProcedimentos }});
     } else if (tipo === 'cancelados') {
-      navigate('/Dashboard/Cancelamento');
+      handleNavigate('/Dashboard/Cancelamento');
     }
   };
 

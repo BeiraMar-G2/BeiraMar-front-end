@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from "../../Hooks/useNavigation";
 import { Botao } from "../../Components/Botao.jsx";
 import { Titulo, Label } from "../../Components/Fontes.jsx";
 import { FaHouse } from "react-icons/fa6";
