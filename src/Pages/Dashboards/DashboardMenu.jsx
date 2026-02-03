@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from '../../Components/Header';
 import { Botao } from '../../Components/Botao';
 import { useNavigation } from "../../Hooks/useNavigation";

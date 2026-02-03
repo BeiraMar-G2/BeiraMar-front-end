@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Header } from "../../Components/Header";
 import { Botao } from "../../Components/Botao";
 import { useLocation } from "react-router-dom";

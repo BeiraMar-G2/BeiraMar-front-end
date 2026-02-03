@@ -4,7 +4,6 @@ import { useNavigation } from "../../Hooks/useNavigation";
 import { FaClock, FaShoppingBag, FaCalendarAlt, FaUser } from 'react-icons/fa';
 import { RiLogoutBoxLine } from "react-icons/ri";
 import '../Styles/MenuCliente.css';
-import { useEffect } from 'react';
 
 export function MenuCliente() {
     const { handleNavigate } = useNavigation();

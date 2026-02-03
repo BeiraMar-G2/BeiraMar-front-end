@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../../Components/Header";
 import "../Styles/DashboardRealizado.css";
 import { useNavigation } from "../../Hooks/useNavigation";

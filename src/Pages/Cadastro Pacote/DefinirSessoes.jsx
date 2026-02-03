@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigation } from "../../Hooks/useNavigation";
 import { Botao } from "../../Components/Botao.jsx";

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Input } from '../../Components/Input';
-import { FaKey, FaUser } from "react-icons/fa";
+import { FaKey } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigation } from "../../Hooks/useNavigation";
 import { Botao } from '../../Components/Botao';
 import { Titulo, Label } from '../../Components/Fontes';
-import { Erro } from '../../Components/Modal';
 import api from '../../Provider/api';
 
 export function DefinicaoNovaSenha() {
