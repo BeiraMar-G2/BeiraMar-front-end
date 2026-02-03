@@ -102,7 +102,7 @@ export function CadastroPacote() {
                 </div>
 
                 <div className="botoes">
-                    <Botao texto="Voltar" cor="#C8C5C5" onClick={() => navigate(-1)} />
+                    <Botao texto="Voltar" cor="#C8C5C5" onClick={() => handleNavigate(-1)} />
                     <Botao 
                         texto="Continuar" 
                         cor="#f8c7ccbb" 

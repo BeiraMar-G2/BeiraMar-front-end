@@ -167,7 +167,7 @@ export function PacotesCadastrados() {
         </div>
 
         <div style={{ display:"flex", justifyContent:"center", width: "90%", marginTop: "18px" }}>
-          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {navigate("/Servicos&Pacotes")}}/>
+          <Botao cor="#d9d9d9" texto="Voltar" onClick={() => {handleNavigate("/Servicos&Pacotes")}}/>
         </div>
       </div>
     </div>

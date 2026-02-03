@@ -25,7 +25,7 @@ export function Menu() {
         <BotaoMenu onClick={() => handleNavigate("/Indisponibilidade")} texto="Disponibilidade" imagem={<LuAlarmClock className="icone-menu"/>}/>
         <BotaoMenu onClick={() => handleNavigate("/Servicos&Pacotes")} texto="Serviços e Pacotes" imagem={<BiSolidShoppingBags className="icone-menu"/>}/>
       </div>
-      {sessionStorage.getItem('cargo')=="Administrador" ? <div className="botoesMenu">
+      {sessionStorage.getItem('cargo') === "Administrador" ? <div className="botoesMenu">
         <BotaoMenu onClick={() => handleNavigate("/Dashboard/Menu")} texto="Dashboards" imagem={<FaChartLine className="icone-menu"/>}/> 
         <BotaoMenu onClick={() => handleNavigate("/Cadastro/Funcionario")} texto="Cadastro de Atendentes" imagem={<LuUserPlus className="icone-menu"/>}  />
       </div> : ""}

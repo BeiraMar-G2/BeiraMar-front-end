@@ -50,7 +50,7 @@ export function CadastroForm(){
     })
     .then((response)=>{
       console.log(response)
-      if(response.status == "201") {
+      if(response.status === "201") {
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 6000);
         setTimeout(() => {  
@@ -62,7 +62,7 @@ export function CadastroForm(){
 
 return (
   <div className='content atendente'>
-  <div onClick={() => navigate("/")} className='voltar-wrapper'>
+  <div onClick={() => handleNavigate("/")} className='voltar-wrapper'>
     <FaArrowLeft size={28} color="#000" className='voltar'/>
   </div>
 

@@ -38,10 +38,10 @@ export function LoginForm() {
         sessionStorage.setItem("loginGoogle", "false");
       setShowAlert(true);
       console.log("Login realizado com sucesso:", response);
-      if (response.status == "200") {
+      if (response.status === "200") {
         setTimeout(() => setShowAlert(false), 6000);
         setTimeout(() => {  
-          if (cargo == "Cliente") {
+          if (cargo === "Cliente") {
             handleNavigate("/MenuCliente");
           } else {
             handleNavigate("/Menu");

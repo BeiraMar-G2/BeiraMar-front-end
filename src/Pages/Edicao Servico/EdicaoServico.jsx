@@ -28,7 +28,7 @@ export function EdicaoServico() {
   };
 
   const handleSubmit = (e) => {
-    if(servicoEditado.nome == "" || servicoEditado.duracao == "" || servicoEditado.preco == ""){
+    if(servicoEditado.nome === "" || servicoEditado.duracao === "" || servicoEditado.preco === ""){
         alert("Preencha todos os campos!");
     } else {
       console.log("Serviço selecionado:", servicoSelecionado);

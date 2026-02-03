@@ -101,7 +101,7 @@ export function DashboardCancelamento() {
       .get(`/servicos/mais-cancelados${queryParams}`)
       .then((response) => {
         if (response.data && Array.isArray(response.data)) {
-          if(response.data.length === 0 || response.data[0][1] == 0){
+          if(response.data.length === 0 || response.data[0][1] === 0){
             setMensagemErroTorta("Nenhum cancelamento registrado nos últimos 30 dias");
           } else {
             setServicosMaisCanceladosData(response.data);

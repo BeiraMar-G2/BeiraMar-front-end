@@ -23,8 +23,8 @@ export function MenuCliente() {
             <div className="container-menu">
                 <div className="boas-vindas">
                     <h2>Boas vindas ao menu!</h2>
-                {sessionStorage.getItem('loginGoogle') == 'true' ? (
-                    <p style={{ color: '#282828' }}>Clique aqui para adicionar seu telefone! <a onClick={() => navigate('/Perfil')}>Adicionar telefone</a></p>
+                {sessionStorage.getItem('loginGoogle') === 'true' ? (
+                    <p style={{ color: '#282828' }}>Clique aqui para adicionar seu telefone! <a onClick={() => handleNavigate('/Perfil')}>Adicionar telefone</a></p>
                 ) : null}
                 </div>
 

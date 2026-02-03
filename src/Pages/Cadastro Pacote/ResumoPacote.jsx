@@ -28,7 +28,7 @@ export function ResumoPacote() {
     api.post("/pacotes", {
       idPacote: "default",
       nome: nomePacote,
-      precoTotalSemDesconto: preco == null ? precoSugerido : preco,
+      precoTotalSemDesconto: preco === null ? precoSugerido : preco,
       qtdSessoesTotal: sessoesTotal,
       tempoLimiteDia: limitePacote
     })

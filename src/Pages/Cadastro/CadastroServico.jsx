@@ -10,7 +10,7 @@ import api from '../../Provider/api.js';
 
 export function CadastroServico() {
   const [showAlert, setShowAlert] = useState(false);
-  const navigate = useNavigate();
+  const { handleNavigate } = useNavigation();
   const [formData, setFormData] = useState({
     idServico: "default",
     nome: '',
@@ -36,7 +36,7 @@ export function CadastroServico() {
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 6000);
         setTimeout(() => {  
-          navigate("/Servicos&Pacotes");
+          handleNavigate("/Servicos&Pacotes");
         }, 4000);
       }
     })
@@ -120,7 +120,7 @@ export function CadastroServico() {
           <Botao
             texto="Voltar"
             cor="#C8C5C5"
-            onClick={() => navigate(-1)}
+            onClick={() => handleNavigate(-1)}
           />
           <Botao
             texto="Continuar"
